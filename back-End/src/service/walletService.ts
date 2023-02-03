@@ -24,6 +24,14 @@ class WalletService {
         }
         return this.walletRepository.update({idWallet: id}, newWallet)
     }
+
+    delete = async (id) => {
+        let wallet = await this.walletRepository.findOneBy({idWallet: id})
+        if (!wallet) {
+            return null
+        }
+        return this.walletRepository.delete({idWallet: id})
+    }
 }
 
 export default new WalletService
