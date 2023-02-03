@@ -29,6 +29,10 @@ __decorate([
     (0, typeorm_1.Column)(),
     __metadata("design:type", String)
 ], Transaction.prototype, "type", void 0);
+__decorate([
+    (0, typeorm_1.Column)(),
+    __metadata("design:type", Number)
+], Transaction.prototype, "money", void 0);
 Transaction = __decorate([
     (0, typeorm_1.Entity)()
 ], Transaction);

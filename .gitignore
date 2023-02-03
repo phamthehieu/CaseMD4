@@ -1,4 +1,6 @@
-.package
-.package-lock
-.tsconfig.build
-.tsconfig
+.back-End/node_modules
+.back-End/dist
+.back-End/package
+.back-End/package-lock
+.back-End/tsconfig.build
+.back-End/tsconfig

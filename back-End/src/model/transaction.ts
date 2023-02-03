@@ -8,5 +8,7 @@ export class Transaction {
     @Column()
     category: number;
     @Column()
-    type: string
+    type: string;
+    @Column()
+    money: number;
 }
