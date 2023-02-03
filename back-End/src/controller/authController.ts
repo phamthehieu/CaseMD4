@@ -14,7 +14,6 @@ class AuthController {
 
     login = async (req: Request, res: Response) => {
         let response = await this.AuthService.checkUser(req.body)
-        // console.log(response)
         res.status(200).json(response)
     }
 }
