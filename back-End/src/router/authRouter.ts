@@ -1,5 +1,5 @@
 import {Router} from "express";
-import AuthController from "../../../../../CaseMD4/back-End/src/controller/authController";
+import AuthController from "../controller/authController";
 export const authRouter = Router()
 
 authRouter.post('/register', AuthController.register)
