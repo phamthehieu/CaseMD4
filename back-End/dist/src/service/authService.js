@@ -17,13 +17,11 @@ class AuthService {
         this.checkUser = async (user) => {
             try {
                 let userCheck = await this.userRepository.findOneBy({ userName: user.userName });
-                console.log(userCheck);
                 if (!userCheck) {
                     return "User not found";
                 }
                 else {
                     let passwordCompare = await bcrypt_1.default.compare(user.password, userCheck.password);
-                    console.log(passwordCompare);
                     if (!passwordCompare) {
                         return 'Password does not match';
                     }
