@@ -5,8 +5,30 @@ const category_1 = require("../model/category");
 class CategoryService {
     constructor() {
         this.getAll = async () => {
-            let sql = `select * from category`;
+            let sql = `select *
+                   from category`;
             return await this.categoryRepository.query(sql);
+        };
+        this.save = async (category) => {
+            return await this.categoryRepository.save(category);
+        };
+        this.remove = async (id) => {
+            let category = this.categoryRepository.findOneBy({ idCategory: id });
+            if (!category) {
+                return null;
+            }
+            else {
+                return await this.categoryRepository.delete({ idCategory: id });
+            }
+        };
+        this.update = async (id, newCategory) => {
+            let category = this.categoryRepository.findOneBy({ idCategory: id });
+            if (!category) {
+                return null;
+            }
+            else {
+                return await this.categoryRepository.update(id, newCategory);
+            }
         };
         this.categoryRepository = data_soure_1.AppDataSource.getRepository(category_1.Category);
     }

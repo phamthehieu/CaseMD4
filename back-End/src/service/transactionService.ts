@@ -14,7 +14,7 @@ class TransactionService {
         return this.transactionRepository.save(transaction)
     }
     findById = async (id) =>{
-        return
+        return this.transactionRepository.findOneBy({idTransaction : id})
     }
     remove = async (id)=>{
         let transaction = this.transactionRepository.findOneBy({idTransaction :id})

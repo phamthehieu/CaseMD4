@@ -9,9 +9,32 @@ class CategoryService {
     }
 
     getAll = async () => {
-        let sql = `select * from category`
+        let sql = `select *
+                   from category`
         return await this.categoryRepository.query(sql)
     }
+    save = async (category) => {
+        return await this.categoryRepository.save(category)
+    }
+    remove = async (id) => {
+        let category = this.categoryRepository.findOneBy({idCategory: id})
+        if (!category) {
+            return null
+        } else {
+            return await this.categoryRepository.delete({idCategory: id})
+        }
+
+
+    }
+    update = async (id,newCategory) => {
+        let category = this.categoryRepository.findOneBy({idCategory : id})
+        if(!category){
+            return null
+        }
+        else {
+            return  await  this.categoryRepository.update(id,newCategory)
+        }
+}
 }
 
 export default new CategoryService()

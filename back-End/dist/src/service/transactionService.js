@@ -5,14 +5,14 @@ const data_soure_1 = require("../data-soure");
 class TransactionService {
     constructor() {
         this.getAll = async () => {
-            let sql = `select * from transaction `;
+            let sql = `select * from transaction join category on transaction.category = category.idCategory`;
             return await this.transactionRepository.query(sql);
         };
         this.save = async (transaction) => {
             return this.transactionRepository.save(transaction);
         };
         this.findById = async (id) => {
-            return;
+            return this.transactionRepository.findOneBy({ idTransaction: id });
         };
         this.remove = async (id) => {
             let transaction = this.transactionRepository.findOneBy({ idTransaction: id });
