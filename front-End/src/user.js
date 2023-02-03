@@ -128,12 +128,13 @@ function logOut() {
     showLogin()
 }
 function showFormProfile() {
-    let user = JSON.parse(localStorage.getItem('token'))
+    let users = JSON.parse(localStorage.getItem('token'))
     $.ajax({
         type: 'GET',
-        url: `http://localhost:3000/user/profile/${user.idUser}`,
+        url: `http://localhost:3000/user/profile/${users.idUser}`,
         headers: {
             'Content-Type': 'application/json',
+            Authorization: 'Bearer ' + users.token
         },
         success : (user) => {
             let html = ''
@@ -197,27 +198,202 @@ function showFormProfile() {
                     <div class="col-12">
                         <div class="row">                          
                             <div class="col-md-10 col-12">
-                                    <div class="col-6">
+                                    <div class="col-12">
                                         <fieldset class="form-label-group">
-                                            <input type="text" class="form-control" id="first-name" value="John">
-                                            <label for="first-name">userName</label>
+                                            <input type="text" class="form-control" id="first-name" value="${user.user.userName}" style="text-align: center">
+                                            <label for="first-name" style="text-align: center">userName </label>
                                         </fieldset>
                                     </div>
-                                    <div class="col-6">
+                                    <div class="col-12" >
                                         <fieldset class="form-label-group">
-                                            <input type="text" class="form-control" id="last-name" value="Doe">
-                                            <label for="last-name">FullName</label>
+                                            <input type="text" class="form-control" id="last-name" value="${user.user.fullName}" style="text-align: center">
+                                            <label for="last-name" style="text-align: center">FullName</label>
                                         </fieldset>
                                     </div>
-                                    <div class="col-6">
+                                  
+                                    <div class="col-12 text-center">
+                                         <div class="btn-group text-left"><a class="btn-gradient-secondary btn-sm white" onclick="showFormEdit()">Edit FullName</a></div>
+                                         <div class="btn-group text-right"><a class="btn-gradient-secondary btn-sm white" onclick="showFormEdit()">Edit Password</a></div>
+                                    </div>                     
+                            </div> 
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+    <div class="col-12 col-md-4">
+        <div class="card">
+            <div class="card-header">
+                <h6 class="card-title text-center">ICO Tokens</h6>
+            </div>
+            <div class="card-content collapse show">
+                <div class="card-body">
+                    <div class="text-center row clearfix mb-2">
+                        <div class="col-12">
+                            <i class="icon-layers font-large-3 bg-warning bg-glow white rounded-circle p-3 d-inline-block"></i>
+                        </div>
+                    </div>
+                    <h3 class="text-center">3,458.88 CIC</h3>
+                </div>
+                <div class="table-responsive">
+                    <table class="table table-de mb-0">
+                        <tbody>
+                            <tr>
+                                <td>CIC Token</td>
+                                <td><i class="icon-layers"></i> 3,258 CIC</td>
+                            </tr>
+                            <tr>
+                                <td>CIC Referral</td>
+                                <td><i class="icon-layers"></i> 200.88 CIC</td>
+                            </tr>
+                            <tr>
+                                <td>CIC Price</td>
+                                <td><i class="cc BTC-alt"></i> 0.0001 BTC</td>
+                            </tr>
+                            <tr>
+                                <td>Raised BTC</td>
+                                <td><i class="cc BTC-alt"></i> 2154 BTC</td>
+                            </tr>
+                            <tr>
+                                <td>Raised USD</td>
+                                <td><i class="la la-dollar"></i> 4.52 M</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+        <div class="card">
+        <div class="card-header">
+            <h6 class="card-title text-center">Token sale progress</h6>
+        </div>
+        <div class="card-content collapse show">
+            <div class="card-body">
+                <div class="font-small-3 clearfix">
+                    <span class="float-left">$0</span>
+                    <span class="float-right">$5M</span>
+                </div>
+                <div class="progress progress-sm my-1 box-shadow-2">
+                    <div class="progress-bar bg-warning" role="progressbar" style="width: 65%" aria-valuenow="65" aria-valuemin="0" aria-valuemax="100"></div>
+                </div>
+                <div class="font-small-3 clearfix">
+                    <span class="float-left">Distributed <br> <strong>6,235,125 CIC</strong></span>
+                    <span class="float-right text-right">Contributed  <br> <strong>5478 ETH | 80 BTC</strong></span>
+                </div>
+            </div>
+        </div>
+    </div>
+    </div>
+</div>
+        </div>
+      </div>
+    </div>
+                `
+            $("#body").html(html)
+        }
+    })
+}
+function editProfile() {
+    let users = JSON.parse(localStorage.getItem('token'))
+    let fullName = $("#fullName").val()
+    let user = {
+        fullName: fullName
+    }
+    $.ajax({
+        type: 'PUT',
+        url: `http://localhost:3000/user/edit/${users.idUser}`,
+        headers: {
+            'Content-Type': 'application/json',
+            Authorization: 'Bearer ' + users.token
+        },
+        data: JSON.stringify(user),
+        success : () => {
+            showFormProfile()
+        }
+    })
+}
+function showFormEdit() {
+    let users = JSON.parse(localStorage.getItem('token'))
+    $.ajax({
+        type: 'GET',
+        url: `http://localhost:3000/user/profile/${users.idUser}`,
+        headers: {
+            'Content-Type': 'application/json',
+            Authorization: 'Bearer ' + users.token
+        },
+        success : (user) => {
+            let html = ''
+            html += `
+                 <nav class="header-navbar navbar-expand-md navbar navbar-with-menu navbar-without-dd-arrow fixed-top navbar-light navbar-bg-color">
+        <div class="navbar-wrapper">
+            <div class="navbar-header d-md-none">
+                <ul class="nav navbar-nav flex-row">
+                    <li class="nav-item mobile-menu d-md-none mr-auto"><a class="nav-link nav-menu-main menu-toggle hidden-xs" href="#"><i class="ft-menu font-large-1"></i></a></li>
+                    <li class="nav-item d-md-none"><button onclick="showWallet()"><img class="brand-logo d-none d-md-block" alt="CryptoDash admin logo" src="../../../app-assets/images/logo/logo.png"><img class="brand-logo d-sm-block d-md-none" alt="CryptoDash admin logo sm" src="../../../app-assets/images/logo/logo-sm.png"></button></li>
+                    <li class="nav-item d-md-none"><a class="nav-link open-navbar-container" data-toggle="collapse" data-target="#navbar-mobile"><i class="la la-ellipsis-v">   </i></a></li>
+                </ul>
+            </div>
+            <div class="navbar-container">
+                <div class="collapse navbar-collapse" id="navbar-mobile">
+                    <ul class="nav navbar-nav mr-auto float-left">
+                        <li class="nav-item d-none d-md-block"><a class="nav-link nav-menu-main menu-toggle hidden-xs" href="#"><i class="ft-menu"></i></a></li>
+                        <li class="nav-item nav-search"><a class="nav-link nav-link-search" href="#"><i class="ficon ft-search"></i></a>
+                            <div class="search-input">
+                                <input class="input" type="text" placeholder="Explore CryptoDash...">
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </nav>
+                 <div class="main-menu menu-fixed menu-dark menu-bg-default rounded menu-accordion menu-shadow">
+        <div class="main-menu-content"><a class="navigation-brand d-none d-md-block d-lg-block d-xl-block" href="index.html"><img class="brand-logo" alt="CryptoDash admin logo" src="../../../app-assets/images/logo/logo.png"/></a>
+            <ul class="navigation navigation-main" id="main-menu-navigation" data-menu="menu-navigation">
+                <li class="active"><a href="wallet.html"><i class="icon-wallet"></i>Wallet</a>
+                </li>
+                <li class=" nav-item"><a href="transactions.html"><i class="ft-user"></i> Profile</span></a>
+                <li class=" nav-item"> <a onclick="logOut()"><i class="ft-power"></i> Log Out</a></li>
+            </ul>
+        </div>
+    </div>
+                 <div class="app-content content">
+    <div class="content-wrapper">
+        <div class="content-header row">
+          <div class="content-header-left col-md-8 col-12 mb-2 breadcrumb-new">
+            <h3 class="content-header-title mb-0 d-inline-block">Account Profile</h3>
+            <div class="row breadcrumbs-top d-inline-block">
+              <div class="breadcrumb-wrapper col-12">
+                <ol class="breadcrumb">
+                  <li class="breadcrumb-item"><a href="index.html">Dashboard</a>
+                  </li>
+                  <li class="breadcrumb-item active">Account Profile
+                  </li>
+                </ol>
+              </div>
+            </div>
+          </div>      
+        </div>
+        <div class="content-body"><div class="row">
+    <div class="col-12 col-md-8">
+        <!-- User Profile -->
+        <section class="card">
+            <div class="card-content">
+                <div class="card-body">
+                    <div class="col-12">
+                        <div class="row">                          
+                            <div class="col-md-10 col-12">          
+                                    <div class="col-12" >
                                         <fieldset class="form-label-group">
-                                            <input type="password" class="form-control" id="old-password" value="password">
-                                            <label for="old-password">Old password</label>
+                                            <input type="text" class="form-control" id="fullName" value="${user.user.fullName}" style="text-align: center">
+                                            <label for="last-name" style="text-align: center">FullName</label>
                                         </fieldset>
-                                    </div>
-                                    <div class="col-12 text-right">
-                                         <div class="btn-group float-md-right"><a class="btn-gradient-secondary btn-sm white" onclick="showEditProfile()">Edit</a></div>
-                                    </div>
+                                    </div>                 
+                                     <div class="col-12 text-center">
+                                          <div class="btn-group"><a class="btn-gradient-secondary btn-sm white" onclick="editProfile()">Edit</a></div>
+                                          <div class="btn-group"><a class="btn-gradient-secondary btn-sm white" onclick="showFormProfile()">ProFile</a></div>
+                                    </div>  
                             </div>
                         </div>
                     </div>
@@ -293,176 +469,7 @@ function showFormProfile() {
       </div>
     </div>
                 `
-            $("#tbody").html(html)
+            $("#body").html(html)
         }
     })
-}
-function showEditProfile() {
-    $.ajax({
-        type: 'POST',
-        url: "http://localhost:3000/auth/login",
-        headers: {
-            'Content-Type': 'application/json',
-        },
-        data: JSON.stringify(user),
-        success : (token) => {
-
-        }
-    })
-    $("#body").html(`
-    <nav class="header-navbar navbar-expand-md navbar navbar-with-menu navbar-without-dd-arrow fixed-top navbar-light navbar-bg-color">
-        <div class="navbar-wrapper">
-            <div class="navbar-header d-md-none">
-                <ul class="nav navbar-nav flex-row">
-                    <li class="nav-item mobile-menu d-md-none mr-auto"><a class="nav-link nav-menu-main menu-toggle hidden-xs" href="#"><i class="ft-menu font-large-1"></i></a></li>
-                    <li class="nav-item d-md-none"><button onclick="showWallet()"><img class="brand-logo d-none d-md-block" alt="CryptoDash admin logo" src="../../../app-assets/images/logo/logo.png"><img class="brand-logo d-sm-block d-md-none" alt="CryptoDash admin logo sm" src="../../../app-assets/images/logo/logo-sm.png"></button></li>
-                    <li class="nav-item d-md-none"><a class="nav-link open-navbar-container" data-toggle="collapse" data-target="#navbar-mobile"><i class="la la-ellipsis-v">   </i></a></li>
-                </ul>
-            </div>
-            <div class="navbar-container">
-                <div class="collapse navbar-collapse" id="navbar-mobile">
-                    <ul class="nav navbar-nav mr-auto float-left">
-                        <li class="nav-item d-none d-md-block"><a class="nav-link nav-menu-main menu-toggle hidden-xs" href="#"><i class="ft-menu"></i></a></li>
-                        <li class="nav-item nav-search"><a class="nav-link nav-link-search" href="#"><i class="ficon ft-search"></i></a>
-                            <div class="search-input">
-                                <input class="input" type="text" placeholder="Explore CryptoDash...">
-                            </div>
-                        </li>
-                    </ul>
-                </div>
-            </div>
-        </div>
-    </nav>
-    <div class="main-menu menu-fixed menu-dark menu-bg-default rounded menu-accordion menu-shadow">
-        <div class="main-menu-content"><a class="navigation-brand d-none d-md-block d-lg-block d-xl-block" href="index.html"><img class="brand-logo" alt="CryptoDash admin logo" src="../../../app-assets/images/logo/logo.png"/></a>
-            <ul class="navigation navigation-main" id="main-menu-navigation" data-menu="menu-navigation">
-                <li class="active"><a href="wallet.html"><i class="icon-wallet"></i>Wallet</a>
-                </li>
-                <li class=" nav-item"><a href="transactions.html"><i class="ft-user"></i> Profile</span></a>
-                <li class=" nav-item"> <a onclick="logOut()"><i class="ft-power"></i> Log Out</a></li>
-            </ul>
-        </div>
-    </div>
-    <div class="app-content content">
-    <div class="content-wrapper">
-        <div class="content-header row">
-          <div class="content-header-left col-md-8 col-12 mb-2 breadcrumb-new">
-            <h3 class="content-header-title mb-0 d-inline-block">Account Profile</h3>
-            <div class="row breadcrumbs-top d-inline-block">
-              <div class="breadcrumb-wrapper col-12">
-                <ol class="breadcrumb">
-                  <li class="breadcrumb-item"><a href="index.html">Dashboard</a>
-                  </li>
-                  <li class="breadcrumb-item active">Account Profile
-                  </li>
-                </ol>
-              </div>
-            </div>
-          </div>      
-        </div>
-        <div class="content-body"><div class="row">
-    <div class="col-12 col-md-8">
-        <!-- User Profile -->
-        <section class="card">
-            <div class="card-content">
-                <div class="card-body">
-                    <div class="col-12">
-                        <div class="row">                          
-                            <div class="col-md-10 col-12">
-                                    <div class="col-6">
-                                        <fieldset class="form-label-group">
-                                            <input type="text" class="form-control" id="first-name" value="John">
-                                            <label for="first-name">userName</label>
-                                        </fieldset>
-                                    </div>
-                                    <div class="col-6">
-                                        <fieldset class="form-label-group">
-                                            <input type="text" class="form-control" id="last-name" value="Doe">
-                                            <label for="last-name">FullName</label>
-                                        </fieldset>
-                                    </div>
-                                    <div class="col-6">
-                                        <fieldset class="form-label-group">
-                                            <input type="password" class="form-control" id="old-password" value="password">
-                                            <label for="old-password">Old password</label>
-                                        </fieldset>
-                                    </div>
-                                    <div class="col-12 text-right">
-                                         <div class="btn-group float-md-right"><a class="btn-gradient-secondary btn-sm white" href="wallet.html">SAVE</a></div>
-                                    </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
-    </div>
-    <div class="col-12 col-md-4">
-        <div class="card">
-            <div class="card-header">
-                <h6 class="card-title text-center">ICO Tokens</h6>
-            </div>
-            <div class="card-content collapse show">
-                <div class="card-body">
-                    <div class="text-center row clearfix mb-2">
-                        <div class="col-12">
-                            <i class="icon-layers font-large-3 bg-warning bg-glow white rounded-circle p-3 d-inline-block"></i>
-                        </div>
-                    </div>
-                    <h3 class="text-center">3,458.88 CIC</h3>
-                </div>
-                <div class="table-responsive">
-                    <table class="table table-de mb-0">
-                        <tbody>
-                            <tr>
-                                <td>CIC Token</td>
-                                <td><i class="icon-layers"></i> 3,258 CIC</td>
-                            </tr>
-                            <tr>
-                                <td>CIC Referral</td>
-                                <td><i class="icon-layers"></i> 200.88 CIC</td>
-                            </tr>
-                            <tr>
-                                <td>CIC Price</td>
-                                <td><i class="cc BTC-alt"></i> 0.0001 BTC</td>
-                            </tr>
-                            <tr>
-                                <td>Raised BTC</td>
-                                <td><i class="cc BTC-alt"></i> 2154 BTC</td>
-                            </tr>
-                            <tr>
-                                <td>Raised USD</td>
-                                <td><i class="la la-dollar"></i> 4.52 M</td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
-            </div>
-        </div>
-        <div class="card">
-        <div class="card-header">
-            <h6 class="card-title text-center">Token sale progress</h6>
-        </div>
-        <div class="card-content collapse show">
-            <div class="card-body">
-                <div class="font-small-3 clearfix">
-                    <span class="float-left">$0</span>
-                    <span class="float-right">$5M</span>
-                </div>
-                <div class="progress progress-sm my-1 box-shadow-2">
-                    <div class="progress-bar bg-warning" role="progressbar" style="width: 65%" aria-valuenow="65" aria-valuemin="0" aria-valuemax="100"></div>
-                </div>
-                <div class="font-small-3 clearfix">
-                    <span class="float-left">Distributed <br> <strong>6,235,125 CIC</strong></span>
-                    <span class="float-right text-right">Contributed  <br> <strong>5478 ETH | 80 BTC</strong></span>
-                </div>
-            </div>
-        </div>
-    </div>
-    </div>
-</div>
-        </div>
-      </div>
-    </div>
-    `)
 }
