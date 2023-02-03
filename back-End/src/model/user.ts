@@ -8,8 +8,8 @@ export class User {
     userName: string;
 @Column({type: 'varchar', length: 255})
     password: string;
-@Column({type: 'varchar', length: 255})
+@Column({type: 'varchar', length: 255, default: "user"})
     role: string;
-@Column({type: 'varchar', length: 255})
+@Column({type: 'varchar', length: 255, default: "name"})
     fullName: string
 }
