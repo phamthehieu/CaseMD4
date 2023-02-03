@@ -1,4 +1,4 @@
-
+showWallet()
 function showTransaction() {
     $("#body").html(`
      <!-- fixed-top-->
