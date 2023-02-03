@@ -12,7 +12,7 @@ class TransactionService {
             return this.transactionRepository.save(transaction);
         };
         this.findById = async (id) => {
-            return;
+            return this.transactionRepository.findOneBy({ idTransaction: id });
         };
         this.remove = async (id) => {
             let transaction = this.transactionRepository.findOneBy({ idTransaction: id });

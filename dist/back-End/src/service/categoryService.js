@@ -5,7 +5,8 @@ const category_1 = require("../model/category");
 class CategoryService {
     constructor() {
         this.getAll = async () => {
-            let sql = `select * from category`;
+            let sql = `select *
+                   from category`;
             return await this.categoryRepository.query(sql);
         };
         this.save = async (category) => {
