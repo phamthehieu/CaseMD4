@@ -14,6 +14,18 @@ class UserController {
                 editProfile
             });
         };
+        this.lockUser = async (req, res) => {
+            let id = req.params.id;
+            let lock = await this.UserService.lock(id);
+            res.status(200).json({
+                Message: 'Locked',
+                lock
+            });
+        };
+        this.showListUser = async (req, res) => {
+            let users = await this.UserService.getUser();
+            res.status(200).json({ users });
+        };
         this.UserService = userService_1.default;
     }
 }

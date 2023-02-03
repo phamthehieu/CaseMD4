@@ -15,5 +15,19 @@ class UserController {
             editProfile
         });
     }
+
+    lockUser = async (req: Request, res: Response) => {
+        let id = req.params.id;
+        let lock = await this.UserService.lock(id);
+        res.status(200).json({
+            Message: 'Locked',
+            lock
+        })
+    }
+
+    showListUser = async (req: Request, res: Response) => {
+        let users = await this.UserService.getUser();
+        res.status(200).json({users})
+    }
 }
 export default new UserController()

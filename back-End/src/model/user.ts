@@ -12,4 +12,6 @@ export class User {
     role: string;
 @Column({type: 'varchar', length: 255, default: "name"})
     fullName: string
+@Column({type: 'varchar', length: 255, default: "open"})
+    status: string;
 }

@@ -19,29 +19,33 @@ class AuthService {
         try {
             let userCheck = await this.userRepository.findOneBy({userName: user.userName})
             console.log(userCheck)
-            if (!userCheck) {
+            if (!userCheck ) {
                 return "User not found"
             } else {
-                let passwordCompare = await bcrypt.compare(user.password, userCheck.password)
-                console.log(passwordCompare)
-                if (!passwordCompare) {
-                    return 'Password does not match'
+                if (userCheck.status === 'locked') {
+                    return "User is already locked"
                 }else {
-                    let payload = {
-                        idUser: userCheck.idUser,
-                        userName: userCheck.userName,
-                        role: userCheck.role
+                    let passwordCompare = await bcrypt.compare(user.password, userCheck.password)
+                    console.log(passwordCompare)
+                    if (!passwordCompare) {
+                        return 'Password does not match'
+                    }else {
+                        let payload = {
+                            idUser: userCheck.idUser,
+                            userName: userCheck.userName,
+                            role: userCheck.role
+                        }
+                        const token = jwt.sign(payload, SECRET, {
+                            expiresIn: 36000
+                        })
+                        const check = {
+                            token: token,
+                            idUser: userCheck.idUser,
+                            userName: userCheck.username,
+                            role: userCheck.role
+                        }
+                        return check;
                     }
-                    const token = jwt.sign(payload, SECRET, {
-                        expiresIn: 36000
-                    })
-                    const check = {
-                        token: token,
-                        idUser: userCheck.idUser,
-                        userName: userCheck.username,
-                        role: userCheck.role
-                    }
-                    return check;
                 }
             }
         }catch (e) {
