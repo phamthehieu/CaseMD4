@@ -96,7 +96,7 @@ function login() {
             if (token === 'Password does not match') {
                 alert("Password does not match")
             } else {
-                localStorage.setItem('token',token.token)
+                localStorage.setItem('token',JSON.stringify(token))
                 showWallet()
             }
         }
@@ -128,8 +128,17 @@ function logOut() {
     showLogin()
 }
 function showFormProfile() {
-    $("#body").html(`
-    <nav class="header-navbar navbar-expand-md navbar navbar-with-menu navbar-without-dd-arrow fixed-top navbar-light navbar-bg-color">
+    let user = JSON.parse(localStorage.getItem('token'))
+    $.ajax({
+        type: 'GET',
+        url: `http://localhost:3000/user/profile/${user.idUser}`,
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        success : (user) => {
+            let html = ''
+                html += `
+                 <nav class="header-navbar navbar-expand-md navbar navbar-with-menu navbar-without-dd-arrow fixed-top navbar-light navbar-bg-color">
         <div class="navbar-wrapper">
             <div class="navbar-header d-md-none">
                 <ul class="nav navbar-nav flex-row">
@@ -152,7 +161,7 @@ function showFormProfile() {
             </div>
         </div>
     </nav>
-    <div class="main-menu menu-fixed menu-dark menu-bg-default rounded menu-accordion menu-shadow">
+                 <div class="main-menu menu-fixed menu-dark menu-bg-default rounded menu-accordion menu-shadow">
         <div class="main-menu-content"><a class="navigation-brand d-none d-md-block d-lg-block d-xl-block" href="index.html"><img class="brand-logo" alt="CryptoDash admin logo" src="../../../app-assets/images/logo/logo.png"/></a>
             <ul class="navigation navigation-main" id="main-menu-navigation" data-menu="menu-navigation">
                 <li class="active"><a href="wallet.html"><i class="icon-wallet"></i>Wallet</a>
@@ -162,7 +171,7 @@ function showFormProfile() {
             </ul>
         </div>
     </div>
-    <div class="app-content content">
+                 <div class="app-content content">
     <div class="content-wrapper">
         <div class="content-header row">
           <div class="content-header-left col-md-8 col-12 mb-2 breadcrumb-new">
@@ -283,9 +292,23 @@ function showFormProfile() {
         </div>
       </div>
     </div>
-    `)
+                `
+            $("#tbody").html(html)
+        }
+    })
 }
 function showEditProfile() {
+    $.ajax({
+        type: 'POST',
+        url: "http://localhost:3000/auth/login",
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        data: JSON.stringify(user),
+        success : (token) => {
+
+        }
+    })
     $("#body").html(`
     <nav class="header-navbar navbar-expand-md navbar navbar-with-menu navbar-without-dd-arrow fixed-top navbar-light navbar-bg-color">
         <div class="navbar-wrapper">
