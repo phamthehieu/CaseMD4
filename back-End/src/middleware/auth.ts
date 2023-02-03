@@ -2,9 +2,7 @@ import jwt from 'jsonwebtoken'
 export const SECRET = '123'
 
 export const auth = (req, res, next) => {
-    console.log(req.headers)
     let authorization = req.headers.authorization
-    console.log()
     if (authorization) {
         let accessToken = req.headers.authorization.split(' ')[1]
         if (accessToken) {

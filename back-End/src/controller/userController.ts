@@ -29,5 +29,11 @@ class UserController {
         let users = await this.UserService.getUser();
         res.status(200).json({users})
     }
+
+    showProfile = async (req: Request, res: Response) => {
+        let id = req.params.id;
+        let user = await this.UserService.getProfile(id)
+        res.status(200).json({user})
+    }
 }
 export default new UserController()

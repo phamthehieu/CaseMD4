@@ -7,9 +7,7 @@ exports.auth = exports.SECRET = void 0;
 const jsonwebtoken_1 = __importDefault(require("jsonwebtoken"));
 exports.SECRET = '123';
 const auth = (req, res, next) => {
-    console.log(req.headers);
     let authorization = req.headers.authorization;
-    console.log();
     if (authorization) {
         let accessToken = req.headers.authorization.split(' ')[1];
         if (accessToken) {

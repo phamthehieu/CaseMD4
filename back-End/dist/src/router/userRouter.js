@@ -11,4 +11,5 @@ exports.userRouter = (0, express_1.Router)();
 exports.userRouter.put('/edit/:id', userController_1.default.editUser);
 exports.userRouter.get('/lock/:id', userController_1.default.lockUser);
 exports.userRouter.get('/list-user', userController_2.default.showListUser);
+exports.userRouter.get('/profile/:id', userController_2.default.showProfile);
 //# sourceMappingURL=userRouter.js.map

@@ -28,6 +28,9 @@ class UserService {
         this.getUser = async () => {
             return this.userRepository.find();
         };
+        this.getProfile = async (id) => {
+            return this.userRepository.findOneBy({ idUser: id });
+        };
         this.userRepository = data_soure_1.AppDataSource.getRepository(user_1.User);
     }
 }

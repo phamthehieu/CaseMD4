@@ -32,6 +32,11 @@ class UserService {
     getUser = async () => {
         return this.userRepository.find()
     }
+
+    getProfile = async (id) => {
+        return this.userRepository.findOneBy({idUser: id})
+
+    }
 }
 
 export default new UserService()

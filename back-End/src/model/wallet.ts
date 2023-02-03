@@ -7,8 +7,8 @@ export class Wallet {
     nameWallet: string;
     @Column()
     user: string
-    @Column()
+    @Column({default :0})
     transaction: number
-    @Column()
+    @Column({default :0})
     money: number
 }
