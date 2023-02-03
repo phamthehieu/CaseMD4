@@ -22,12 +22,11 @@ class AuthService {
                 }
                 else {
                     let passwordCompare = await bcrypt_1.default.compare(user.password, userCheck.password);
-                    if (!passwordCompare) {
-                        return 'Password does not match';
+                    if (userCheck.status === 'locked') {
+                        return "User is already locked";
                     }
                     else {
                         let passwordCompare = await bcrypt_1.default.compare(user.password, userCheck.password);
-                        console.log(passwordCompare);
                         if (!passwordCompare) {
                             return 'Password does not match';
                         }

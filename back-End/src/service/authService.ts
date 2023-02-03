@@ -18,25 +18,14 @@ class AuthService {
     checkUser = async (user) => {
         try {
             let userCheck = await this.userRepository.findOneBy({userName: user.userName})
-<<<<<<< HEAD
             if (!userCheck) {
                 return "User not found"
             } else {
                 let passwordCompare = await bcrypt.compare(user.password, userCheck.password)
-
-                if (!passwordCompare) {
-                    return 'Password does not match'
-=======
-            console.log(userCheck)
-            if (!userCheck ) {
-                return "User not found"
-            } else {
                 if (userCheck.status === 'locked') {
                     return "User is already locked"
->>>>>>> e8852e6885df7d881a19317013069271e3e099e3
                 }else {
                     let passwordCompare = await bcrypt.compare(user.password, userCheck.password)
-                    console.log(passwordCompare)
                     if (!passwordCompare) {
                         return 'Password does not match'
                     }else {
