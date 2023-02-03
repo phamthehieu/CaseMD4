@@ -26,21 +26,28 @@ class AuthService {
                         return 'Password does not match';
                     }
                     else {
-                        let payload = {
-                            idUser: userCheck.idUser,
-                            userName: userCheck.userName,
-                            role: userCheck.role
-                        };
-                        const token = jsonwebtoken_1.default.sign(payload, auth_1.SECRET, {
-                            expiresIn: 36000
-                        });
-                        const check = {
-                            token: token,
-                            idUser: userCheck.idUser,
-                            userName: userCheck.username,
-                            role: userCheck.role
-                        };
-                        return check;
+                        let passwordCompare = await bcrypt_1.default.compare(user.password, userCheck.password);
+                        console.log(passwordCompare);
+                        if (!passwordCompare) {
+                            return 'Password does not match';
+                        }
+                        else {
+                            let payload = {
+                                idUser: userCheck.idUser,
+                                userName: userCheck.userName,
+                                role: userCheck.role
+                            };
+                            const token = jsonwebtoken_1.default.sign(payload, auth_1.SECRET, {
+                                expiresIn: 36000
+                            });
+                            const check = {
+                                token: token,
+                                idUser: userCheck.idUser,
+                                userName: userCheck.username,
+                                role: userCheck.role
+                            };
+                            return check;
+                        }
                     }
                 }
             }

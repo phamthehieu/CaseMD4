@@ -15,6 +15,23 @@ class UserService {
         }
         return this.userRepository.update({idUser: id}, newProfile);
     }
+
+    lock = async (id) => {
+        let user = await this.userRepository.findOneBy({idUser: id});
+        if (!user) {
+            return null;
+        }else {
+            if (user.status === 'open') {
+                return this.userRepository.update({idUser: id}, {status: 'locked'})
+            }else {
+                return this.userRepository.update({idUser: id}, {status : 'open'})
+            }
+        }
+    }
+
+    getUser = async () => {
+        return this.userRepository.find()
+    }
 }
 
 export default new UserService()

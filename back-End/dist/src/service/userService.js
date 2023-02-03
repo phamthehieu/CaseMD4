@@ -11,6 +11,23 @@ class UserService {
             }
             return this.userRepository.update({ idUser: id }, newProfile);
         };
+        this.lock = async (id) => {
+            let user = await this.userRepository.findOneBy({ idUser: id });
+            if (!user) {
+                return null;
+            }
+            else {
+                if (user.status === 'open') {
+                    return this.userRepository.update({ idUser: id }, { status: 'locked' });
+                }
+                else {
+                    return this.userRepository.update({ idUser: id }, { status: 'open' });
+                }
+            }
+        };
+        this.getUser = async () => {
+            return this.userRepository.find();
+        };
         this.userRepository = data_soure_1.AppDataSource.getRepository(user_1.User);
     }
 }
