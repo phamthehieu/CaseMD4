@@ -24,6 +24,10 @@ class WalletController {
             let newWallet = await this.WalletService.updateWallet(id, req.body);
             res.status(200).json(newWallet);
         };
+        this.delete = async (req, res) => {
+            let id = req.params.id;
+            res.status(200).json(await this.WalletService.delete(id));
+        };
         this.WalletService = walletService_1.default;
     }
 }

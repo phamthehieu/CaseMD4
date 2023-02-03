@@ -17,6 +17,13 @@ class WalletService {
             }
             return this.walletRepository.update({ idWallet: id }, newWallet);
         };
+        this.delete = async (id) => {
+            let wallet = await this.walletRepository.findOneBy({ idWallet: id });
+            if (!wallet) {
+                return null;
+            }
+            return this.walletRepository.delete({ idWallet: id });
+        };
         this.walletRepository = data_soure_1.AppDataSource.getRepository(wallet_1.Wallet);
     }
 }

@@ -10,4 +10,5 @@ exports.walletRouter = (0, express_1.Router)();
 exports.walletRouter.get('/', walletController_1.default.showWallet);
 exports.walletRouter.post('/create', walletController_1.default.create);
 exports.walletRouter.put('/edit/:id', walletController_1.default.edit);
+exports.walletRouter.delete('/delete/:id', walletController_1.default.delete);
 //# sourceMappingURL=walletRouter.js.map
