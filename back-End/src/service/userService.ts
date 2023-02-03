@@ -15,6 +15,10 @@ class UserService {
         }
         return this.userRepository.update({idUser: id}, newProfile);
     }
+
+    lock = async (id, newStatus) => {
+
+    }
 }
 
 export default new UserService()

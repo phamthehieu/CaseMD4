@@ -11,6 +11,8 @@ class UserService {
             }
             return this.userRepository.update({ idUser: id }, newProfile);
         };
+        this.lock = async (id, newStatus) => {
+        };
         this.userRepository = data_soure_1.AppDataSource.getRepository(user_1.User);
     }
 }
