@@ -31,6 +31,16 @@ class UserController {
             let user = await this.UserService.getProfile(id);
             res.status(200).json({ user });
         };
+        this.changePassword = async (req, res) => {
+            let username = req['decoded'].userName;
+            let user = {
+                userName: username,
+                password: req.body.password,
+                newPassword: req.body.newPassword
+            };
+            let response = await this.UserService.changePassword(user);
+            res.status(200).json(response);
+        };
         this.UserService = userService_1.default;
     }
 }
