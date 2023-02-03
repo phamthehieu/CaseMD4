@@ -1,4 +1,4 @@
-showWallet()
+showLogin()
 function showTransaction() {
     $("#body").html(`
      <!-- fixed-top-->
@@ -306,18 +306,10 @@ function showTransaction() {
             </div>
         </div>
     </div>
-    <!-- ////////////////////////////////////////////////////////////////////////////-->
-    <footer class="footer footer-static footer-transparent">
-        <p class="clearfix blue-grey lighten-2 text-sm-center mb-0 px-2"><span class="float-md-left d-block d-md-inline-block">Copyright  &copy; <script>
-          document.write(new Date().getFullYear())
-          </script> <a class="text-bold-800 grey darken-2" href="https://themeselection.com/" target="_blank">ThemeSelection </a>, All rights reserved. </span><span class="float-md-right d-block d-md-inline-blockd-none d-lg-block">Hand-crafted & Made with <i class="ft-heart pink"></i></span></p>
-    </footer>
     `)
 }
 function showWallet() {
     $("#body").html(`
-      <body class="vertical-layout vertical-compact-menu content-detached-right-sidebar   menu-expanded fixed-navbar" data-open="click" data-menu="vertical-compact-menu" data-col="content-detached-right-sidebar">
-
     <!-- fixed-top-->
     <nav class="header-navbar navbar-expand-md navbar navbar-with-menu navbar-without-dd-arrow fixed-top navbar-light navbar-bg-color">
       <div class="navbar-wrapper">
@@ -415,9 +407,6 @@ function showWallet() {
           <li class="active"><a href="wallet.html"><i class="icon-wallet"></i><span class="menu-title" data-i18n="">Wallet</span></a>
           </li>
           <li class=" nav-item"><a href="transactions.html"><i class="icon-shuffle"></i><span class="menu-title" data-i18n="">Transactions</span></a>
-          </li>
-          <li class=" nav-item"><a href="faq.html"><i class="icon-support"></i><span class="menu-title" data-i18n="">FAQ</span></a>
-          </li>
           <li class=" nav-item"><a href="#"><i class="icon-user-following"></i><span class="menu-title" data-i18n="">Account</span></a>
             <ul class="menu-content">
               <li><a class="menu-item" href="account-profile.html">Profile</a>
@@ -653,26 +642,129 @@ function showWallet() {
         </div>
       </div>
     </div>
-    <!-- ////////////////////////////////////////////////////////////////////////////-->
-
-
-    <footer class="footer footer-static footer-transparent">
-      <p class="clearfix blue-grey lighten-2 text-sm-center mb-0 px-2"><span class="float-md-left d-block d-md-inline-block">Copyright  &copy; <script>
-          document.write(new Date().getFullYear())
-          </script> <a class="text-bold-800 grey darken-2" href="https://themeselection.com/" target="_blank">ThemeSelection </a>, All rights reserved. </span><span class="float-md-right d-block d-md-inline-blockd-none d-lg-block">Hand-crafted & Made with <i class="ft-heart pink"></i></span></p>
-    </footer>
-
-    <!-- BEGIN VENDOR JS-->
-    <script src="../../../app-assets/vendors/js/vendors.min.js" type="text/javascript"></script>
-    <!-- BEGIN VENDOR JS-->
-    <!-- BEGIN PAGE VENDOR JS-->
-    <!-- END PAGE VENDOR JS-->
-    <!-- BEGIN MODERN JS-->
-    <script src="../../../app-assets/js/core/app-menu.js" type="text/javascript"></script>
-    <script src="../../../app-assets/js/core/app.js" type="text/javascript"></script>
-    <!-- END MODERN JS-->
-    <!-- BEGIN PAGE LEVEL JS-->
-    <!-- END PAGE LEVEL JS-->
-  </body>
     `)
+}
+function showLogin() {
+    $("#body").html(`
+    <!-- ////////////////////////////////////////////////////////////////////////////-->
+    <div class="app-content content">
+      <div class="content-wrapper">
+        <div class="content-header row">
+        </div>
+        <div class="content-body"><section id="account-login" class="flexbox-container">    
+    <div class="col-12 d-flex align-items-center justify-content-center">
+        <!-- image -->
+        <div class="col-xl-3 col-lg-4 col-md-5 col-sm-5 col-12 p-0 text-center d-none d-md-block">
+            <div class="border-grey border-lighten-3 m-0 box-shadow-0 card-account-left height-400">
+                <img src="../../../app-assets/images/pages/account-login.png" class="card-account-img width-200" alt="card-account-img">
+            </div>
+        </div>
+        <!-- login form -->
+        <div class="col-xl-3 col-lg-4 col-md-5 col-sm-5 col-12 p-0">
+            <div class="card border-grey border-lighten-3 m-0 box-shadow-0 card-account-right height-400">                
+                <div class="card-content">                    
+                    <div class="card-body p-3">
+                        <p class="text-center h5 text-capitalize">Welcome to HKT!</p>                                                            
+                                <label for="user-name">Username</label>    
+                                <input type="text" class="form-control" id="userName" placeholder="Your Username">
+                                <label for="user-password">Password</label>
+                                <input type="password" class="form-control" id="password" placeholder="Enter Password">                         
+                            <button class="btn-gradient-primary btn-block my-1" onclick="login()">Log In</button>
+                             <button class="btn-gradient-primary btn-block my-1" onclick="showRegister()">Register</button>
+                    </div>                      
+                </div>
+            </div>
+        </div>        
+    </div>    
+</section>
+
+        </div>
+      </div>
+    </div>
+    `)
+}
+function showRegister() {
+    $('#body').html(`
+        <div class="app-content content">
+      <div class="content-wrapper">
+        <div class="content-header row">
+        </div>
+        <div class="content-body"><section id="account-register" class="flexbox-container">    
+    <div class="col-12 d-flex align-items-center justify-content-center">
+        <!-- image -->
+        <div class="col-xl-3 col-lg-4 col-md-5 col-sm-5 col-12 p-0 text-center d-none d-md-block">
+            <div class="border-grey border-lighten-3 m-0 box-shadow-0 card-account-left height-400">
+                <img src="../../../app-assets/images/pages/account-login.png" class="card-account-img width-200" alt="card-account-img">
+            </div>
+        </div>
+        <!-- login form -->
+        <div class="col-xl-3 col-lg-4 col-md-5 col-sm-5 col-12 p-0">
+            <div class="card border-grey border-lighten-3 m-0 box-shadow-0 card-account-right height-400">                
+                <div class="card-content">                    
+                    <div class="card-body p-3">  
+                     <p class="text-center h5 text-capitalize">Register to HKT!</p>
+                                <label>Username</label>       
+                                <input type="text" class="form-control" id="userName" placeholder="Your Username">                       
+                                <label>Password</label>
+                                <input type="password" class="form-control" id="password" placeholder="Your password"> 
+                                <label>Full Name</label>           
+                                <input type="text" class="form-control" id="fullName" placeholder="Full Name">                                  
+                            <button onclick="register()" class="btn-gradient-primary btn-block my-1" >Sign Up</button>
+                             <button type="submit" class="btn-gradient-primary btn-block my-1" onclick="showLogin()">Log In</button>
+                        
+                    </div>                    
+                </div>
+            </div>
+        </div>        
+    </div>    
+</section>
+        </div>
+      </div>
+    </div>
+    `)
+}
+function login() {
+    let userName = $("#userName").val()
+    let password = $("#password").val()
+    let user = {
+        userName: userName,
+        password: password
+    }
+    $.ajax({
+        type: 'POST',
+        url: "http://localhost:3000/auth/login",
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        data: JSON.stringify(user),
+        success : (token) => {
+            if (token === 'Password does not match') {
+                alert("Password does not match")
+            } else {
+                localStorage.setItem('token',token.token)
+                showWallet()
+            }
+        }
+    })
+}
+function register() {
+    let userName = $("#userName").val()
+    let password = $("#password").val()
+    let fullName = $("#fullName").val()
+    let user = {
+        userName: userName,
+        password: password,
+        fullName: fullName
+    }
+    $.ajax({
+        type: 'POST',
+        url: "http://localhost:3000/auth/register",
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        data: JSON.stringify(user),
+        success : () => {
+                showLogin()
+        }
+    })
 }
