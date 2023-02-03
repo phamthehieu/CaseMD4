@@ -35,5 +35,17 @@ class UserController {
         let user = await this.UserService.getProfile(id)
         res.status(200).json({user})
     }
+
+    changePassword = async (req: Request, res: Response) => {
+        let username = req['decoded'].userName;
+        let user = {
+            userName: username,
+            password: req.body.password,
+            newPassword: req.body.newPassword
+        }
+        let response = await this.UserService.changePassword(user)
+        res.status(200).json(response)
+
+    }
 }
 export default new UserController()
