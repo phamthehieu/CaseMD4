@@ -18,11 +18,7 @@ class WalletController {
         };
         this.create = async (req, res) => {
             try {
-                let wallet = {
-                    nameWallet: req.body.nameWallet,
-                    user: req.decoded.idUser,
-                };
-                let save = await this.WalletService.createWallet(wallet);
+                let save = await this.WalletService.createWallet(req.body);
                 res.status(201).json(save);
             }
             catch (e) {
@@ -31,8 +27,9 @@ class WalletController {
         };
         this.edit = async (req, res) => {
             try {
+                let wallet = req.body;
                 let id = req.params.id;
-                let newWallet = await this.WalletService.updateWallet(id, req.body);
+                let newWallet = await this.WalletService.updateWallet(id, wallet);
                 res.status(200).json(newWallet);
             }
             catch (e) {
