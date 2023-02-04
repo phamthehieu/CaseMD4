@@ -22,8 +22,8 @@ __decorate([
     __metadata("design:type", String)
 ], Wallet.prototype, "nameWallet", void 0);
 __decorate([
-    (0, typeorm_1.Column)(),
-    __metadata("design:type", String)
+    (0, typeorm_1.Column)({ type: "int" }),
+    __metadata("design:type", Number)
 ], Wallet.prototype, "user", void 0);
 __decorate([
     (0, typeorm_1.Column)({ default: 0 }),

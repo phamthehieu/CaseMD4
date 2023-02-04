@@ -165,9 +165,9 @@ function showFormProfile() {
                  <div class="main-menu menu-fixed menu-dark menu-bg-default rounded menu-accordion menu-shadow">
         <div class="main-menu-content"><a class="navigation-brand d-none d-md-block d-lg-block d-xl-block" href="index.html"><img class="brand-logo" alt="CryptoDash admin logo" src="../../../app-assets/images/logo/logo.png"/></a>
             <ul class="navigation navigation-main" id="main-menu-navigation" data-menu="menu-navigation">
-                <li class="active"><a href="wallet.html"><i class="icon-wallet"></i>Wallet</a>
+                <li class="active"><a onclick="showWallet()"><i class="icon-wallet"></i>Wallet</a>
                 </li>
-                <li class=" nav-item"><a href="transactions.html"><i class="ft-user"></i> Profile</span></a>
+                <li class=" nav-item"><a onclick="showFormProfile()"><i class="ft-user"></i> Profile</span></a>
                 <li class=" nav-item"> <a onclick="logOut()"><i class="ft-power"></i> Log Out</a></li>
             </ul>
         </div>
@@ -351,30 +351,15 @@ function showFormEdit() {
                  <div class="main-menu menu-fixed menu-dark menu-bg-default rounded menu-accordion menu-shadow">
         <div class="main-menu-content"><a class="navigation-brand d-none d-md-block d-lg-block d-xl-block" href="index.html"><img class="brand-logo" alt="CryptoDash admin logo" src="../../../app-assets/images/logo/logo.png"/></a>
             <ul class="navigation navigation-main" id="main-menu-navigation" data-menu="menu-navigation">
-                <li class="active"><a href="wallet.html"><i class="icon-wallet"></i>Wallet</a>
+                <li class="active"><a onclick="showWallet()"><i class="icon-wallet"></i>Wallet</a>
                 </li>
-                <li class=" nav-item"><a href="transactions.html"><i class="ft-user"></i> Profile</span></a>
+                <li class=" nav-item"><a onclick="showFormProfile()"><i class="ft-user"></i> Profile</span></a>
                 <li class=" nav-item"> <a onclick="logOut()"><i class="ft-power"></i> Log Out</a></li>
             </ul>
         </div>
     </div>
                  <div class="app-content content">
     <div class="content-wrapper">
-        <div class="content-header row">
-          <div class="content-header-left col-md-8 col-12 mb-2 breadcrumb-new">
-            <h3 class="content-header-title mb-0 d-inline-block">Account Profile</h3>
-            <div class="row breadcrumbs-top d-inline-block">
-              <div class="breadcrumb-wrapper col-12">
-                <ol class="breadcrumb">
-                  <li class="breadcrumb-item"><a href="index.html">Dashboard</a>
-                  </li>
-                  <li class="breadcrumb-item active">Account Profile
-                  </li>
-                </ol>
-              </div>
-            </div>
-          </div>      
-        </div>
         <div class="content-body"><div class="row">
     <div class="col-12 col-md-8">
         <!-- User Profile -->

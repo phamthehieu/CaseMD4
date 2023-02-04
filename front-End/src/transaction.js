@@ -339,7 +339,7 @@ function showWallet() {
     <div class="main-menu menu-fixed menu-dark menu-bg-default rounded menu-accordion menu-shadow">
       <div class="main-menu-content"><a class="navigation-brand d-none d-md-block d-lg-block d-xl-block" href="index.html"><img class="brand-logo" alt="CryptoDash admin logo" src="../../../app-assets/images/logo/logo.png"/></a>
         <ul class="navigation navigation-main" id="main-menu-navigation" data-menu="menu-navigation">     
-          <li class="active"><a href="wallet.html"><i class="icon-wallet"></i>Wallet</a>
+          <li class="active"><a onclick="showWallet()"><i class="icon-wallet"></i>Wallet</a>
           </li>
           <li class=" nav-item"><a onclick="showFormProfile()"><i class="ft-user"></i> Profile</span></a>
           <li class=" nav-item"> <a onclick="logOut()"><i class="ft-power"></i> Log Out</a></li>  
@@ -383,16 +383,27 @@ function showWallet() {
         </div>
       </div>
     </div>
-    
     `)
+        showListWallet()
     } else {
         showLogin()
     }
-    showListWallet()
+
 }
 function showListWallet() {
-    $("#1").html(`
-    <section class="card pull-up" onclick="">
+    let users = JSON.parse(localStorage.getItem('token'))
+    $.ajax({
+        type: 'GET',
+        url: `http://localhost:3000/wallet/${users.idUser}`,
+        headers: {
+            'Content-Type': 'application/json',
+            Authorization: 'Bearer ' + users.token
+        },
+        success : (wallet) => {
+            let html = ''
+            wallet.map(item => {
+                html += `
+       <section class="card">
         <div class="card-content">
             <div class="card-body">
                 <div class="col-12">
@@ -400,7 +411,7 @@ function showListWallet() {
                         <div class="col-md-4 col-12 py-1">
                             <div class="media">
                                 <div class="media-body">
-                                    <h5 class="mt-0 text-capitalize">Bitcoin</h5>
+                                  <h5 class="mt-0 text-capitalize">${item.nameWallet}</h5>
                                 </div>
                             </div>
                         </div>
@@ -410,14 +421,80 @@ function showListWallet() {
                         <div class="col-md-2 col-12 py-1 text-center">
                            <h6>0.019842 BTC</h6>  
                         </div>
-                        <div class="col-md-4 col-12 text-center" style="margin-top: 15px">
-                         <a href="#" class="col-md-6 col-12 text-left">Xóa</a> 
-                         <a href="#" class="col-md-6 col-12 text-right">Edit</a>   
+                        <tr>
+                        <td>
+                        <div class="col-md-4 col-12 text-center" style="margin-top: 5px">
+                         <button class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#deleteModal${item.idWallet}">Delete</button>
+                        <div class="modal fade" id="deleteModal${item.idWallet}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                        <div class="modal-dialog">
+                            <div class="modal-content">
+                            <div class="modal-header">
+                                <h1 class="modal-title fs-5" id="exampleModalLabel">Delete${item.nameWallet}</h1>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                            </div>
+                            <div class="modal-body">
+                                Are you sure you want to delete???
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">No</button>
+                                <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Yes</button>
+                            </div>
+                            </div>
+                        </div>
+                        </div>
+                        </td>
+                        <td>
+                        <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#editModal${item.idWallet}">Edit</button>
+                            <div class="modal fade" id="editModal${item.idWallet}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                <div class="modal-dialog modal-lg">
+                                    <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h1 class="modal-title fs-5" id="exampleModalLabel">Edit ${item.nameWallet}</h1>
+                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                    </div>
+                                    <div class="modal-body">
+                                        <div class="input-group flex-nowrap">
+                                            <span class="input-group-text" id="addon-wrapping">Name</span>
+                                            <input type="text" class="form-control" id="name" value="" aria-label="Username" aria-describedby="addon-wrapping">
+                                        </div>
+                                        <br>
+                                        <div class="input-group flex-nowrap">
+                                            <span class="input-group-text" id="addon-wrapping">Price</span>
+                                            <input type="text" class="form-control" id="price" value="}" aria-label="Username" aria-describedby="addon-wrapping">
+                                        </div>
+                                        <br>
+                                        <div class="input-group flex-nowrap">
+                                            <span class="input-group-text" id="addon-wrapping">Category</span>
+                                            <select id="category" class="form-select" aria-label="Default select example" aria-describedby="addon-wrapping">
+                                                <option value=""></option>
+                                                
+                                            </select>
+                                        </div>
+                                        <br> 
+                                        <br>
+                                        <div class="input-group flex-nowrap">
+                                            <span class="input-group-text" id="addon-wrapping">@</span>
+                                            <div class="container-fluid" id="imgDiv" aria-describedby="addon-wrapping"><img src="${item.image}" alt="${item.image}" style="width: 500px;"></div>
+                                        </div>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                        <button type="button" class="btn btn-danger" data-bs-dismiss="modal" onclick="editProduct(${item.id})">Save changes</button>
+                                    </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </td>
+                        </tr>  
                         </div>
                     </div>
                 </div>
             </div>
         </div>
     </section>
-    `)
+       `
+            })
+            $("#1").html(html)
+        }
+    })
 }

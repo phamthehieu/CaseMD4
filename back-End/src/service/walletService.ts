@@ -9,8 +9,10 @@ class WalletService {
         this.walletRepository = AppDataSource.getRepository(Wallet);
     }
 
-    getAllWallet = async () => {
-        return this.walletRepository.find()
+    getAllWallet = async (id) => {
+        let sql = `SELECT * from wallet where user = ${id}`
+        let wallet = this.walletRepository.query(sql)
+           return wallet;
     }
 
     createWallet = async (wallet) => {

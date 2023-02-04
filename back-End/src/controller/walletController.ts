@@ -1,4 +1,5 @@
 import WalletService from "../service/walletService";
+import categoryService from "../service/categoryService";
 
 class WalletController {
     private WalletService
@@ -8,29 +9,48 @@ class WalletController {
     }
 
     showWallet = async (req, res) => {
-        let wallet = await this.WalletService.getAllWallet()
-        res.status(200).json(wallet)
+        try {
+            let id = req.params.id
+            let wallet = await this.WalletService.getAllWallet(id)
+            res.status(200).json(wallet)
+        } catch (e) {
+            res.status(500).json(e.message);
+        }
+
     }
 
     create = async (req, res) => {
-        let wallet = {
-            nameWallet : req.body.nameWallet,
-            user: req.decoded.idUser,
+        try {
+            let wallet = {
+                nameWallet : req.body.nameWallet,
+                user: req.decoded.idUser,
+            }
+            let save = await this.WalletService.createWallet(wallet)
+            res.status(201).json(save)
+        } catch (e) {
+            res.status(500).json(e.message);
         }
-        console.log(wallet)
-        let save = await this.WalletService.createWallet(wallet)
-        res.status(201).json(save)
+
     }
 
     edit = async (req, res) => {
-        let id = req.params.id
-        let newWallet = await this.WalletService.updateWallet(id, req.body)
-        res.status(200).json(newWallet)
+        try {
+            let id = req.params.id
+            let newWallet = await this.WalletService.updateWallet(id, req.body)
+            res.status(200).json(newWallet)
+        } catch (e) {
+            res.status(500).json(e.message);
+        }
     }
 
     delete = async (req, res) => {
-        let id = req.params.id
-        res.status(200).json(await this.WalletService.delete(id))
+        try {
+            let id = req.params.id
+            res.status(200).json(await this.WalletService.delete(id))
+        } catch (e) {
+            res.status(500).json(e.message);
+        }
+
     }
 }
 export default new WalletController();
