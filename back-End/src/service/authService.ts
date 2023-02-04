@@ -21,7 +21,6 @@ class AuthService {
             if (!userCheck) {
                 return "User not found"
             } else {
-                let passwordCompare = await bcrypt.compare(user.password, userCheck.password)
                 if (userCheck.status === 'locked') {
                     return "User is already locked"
                 }else {
@@ -53,20 +52,7 @@ class AuthService {
 
     }
 
-    changePassword = async (user) => {
-        let userfind = await this.userRepository.findOneBy({userName: user.userName})
-        if (!userfind) {
-            return "User not found"
-        } else {
-            let passwordCompare = await bcrypt.compare(user.password, userfind.password)
-            if (!passwordCompare) {
-                return 'Password does not match'
-            } else {
-                let passwordHash = await bcrypt.hash(user.passwordChange, 10)
-                return await this.userRepository.update({idUser: userfind.idUser}, passwordHash)
-            }
-        }
-    }
+
 }
 
 export default new AuthService()

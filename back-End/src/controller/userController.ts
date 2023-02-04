@@ -37,13 +37,14 @@ class UserController {
     }
 
     changePassword = async (req: Request, res: Response) => {
-        let username = req['decoded'].userName;
-        let user = {
-            userName: username,
-            password: req.body.password,
-            newPassword: req.body.newPassword
-        }
-        let response = await this.UserService.changePassword(user)
+        // let username = req['decoded'].userName;
+        let id  = req.params.id;
+        // let user = {
+        //     userName: username,
+        //     password: req.body.password,
+        //     newPassword: req.body.newPassword
+        // }
+        let response = await this.UserService.changePassword(id)
         res.status(200).json(response)
 
     }
