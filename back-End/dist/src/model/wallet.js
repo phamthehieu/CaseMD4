@@ -28,10 +28,6 @@ __decorate([
 __decorate([
     (0, typeorm_1.Column)({ default: 0 }),
     __metadata("design:type", Number)
-], Wallet.prototype, "transaction", void 0);
-__decorate([
-    (0, typeorm_1.Column)({ default: 0 }),
-    __metadata("design:type", Number)
 ], Wallet.prototype, "money", void 0);
 Wallet = __decorate([
     (0, typeorm_1.Entity)()

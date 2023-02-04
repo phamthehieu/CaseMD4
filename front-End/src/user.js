@@ -1,4 +1,4 @@
-
+showLogin()
 function showLogin() {
     $("#body").html(`
     <!-- ////////////////////////////////////////////////////////////////////////////-->
@@ -20,10 +20,10 @@ function showLogin() {
                 <div class="card-content">                    
                     <div class="card-body p-3">
                         <p class="text-center h5 text-capitalize">Welcome to HKT!</p>                                                            
-                                <label for="user-name">Username</label>    
-                                <input type="text" class="form-control" id="userName" placeholder="Your Username">
-                                <label for="user-password">Password</label>
-                                <input type="password" class="form-control" id="password" placeholder="Enter Password">                         
+                                <label for="user-name" id="login1">Username</label>    
+                                <input type="text" class="form-control" id="userName" placeholder="Your Username" value="">
+                                <label for="user-password" id="login2">Password</label>
+                                <input type="password" class="form-control" id="password" placeholder="Enter Password" value="">                         
                             <button class="btn-gradient-primary btn-block my-1" onclick="login()">Log In</button>
                              <button class="btn-gradient-primary btn-block my-1" onclick="showRegister()">Register</button>
                     </div>                      
@@ -81,6 +81,12 @@ function showRegister() {
 function login() {
     let userName = $("#userName").val()
     let password = $("#password").val()
+    if (userName === "") {
+      return $("#login1").html(`Vui Lòng Nhập Tên Đăng Nhập`)
+    }
+    if (password === "") {
+       return $("#login2").html(`Vui Lòng Nhập Password`)
+    }
     let user = {
         userName: userName,
         password: password
@@ -93,8 +99,10 @@ function login() {
         },
         data: JSON.stringify(user),
         success : (token) => {
-            if (token === 'Password does not match') {
-                alert("Password does not match")
+            if (token === "User not found") {
+                return $("#login1").html(`Vui Lòng Nhập Đúng Tên Đăng Nhập`)
+            } else if (token === 'Password does not match') {
+                return $("#login2").html(`Vui Lòng Nhập Đúng Password`)
             } else {
                 localStorage.setItem('token',JSON.stringify(token))
                 showWallet()

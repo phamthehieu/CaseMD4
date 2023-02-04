@@ -7,43 +7,22 @@ const walletService_1 = __importDefault(require("../service/walletService"));
 class WalletController {
     constructor() {
         this.showWallet = async (req, res) => {
-            try {
-                let id = req.params.id;
-                let wallet = await this.WalletService.getAllWallet(id);
-                res.status(200).json(wallet);
-            }
-            catch (e) {
-                res.status(500).json(e.message);
-            }
+            let id = req.params.id;
+            let wallet = await this.WalletService.getAllWallet(id);
+            res.status(200).json(wallet);
         };
         this.create = async (req, res) => {
-            try {
-                let save = await this.WalletService.createWallet(req.body);
-                res.status(201).json(save);
-            }
-            catch (e) {
-                res.status(500).json(e.message);
-            }
+            let save = await this.WalletService.createWallet(req.body);
+            res.status(201).json(save);
         };
         this.edit = async (req, res) => {
-            try {
-                let wallet = req.body;
-                let id = req.params.id;
-                let newWallet = await this.WalletService.updateWallet(id, wallet);
-                res.status(200).json(newWallet);
-            }
-            catch (e) {
-                res.status(500).json(e.message);
-            }
+            let id = req.params.id;
+            let newWallet = await this.WalletService.updateWallet(id, req.body);
+            res.status(200).json(newWallet);
         };
         this.delete = async (req, res) => {
-            try {
-                let id = req.params.id;
-                res.status(200).json(await this.WalletService.delete(id));
-            }
-            catch (e) {
-                res.status(500).json(e.message);
-            }
+            let id = req.params.id;
+            res.status(200).json(await this.WalletService.delete(id));
         };
         this.WalletService = walletService_1.default;
     }

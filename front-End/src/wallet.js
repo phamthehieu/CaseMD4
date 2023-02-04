@@ -1,4 +1,4 @@
-showWallet()
+
 function showWallet() {
     let user = localStorage.getItem('token')
     let users = JSON.parse(localStorage.getItem('token'))
@@ -46,8 +46,35 @@ function showWallet() {
             <h3 class="content-header-title mb-0 d-inline-block">Wallet</h3>
           </div>
           <div class="content-header-right col-md-11 col-12">
-            <div class="btn-group float-md-left">
-              <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#createModal${users.idUser}">ADD WALLET</button>            
+            <div class="btn-group float-md-left">           
+              <div class="btn-group float-md-left">
+              <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#createModal">ADD WALLET</button>
+                            <div class="modal fade" id="createModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                <div class="modal-dialog modal-lg">
+                                    <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h1 class="modal-title fs-5" id="exampleModalLabel">ADD WALLET</h1>
+                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                    </div>
+                                    <div class="modal-body">
+                                        <div class="input-group flex-nowrap">
+                                            <span class="input-group-text" id="addon-wrapping">Name</span>
+                                            <input type="text" class="form-control" id="nameWallet"  aria-describedby="addon-wrapping">
+                                        </div>
+                                        <br>
+                                        <div class="input-group flex-nowrap">
+                                            <span class="input-group-text" id="addon-wrapping">MONEY VND</span>
+                                            <input type="text" class="form-control" id="money"  aria-describedby="addon-wrapping">
+                                        </div>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                        <button type="button" class="btn btn-danger" data-bs-dismiss="modal" onclick="createWallet()">Save</button>
+                                    </div>
+                                    </div>
+                                </div>
+                            </div>
+              </div>     
             </div>
           </div>
         <div class="content-detached content-left">
@@ -82,9 +109,6 @@ function showWallet() {
         showLogin()
     }
 }
-function showFormCreateWallet() {
-    
-}
 function showListWallet() {
     let users = JSON.parse(localStorage.getItem('token'))
     $.ajax({
@@ -105,7 +129,7 @@ function showListWallet() {
                     <div class="row">
                         <div class="col-md-4 col-12 py-1">
                             <div class="media">
-                                <div class="media-body">
+                                <div class="media-body" onclick="showTransaction(${item.idWallet})">
                                   <h5 class="mt-0 text-capitalize">${item.nameWallet}</h5>
                                 </div>
                             </div>
@@ -139,7 +163,7 @@ function showListWallet() {
                         </div>
                         </td>
                         <td>
-                        <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#editModal${item.idWallet}">Edit</button>
+                         <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#editModal${item.idWallet}">Edit</button>
                             <div class="modal fade" id="editModal${item.idWallet}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
                                 <div class="modal-dialog modal-lg">
                                     <div class="modal-content">
@@ -149,18 +173,18 @@ function showListWallet() {
                                     </div>
                                     <div class="modal-body">
                                         <div class="input-group flex-nowrap">
-                                            <span class="input-group-text" >Name Wallet</span>
-                                            <input type="text" class="form-control" id="nameWallet" value="${item.nameWallet}" >
+                                            <span class="input-group-text" id="addon-wrapping">Name</span>
+                                            <input type="text" class="form-control" id="nameWallet${item.idWallet}" value="${item.nameWallet}" aria-label="Username" aria-describedby="addon-wrapping">
                                         </div>
                                         <br>
                                         <div class="input-group flex-nowrap">
-                                            <span class="input-group-text" >money</span>
-                                            <input type="text" class="form-control" id="money" value="${item.money}" >
+                                            <span class="input-group-text" id="addon-wrapping">Price VND</span>
+                                            <input type="text" class="form-control" id="money${item.idWallet}" value="${item.money}" aria-label="Username" aria-describedby="addon-wrapping">
                                         </div>
                                     </div>
                                     <div class="modal-footer">
                                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                                        <button type="button" class="btn btn-danger" data-bs-dismiss="modal" onclick="editWallet(${item.idWallet})">Save Wallet</button>
+                                        <button type="button" class="btn btn-danger" data-bs-dismiss="modal" onclick="editWallet(${item.idWallet})">Save</button>
                                     </div>
                                     </div>
                                 </div>
@@ -181,14 +205,15 @@ function showListWallet() {
 }
 function editWallet(id) {
     let users = JSON.parse(localStorage.getItem('token'))
-    let nameWallet = $("#nameWallet").val()
-    let money = $("#money").val()
+    let nameWallet = $(`#nameWallet${id}`).val()
+    let money = $(`#money${id}`).val()
     let user = users.idUser
     let wallet = {
         nameWallet: nameWallet,
         money: money,
         user: user
     }
+    console.log(id)
     console.log(wallet)
     $.ajax({
         type: 'PUT',

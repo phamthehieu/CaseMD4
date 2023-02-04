@@ -13,10 +13,6 @@ class WalletService {
             return this.walletRepository.save(wallet);
         };
         this.updateWallet = async (id, newWallet) => {
-            let wallet = await this.walletRepository.findOneBy({ idWallet: id });
-            if (!wallet) {
-                return null;
-            }
             return this.walletRepository.update({ idWallet: id }, newWallet);
         };
         this.delete = async (id) => {

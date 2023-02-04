@@ -7,7 +7,8 @@ class TransactionController {
 
     getAll = async (req: Request, res: Response) => {
         try {
-            let transaction = await transactionService.getAll();
+            let id = req.params.id
+            let transaction = await transactionService.getAll(id);
             res.status(200).json(transaction)
         } catch (e) {
             res.status(500).json(e.message);

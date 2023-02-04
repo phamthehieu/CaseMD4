@@ -8,7 +8,6 @@ declare class AuthService {
         userName: any;
         role: any;
     }>;
-    changePassword: (user: any) => Promise<any>;
 }
 declare const _default: AuthService;
 export default _default;

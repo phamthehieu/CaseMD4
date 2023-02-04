@@ -6,8 +6,8 @@ class TransactionService {
     constructor() {
         this.transactionRepository = AppDataSource.getRepository(Transaction)
     }
-    getAll = async () =>{
-        let sql = `select * from transaction join category on transaction.category = category.idCategory`
+    getAll = async (id) =>{
+        let sql = `select * from transaction join category on transaction.category = category.idCategory WHERE wallet = ${id}`
         return await  this.transactionRepository.query(sql)
     }
     save = async (transaction) =>{
