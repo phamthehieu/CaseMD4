@@ -21,7 +21,6 @@ class AuthService {
                     return "User not found";
                 }
                 else {
-                    let passwordCompare = await bcrypt_1.default.compare(user.password, userCheck.password);
                     if (userCheck.status === 'locked') {
                         return "User is already locked";
                     }
@@ -52,22 +51,6 @@ class AuthService {
             }
             catch (e) {
                 console.log(e.message);
-            }
-        };
-        this.changePassword = async (user) => {
-            let userfind = await this.userRepository.findOneBy({ userName: user.userName });
-            if (!userfind) {
-                return "User not found";
-            }
-            else {
-                let passwordCompare = await bcrypt_1.default.compare(user.password, userfind.password);
-                if (!passwordCompare) {
-                    return 'Password does not match';
-                }
-                else {
-                    let passwordHash = await bcrypt_1.default.hash(user.passwordChange, 10);
-                    return await this.userRepository.update({ idUser: userfind.idUser }, passwordHash);
-                }
             }
         };
         this.userRepository = data_soure_1.AppDataSource.getRepository(user_1.User);

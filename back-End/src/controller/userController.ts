@@ -1,5 +1,8 @@
 import {Request, Response} from "express";
 import UserService from "../service/userService";
+import bcrypt from "bcrypt";
+import jwt from "jsonwebtoken"
+
 class UserController {
     private UserService
 
@@ -38,15 +41,16 @@ class UserController {
 
     changePassword = async (req: Request, res: Response) => {
         // let username = req['decoded'].userName;
-        let id  = req.params.id;
-        // let user = {
-        //     userName: username,
-        //     password: req.body.password,
-        //     newPassword: req.body.newPassword
-        // }
-        let response = await this.UserService.changePassword(id)
-        res.status(200).json(response)
-
+        let id = req.params.id;
+        let user = await this.UserService.findUser(id)
+        let passwordCompare = await bcrypt.compare(req.body.password, user.password)
+        if (!passwordCompare) {
+            res.status(403).json({message: 'wrong password'})
+        }else {
+            let newPassword = await bcrypt.hash(req.body.passwordNew, 10)
+            let response = await this.UserService.changePassword(user, newPassword)
+            res.status(200).json(response)
+        }
     }
 }
 export default new UserController()

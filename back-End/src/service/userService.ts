@@ -2,8 +2,10 @@ import {User} from "../model/user";
 import {AppDataSource} from "../data-soure";
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken"
+
 class UserService {
     private userRepository;
+
     constructor() {
         this.userRepository = AppDataSource.getRepository(User);
     }
@@ -20,11 +22,11 @@ class UserService {
         let user = await this.userRepository.findOneBy({idUser: id});
         if (!user) {
             return null;
-        }else {
+        } else {
             if (user.status === 'open') {
                 return this.userRepository.update({idUser: id}, {status: 'locked'})
-            }else {
-                return this.userRepository.update({idUser: id}, {status : 'open'})
+            } else {
+                return this.userRepository.update({idUser: id}, {status: 'open'})
             }
         }
     }
@@ -38,19 +40,17 @@ class UserService {
 
     }
 
-    changePassword = async (user) => {
-        let userfind = await this.userRepository.findOneBy({userName: user.userName})
-        if (!userfind) {
-            return "User not found"
-        } else {
-            let passwordCompare = await bcrypt.compare(user.password, userfind.password)
-            if (!passwordCompare) {
-                return 'Password does not match'
-            } else {
-                let passwordHash = await bcrypt.hash(user.passwordChange, 10)
-                return await this.userRepository.update({idUser: userfind.idUser}, passwordHash)
-            }
+    findUser = async (id) => {
+        let user = await this.userRepository.findOneBy({idUser: id})
+        if (!user) {
+            return null;
+        }else{
+            return user
         }
+    }
+
+    changePassword = async (user, newPass) => {
+            return await this.userRepository.update({idUser: user.idUser}, {password:newPass})
     }
 }
 
