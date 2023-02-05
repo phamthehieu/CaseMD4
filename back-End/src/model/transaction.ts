@@ -10,5 +10,5 @@ export class Transaction {
     @Column()
     type: string;
     @Column()
-    money: number;
+    money: string;
 }

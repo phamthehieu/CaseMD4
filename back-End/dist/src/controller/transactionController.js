@@ -4,13 +4,16 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const transactionService_1 = __importDefault(require("../service/transactionService"));
+const categoryService_1 = __importDefault(require("../service/categoryService"));
 class TransactionController {
     constructor() {
         this.getAll = async (req, res) => {
             try {
                 let id = req.params.id;
+                let category = await categoryService_1.default.getAll();
                 let transaction = await transactionService_1.default.getAll(id);
-                res.status(200).json(transaction);
+                let all = { category, transaction };
+                res.status(200).json(all);
             }
             catch (e) {
                 res.status(500).json(e.message);
@@ -36,15 +39,10 @@ class TransactionController {
             }
         };
         this.update = async (req, res) => {
-            try {
-                let id = req.params.id;
-                let newTransaction = req.body;
-                await transactionService_1.default.update(id, newTransaction);
-                res.status(200).json('Update Success !!!');
-            }
-            catch (e) {
-                res.status(500).json(e.message);
-            }
+            let id = req.params.id;
+            let newTransaction = req.body;
+            await transactionService_1.default.update(id, newTransaction);
+            res.status(200).json('Update Success !!!');
         };
         this.findById = async (req, res) => {
             try {
