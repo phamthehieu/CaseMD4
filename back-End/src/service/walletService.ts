@@ -11,16 +11,24 @@ class WalletService {
 
     getAllWallet = async (id) => {
         let sql = `SELECT * from wallet where user = ${id}`
-        let wallet = this.walletRepository.query(sql)
+        let wallet = await this.walletRepository.query(sql)
            return wallet;
     }
 
+    // wallet = async (id) => {
+    //     return await this.walletRepository.findOneBy({idWallet: id})
+    // }
+
     createWallet = async (wallet) => {
-        return this.walletRepository.save(wallet)
+        return await this.walletRepository.save(wallet)
     }
 
     updateWallet = async (id, newWallet) => {
-        return this.walletRepository.update({idWallet: id}, newWallet)
+        let sql = `select * from wallet
+            join transaction on wallet.transaction = transaction.idTransaction
+            where wallet.idWallet = ${id}`
+
+        return await this.walletRepository.update({idWallet: id}, newWallet)
     }
 
     delete = async (id) => {
@@ -28,7 +36,7 @@ class WalletService {
         if (!wallet) {
             return null
         }
-        return this.walletRepository.delete({idWallet: id})
+        return await this.walletRepository.delete({idWallet: id})
     }
 }
 

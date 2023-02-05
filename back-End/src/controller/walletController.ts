@@ -15,15 +15,19 @@ class WalletController {
     }
 
     create = async (req, res) => {
-            let save = await this.WalletService.createWallet(req.body)
+        let wallet = {
+            nameWallet: req.body.nameWallet,
+            user: req.decoded.idUser
+        }
+            let save = await this.WalletService.createWallet(wallet)
             res.status(201).json(save)
 
     }
 
     edit = async (req, res) => {
-                let id = req.params.id
-                let newWallet = await this.WalletService.updateWallet(id, req.body)
-                res.status(200).json(newWallet)
+        let id = req.params.id
+        let newWallet = await this.WalletService.updateWallet(id, req.body)
+        res.status(200).json(newWallet)
     }
 
     delete = async (req, res) => {

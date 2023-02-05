@@ -12,7 +12,11 @@ class WalletController {
             res.status(200).json(wallet);
         };
         this.create = async (req, res) => {
-            let save = await this.WalletService.createWallet(req.body);
+            let wallet = {
+                nameWallet: req.body.nameWallet,
+                user: req.decoded.idUser
+            };
+            let save = await this.WalletService.createWallet(wallet);
             res.status(201).json(save);
         };
         this.edit = async (req, res) => {
