@@ -36,8 +36,8 @@ class TransactionService {
             return  this.transactionRepository.update({idTransaction :id},newTransaction)
         }
     }
-    findByType = async (type) =>{
-        let sql = `select * from transaction join category on transaction.category = category.idCategory where transaction.type like '%${type}%'`
+    findByType = async (type, id) =>{
+        let sql = `select * from transaction join category on transaction.category = category.idCategory where transaction.type like '%${type}%' and wallet = ${id}`
         let transaction = await  this.transactionRepository.query(sql)
         if(!transaction){
             return null

@@ -1,4 +1,3 @@
-
 function showTransaction(id) {
    $("#body").html(`
                  <nav class="header-navbar navbar-expand-md navbar navbar-with-menu navbar-without-dd-arrow fixed-top navbar-light navbar-bg-color">
@@ -14,13 +13,13 @@ function showTransaction(id) {
           <div class="collapse navbar-collapse" id="navbar-mobile">
             <ul class="nav navbar-nav mr-auto float-left">
               <li class="nav-item d-none d-md-block"><a class="nav-link nav-menu-main menu-toggle hidden-xs" href="#"><i class="ft-menu"></i></a></li>
-              <li class="nav-item nav-search"><a class="nav-link nav-link-search" href="#"><i class="ficon ft-search"></i></a>
-                <div class="search-input">
-                  <input class="input" type="text" placeholder="Explore CryptoDash...">
+              <li>
+                <div class="input-group mb-3" style="margin-top: 10px">
+                  <span class="input-group-text" id="basic-addon1"><i class="ficon ft-search"></i></span>
+                  <input type="text" class="form-control" placeholder="Username" aria-label="Username" aria-describedby="basic-addon1" onkeyup="searchTransaction(this.value)">
                 </div>
               </li>
             </ul>
-          </div>
         </div>
       </div>
     </nav>
@@ -210,7 +209,6 @@ function showListTransactions(id) {
             Authorization: 'Bearer ' + users.token
         },
         success : (all) => {
-          let a = JSON.stringify(all.transaction)
             let html = ''
             all.transaction.map(item => {
                 html += `
@@ -234,20 +232,13 @@ function showListTransactions(id) {
                                                       <div class="modal-body">
                                                           <div class="input-group flex-nowrap">
                                                               <span class="input-group-text" >Money</span>
-                                                              <input type="text" class="form-control" id="money${item.idTransaction}" value="${item.money} $" aria-describedby="addon-wrapping"> 
+                                                              <input type="text" class="form-control" id="money${item.idTransaction}" value="${item.money}" aria-describedby="addon-wrapping"> 
                                                               
                                                           </div>
-                                                                <br>
-                                                                <div class="input-group flex-nowrap">
-                                                                    <span class="input-group-text" id="addon-wrapping">List Category</span>
-                                                                     <select class="custom-select" id="category${item.idTransaction}">
-                                                                         <option selected></option>                                               
-                                                                     </select>
-                                                                </div>
                                                             </div>
                                                             <div class="modal-footer">
                                                                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                                                                <button type="button" class="btn btn-danger" data-bs-dismiss="modal" onclick="editTransaction(${item.wallet}, ${item.idTransaction}})">Save</button>
+                                                                <button type="button" class="btn btn-danger" data-bs-dismiss="modal" onclick="editTransaction(${item.idTransaction})">Save</button>
                                                             </div>
                                                             </div>
                                                         </div>
@@ -259,7 +250,7 @@ function showListTransactions(id) {
                                                 <div class="modal-dialog">
                                                     <div class="modal-content">
                                                     <div class="modal-header">
-                                                        <h1 class="modal-title fs-5" id="exampleModalLabel">Delete ${item.nameCategory}</h1>
+                                                        <h1 class="modal-title fs-5" id="exampleModalLabel">Delete ${item.type} - ${item.nameCategory}</h1>
                                                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                                     </div>
                                                     <div class="modal-body">
@@ -267,7 +258,7 @@ function showListTransactions(id) {
                                                     </div>
                                                     <div class="modal-footer">
                                                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">No</button>
-                                                        <button type="button" class="btn btn-danger" data-bs-dismiss="modal" onclick="deleteWallet(${item.idWallet})">Yes</button>
+                                                        <button type="button" class="btn btn-danger" data-bs-dismiss="modal" onclick="deleteTransaction(${item.idTransaction}, ${item.wallet})">Yes</button>
                                                     </div>
                                                     </div>
                                                 </div>
@@ -347,27 +338,109 @@ function showListCategory(id) {
         }
     })
 }
-function editTransaction(idWallet, idTransaction) {
+function editTransaction(idTransaction) {
     let users = JSON.parse(localStorage.getItem('token'))
-    let category = $(`#category${idTransaction}`).val();
-    let wallet = idWallet;
-    let money = $(`#money${idTransaction}`).val();
-    let transaction = {
-        category: category,
-        money: money,
-        wallet: wallet,
-    }
-    console.log(transaction)
     $.ajax({
-        type: "PUT",
+        type: "GET",
+        url: `http://localhost:3000/transactions/findById/${idTransaction}`,
+        headers: {
+            'Content-Type': 'application/json',
+            Authorization: 'Bearer ' + users.token
+        },
+        success : (transaction) => {
+            console.log(transaction)
+        }
+    })
+}
+function deleteTransaction(idTransaction, idWallet) {
+    let users = JSON.parse(localStorage.getItem('token'))
+    $.ajax({
+        type: 'DELETE',
         url: `http://localhost:3000/transactions/${idTransaction}`,
         headers: {
             'Content-Type': 'application/json',
             Authorization: 'Bearer ' + users.token
         },
-        data: JSON.stringify(transaction),
         success : () => {
             showTransaction(idWallet)
+        }
+    })
+}
+function searchTransaction(value, id) {
+    console.log(id)
+    let type = value.toLowerCase()
+    let users = JSON.parse(localStorage.getItem('token'))
+    $.ajax({
+        type: 'GET',
+        url: `http://localhost:3000/transactions/search?type=${type}`,
+        headers: {
+            'Content-Type': 'application/json',
+            Authorization: 'Bearer ' + users.token
+        },
+        data: JSON.stringify(type, id),
+        success : (transactions) => {
+            console.log(transactions)
+            let html = ''
+            transactions.map(item => {
+                html += `
+                <tr>
+                   <td class="text-truncate"><i class="la la-cart-plus success font-medium-1 mr-1"></i> ${item.type}</td>
+                    <td class="text-truncate">
+                        <p>${item.nameCategory}</p>
+                            </td>
+                              <td class="text-truncate">
+                                 <p>${item.money} <i class="la la-dollar success font-medium-1 mr-1"></i></p>
+                              </td>
+                              <td>
+                                  <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#editModal${item.idTransaction}">Edit</button>
+                                      <div class="modal fade" id="editModal${item.idTransaction}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                           <div class="modal-dialog modal-lg">
+                                                 <div class="modal-content">
+                                                      <div class="modal-header">
+                                                           <h1 class="modal-title fs-5" >Edit ${item.nameCategory}</h1>
+                                                           <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                                      </div>
+                                                      <div class="modal-body">
+                                                          <div class="input-group flex-nowrap">
+                                                              <span class="input-group-text" >Money</span>
+                                                              <input type="text" class="form-control" id="money${item.idTransaction}" value="${item.money}" aria-describedby="addon-wrapping"> 
+                                                              
+                                                          </div>
+                                                            </div>
+                                                            <div class="modal-footer">
+                                                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                                                <button type="button" class="btn btn-danger" data-bs-dismiss="modal" onclick="editTransaction(${item.wallet}, ${item.idTransaction}})">Save</button>
+                                                            </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                            </td>
+                                            <td>
+                                             <button class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#deleteModal${item.idTransaction}">Delete</button>
+                                                <div class="modal fade" id="deleteModal${item.idTransaction}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                                <div class="modal-dialog">
+                                                    <div class="modal-content">
+                                                    <div class="modal-header">
+                                                        <h1 class="modal-title fs-5" id="exampleModalLabel">Delete ${item.type} - ${item.nameCategory}</h1>
+                                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                                    </div>
+                                                    <div class="modal-body">
+                                                        Are you sure you want to delete???
+                                                    </div>
+                                                    <div class="modal-footer">
+                                                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">No</button>
+                                                        <button type="button" class="btn btn-danger" data-bs-dismiss="modal" onclick="deleteTransaction(${item.idTransaction}, ${item.wallet})">Yes</button>
+                                                    </div>
+                                                    </div>
+                                                </div>
+                                                </div>
+                                            </td>             
+                                        </tr>
+                            
+                `})
+            showListCategory(id)
+            $("#listTransactions").html(html)
+
         }
     })
 }

@@ -53,7 +53,9 @@ class TransactionController {
     findByType = async (req: Request, res :Response)=> {
         try {
             let type = req.query.type
-            let transaction = await transactionService.findByType(type)
+            let id = req.query.id
+            console.log(type)
+            let transaction = await transactionService.findByType(type, id)
             res.status(200).json(transaction)
         } catch (e) {
             res.status(500).json(e.message)

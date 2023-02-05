@@ -57,7 +57,9 @@ class TransactionController {
         this.findByType = async (req, res) => {
             try {
                 let type = req.query.type;
-                let transaction = await transactionService_1.default.findByType(type);
+                let id = req.query.id;
+                console.log(type);
+                let transaction = await transactionService_1.default.findByType(type, id);
                 res.status(200).json(transaction);
             }
             catch (e) {
