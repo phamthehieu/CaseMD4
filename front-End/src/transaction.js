@@ -210,6 +210,7 @@ function showListTransactions(id) {
             Authorization: 'Bearer ' + users.token
         },
         success : (all) => {
+          let a = JSON.stringify(all.transaction)
             let html = ''
             all.transaction.map(item => {
                 html += `
@@ -246,7 +247,7 @@ function showListTransactions(id) {
                                                             </div>
                                                             <div class="modal-footer">
                                                                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                                                                <button type="button" class="btn btn-danger" data-bs-dismiss="modal" onclick="editTransaction(${item.wallet}, ${item.idTransaction}, ${item.type})">Save</button>
+                                                                <button type="button" class="btn btn-danger" data-bs-dismiss="modal" onclick="editTransaction(${item.wallet}, ${item.idTransaction}})">Save</button>
                                                             </div>
                                                             </div>
                                                         </div>
@@ -273,10 +274,11 @@ function showListTransactions(id) {
                                                 </div>
                                             </td>             
                                         </tr>
-                                      
+                            
                 `})
-            $("#listTransactions").html(html)
             showListCategory(id)
+            $("#listTransactions").html(html)
+
         }
     })
 
@@ -341,23 +343,19 @@ function showListCategory(id) {
                          <option value="${item.idCategory}">${item.nameCategory}</option>                  
                 `})
             $('#category').html(html1)
-            $('#category1').html(html1)
+            $(`#category`).html(html1)
         }
     })
 }
-function editTransaction(idWallet, idTransaction, type) {
-    console.log(idWallet)
-    console.log(idTransaction)
+function editTransaction(idWallet, idTransaction) {
     let users = JSON.parse(localStorage.getItem('token'))
     let category = $(`#category${idTransaction}`).val();
     let wallet = idWallet;
-    let type1 = type
     let money = $(`#money${idTransaction}`).val();
     let transaction = {
         category: category,
         money: money,
         wallet: wallet,
-        type: type1
     }
     console.log(transaction)
     $.ajax({
