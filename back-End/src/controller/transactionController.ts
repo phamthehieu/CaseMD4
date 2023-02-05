@@ -1,6 +1,6 @@
 import  {Request, Response} from 'express';
 import transactionService from "../service/transactionService";
-
+import categoryService from "../service/categoryService";
 class TransactionController {
     constructor() {
     }
@@ -8,8 +8,10 @@ class TransactionController {
     getAll = async (req: Request, res: Response) => {
         try {
             let id = req.params.id
+            let category = await categoryService.getAll()
             let transaction = await transactionService.getAll(id);
-            res.status(200).json(transaction)
+            let all = {category, transaction}
+            res.status(200).json(all)
         } catch (e) {
             res.status(500).json(e.message);
         }
@@ -34,14 +36,10 @@ class TransactionController {
         }
     }
     update = async (req: Request, res :Response)=> {
-        try {
             let id = req.params.id
             let newTransaction = req.body
             await transactionService.update(id,newTransaction)
             res.status(200).json('Update Success !!!')
-        } catch (e) {
-            res.status(500).json(e.message)
-        }
     }
     findById = async (req: Request, res :Response)=> {
         try {
@@ -55,8 +53,6 @@ class TransactionController {
     findByType = async (req: Request, res :Response)=> {
         try {
             let type = req.query.type
-            console.log(type);
-
             let transaction = await transactionService.findByType(type)
             res.status(200).json(transaction)
         } catch (e) {

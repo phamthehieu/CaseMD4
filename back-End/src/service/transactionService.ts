@@ -8,13 +8,14 @@ class TransactionService {
     }
     getAll = async (id) =>{
         let sql = `select * from transaction join category on transaction.category = category.idCategory WHERE wallet = ${id}`
-        return await  this.transactionRepository.query(sql)
+        return await this.transactionRepository.query(sql)
     }
     save = async (transaction) =>{
         return this.transactionRepository.save(transaction)
     }
     findById = async (id) =>{
-        return
+        let transaction = this.transactionRepository.findOneBy({idTransaction :id})
+        return transaction;
     }
     remove = async (id)=>{
         let transaction = this.transactionRepository.findOneBy({idTransaction :id})

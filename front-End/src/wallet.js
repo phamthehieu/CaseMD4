@@ -213,8 +213,6 @@ function editWallet(id) {
         money: money,
         user: user
     }
-    console.log(id)
-    console.log(wallet)
     $.ajax({
         type: 'PUT',
         url: `http://localhost:3000/wallet/edit/${id}`,

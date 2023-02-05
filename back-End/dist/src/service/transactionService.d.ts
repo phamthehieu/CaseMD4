@@ -3,7 +3,7 @@ declare class TransactionService {
     constructor();
     getAll: (id: any) => Promise<any>;
     save: (transaction: any) => Promise<any>;
-    findById: (id: any) => Promise<void>;
+    findById: (id: any) => Promise<any>;
     remove: (id: any) => Promise<any>;
     update: (id: any, newTransaction: any) => Promise<any>;
     findByType: (type: any) => Promise<any>;
