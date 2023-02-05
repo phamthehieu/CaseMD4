@@ -43,6 +43,9 @@ class TransactionService {
                 return transaction;
             }
         };
+        this.searchByMonth = async (month) => {
+            return this.transactionRepository.find({ month: month });
+        };
         this.transactionRepository = data_soure_1.AppDataSource.getRepository(transaction_1.Transaction);
     }
 }

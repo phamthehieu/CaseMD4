@@ -8,3 +8,6 @@ transactionRouter.delete('/:id',transactionController.delete)
 transactionRouter.put('/:id',transactionController.update)
 transactionRouter.get('/search',transactionController.findByType)
 transactionRouter.get("/findById/:id", transactionController.findById)
+transactionRouter.get('/search/',transactionController.findByType)
+transactionRouter.get('/month',transactionController.searchByMonth)
+

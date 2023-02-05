@@ -6,21 +6,38 @@ class WalletService {
     constructor() {
         this.getAllWallet = async (id) => {
             let sql = `SELECT * from wallet where user = ${id}`;
-            let wallet = this.walletRepository.query(sql);
+            let wallet = await this.walletRepository.query(sql);
             return wallet;
         };
         this.createWallet = async (wallet) => {
-            return this.walletRepository.save(wallet);
+            return await this.walletRepository.save(wallet);
         };
         this.updateWallet = async (id, newWallet) => {
-            return this.walletRepository.update({ idWallet: id }, newWallet);
+            return await this.walletRepository.update({ idWallet: id }, newWallet);
         };
         this.delete = async (id) => {
             let wallet = await this.walletRepository.findOneBy({ idWallet: id });
             if (!wallet) {
                 return null;
             }
-            return this.walletRepository.delete({ idWallet: id });
+            return await this.walletRepository.delete({ idWallet: id });
+        };
+        this.transaction = async (id) => {
+            let wallet = await this.walletRepository.findOneBy({ idWallet: id });
+            let sql = `select * from transaction 
+                    join wallet on transaction.wallet = wallet.idWallet 
+                    where wallet.idWallet = ${wallet.idWallet}`;
+            return await this.walletRepository.query(sql);
+        };
+        this.transactionSpend = async (id) => {
+            let wallet = await this.walletRepository.findOneBy({ idWallet: id });
+            let sql = `select * from transaction 
+                    join wallet on transaction.wallet = wallet.idWallet 
+                    where wallet.idWallet = ${wallet.idWallet} and transaction.type ='chi'`;
+            return await this.walletRepository.query(sql);
+        };
+        this.editMoney = async (id, newMoney) => {
+            return await this.walletRepository.update({ idWallet: id }, { money: newMoney });
         };
         this.walletRepository = data_soure_1.AppDataSource.getRepository(wallet_1.Wallet);
     }
