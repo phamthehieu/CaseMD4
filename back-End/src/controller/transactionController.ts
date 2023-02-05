@@ -1,11 +1,7 @@
 import  {Request, Response} from 'express';
 import transactionService from "../service/transactionService";
-<<<<<<< HEAD
 import categoryService from "../service/categoryService";
-=======
-import walletController from "./walletController";
-
->>>>>>> c7484b592ed4aa79677b4bac8cfebf03e89a4c79
+import walletController from './walletController';
 class TransactionController {
     constructor() {
     }
@@ -32,7 +28,7 @@ class TransactionController {
                 date: new Date().getDate()
             }
             await transactionService.save(newTransaction)
-            walletController.editMoney(req.body.wallet)
+            await walletController.editMoney(req.body.wallet)
             res.status(200).json("add ok")
         }
         catch (e){

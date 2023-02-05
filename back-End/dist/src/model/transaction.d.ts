@@ -4,4 +4,7 @@ export declare class Transaction {
     category: number;
     type: string;
     money: string;
+    moneyTransaction: number;
+    month: number;
+    date: number;
 }

@@ -5,6 +5,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 const transactionService_1 = __importDefault(require("../service/transactionService"));
 const categoryService_1 = __importDefault(require("../service/categoryService"));
+const walletController_1 = __importDefault(require("./walletController"));
 class TransactionController {
     constructor() {
         this.getAll = async (req, res) => {
@@ -30,7 +31,7 @@ class TransactionController {
                     date: new Date().getDate()
                 };
                 await transactionService_1.default.save(newTransaction);
-                walletController.editMoney(req.body.wallet);
+                await walletController_1.default.editMoney(req.body.wallet);
                 res.status(200).json("add ok");
             }
             catch (e) {
