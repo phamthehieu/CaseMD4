@@ -24,9 +24,6 @@ class WalletService {
     }
 
     updateWallet = async (id, newWallet) => {
-        let sql = `select * from wallet
-            join transaction on wallet.transaction = transaction.idTransaction
-            where wallet.idWallet = ${id}`
 
         return await this.walletRepository.update({idWallet: id}, newWallet)
     }
@@ -37,6 +34,26 @@ class WalletService {
             return null
         }
         return await this.walletRepository.delete({idWallet: id})
+    }
+
+    transaction = async (id) => {
+        let wallet = await this.walletRepository.findOneBy({idWallet: id})
+        let sql = `select * from transaction 
+                    join wallet on transaction.wallet = wallet.idWallet 
+                    where wallet.idWallet = ${wallet.idWallet}`
+        return  await this.walletRepository.query(sql)
+    }
+
+    transactionSpend = async (id) =>{
+        let wallet = await this.walletRepository.findOneBy({idWallet: id})
+        let sql = `select * from transaction 
+                    join wallet on transaction.wallet = wallet.idWallet 
+                    where wallet.idWallet = ${wallet.idWallet} and transaction.type ='chi'`
+        return  await this.walletRepository.query(sql)
+    }
+
+    editMoney = async (id, newMoney) => {
+        return await this.walletRepository.update({idWallet: id}, {money: newMoney})
     }
 }
 

@@ -6,6 +6,8 @@ declare class TransactionController {
     delete: (req: Request, res: Response) => Promise<void>;
     update: (req: Request, res: Response) => Promise<void>;
     findById: (req: Request, res: Response) => Promise<void>;
+    findByType: (req: Request, res: Response) => Promise<void>;
+    searchByMonth: (req: Request, res: Response) => Promise<void>;
 }
 declare const _default: TransactionController;
 export default _default;

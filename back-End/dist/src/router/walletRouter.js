@@ -11,4 +11,5 @@ exports.walletRouter.get('/:id', walletController_1.default.showWallet);
 exports.walletRouter.post('/create', walletController_1.default.create);
 exports.walletRouter.put('/edit/:id', walletController_1.default.edit);
 exports.walletRouter.delete('/delete/:id', walletController_1.default.delete);
+exports.walletRouter.put('/editMoney/:id', walletController_1.default.editMoney);
 //# sourceMappingURL=walletRouter.js.map

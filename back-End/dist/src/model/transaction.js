@@ -32,7 +32,15 @@ __decorate([
 __decorate([
     (0, typeorm_1.Column)(),
     __metadata("design:type", Number)
-], Transaction.prototype, "money", void 0);
+], Transaction.prototype, "moneyTransaction", void 0);
+__decorate([
+    (0, typeorm_1.Column)(),
+    __metadata("design:type", Number)
+], Transaction.prototype, "month", void 0);
+__decorate([
+    (0, typeorm_1.Column)(),
+    __metadata("design:type", Number)
+], Transaction.prototype, "date", void 0);
 Transaction = __decorate([
     (0, typeorm_1.Entity)()
 ], Transaction);

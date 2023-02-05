@@ -4,6 +4,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const transactionService_1 = __importDefault(require("../service/transactionService"));
+const walletController_1 = __importDefault(require("./walletController"));
 class TransactionController {
     constructor() {
         this.getAll = async (req, res) => {
@@ -18,8 +19,17 @@ class TransactionController {
         };
         this.create = async (req, res) => {
             try {
-                let newTransaction = transactionService_1.default.save(req.body);
-                res.status(200).json(newTransaction);
+                let newTransaction = {
+                    wallet: req.body.wallet,
+                    category: req.body.category,
+                    type: req.body.type,
+                    moneyTransaction: req.body.moneyTransaction,
+                    month: new Date().getMonth() + 1,
+                    date: new Date().getDate()
+                };
+                await transactionService_1.default.save(newTransaction);
+                walletController_1.default.editMoney(req.body.wallet);
+                res.status(200).json("add ok");
             }
             catch (e) {
                 res.status(500).json(e.message);
@@ -55,6 +65,22 @@ class TransactionController {
             catch (e) {
                 res.status(500).json(e.message);
             }
+        };
+        this.findByType = async (req, res) => {
+            try {
+                let type = req.query.type;
+                console.log(type);
+                let transaction = await transactionService_1.default.findByType(type);
+                res.status(200).json(transaction);
+            }
+            catch (e) {
+                res.status(500).json(e.message);
+            }
+        };
+        this.searchByMonth = async (req, res) => {
+            let month = req.query.month;
+            let transaction = await transactionService_1.default.searchByMonth(month);
+            res.status(200).json(transaction);
         };
     }
 }

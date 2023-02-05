@@ -46,6 +46,10 @@ class TransactionService {
         }
     }
 
+    searchByMonth = async (month) =>{
+        return this.transactionRepository.find({month: month})
+    }
+
 
 }
 export default new TransactionService()

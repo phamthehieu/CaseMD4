@@ -3,5 +3,7 @@ export declare class Transaction {
     wallet: number;
     category: number;
     type: string;
-    money: number;
+    moneyTransaction: number;
+    month: number;
+    date: number;
 }

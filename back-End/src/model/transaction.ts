@@ -10,5 +10,9 @@ export class Transaction {
     @Column()
     type: string;
     @Column()
-    money: number;
+    moneyTransaction: number;
+    @Column()
+    month : number;
+    @Column()
+    date: number;
 }
