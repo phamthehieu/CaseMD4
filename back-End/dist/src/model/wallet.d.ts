@@ -1,7 +1,6 @@
 export declare class Wallet {
     idWallet: number;
     nameWallet: string;
-    user: string;
-    transaction: number;
+    user: number;
     money: number;
 }

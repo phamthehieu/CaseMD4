@@ -1,4 +1,5 @@
 import WalletService from "../service/walletService";
+import categoryService from "../service/categoryService";
 
 class WalletController {
     private WalletService
@@ -8,29 +9,26 @@ class WalletController {
     }
 
     showWallet = async (req, res) => {
-        let wallet = await this.WalletService.getAllWallet()
-        res.status(200).json(wallet)
+            let id = req.params.id
+            let wallet = await this.WalletService.getAllWallet(id)
+            res.status(200).json(wallet)
     }
 
     create = async (req, res) => {
-        let wallet = {
-            nameWallet : req.body.nameWallet,
-            user: req.decoded.idUser,
-        }
-        console.log(wallet)
-        let save = await this.WalletService.createWallet(wallet)
-        res.status(201).json(save)
+            let save = await this.WalletService.createWallet(req.body)
+            res.status(201).json(save)
+
     }
 
     edit = async (req, res) => {
-        let id = req.params.id
-        let newWallet = await this.WalletService.updateWallet(id, req.body)
-        res.status(200).json(newWallet)
+                let id = req.params.id
+                let newWallet = await this.WalletService.updateWallet(id, req.body)
+                res.status(200).json(newWallet)
     }
 
     delete = async (req, res) => {
-        let id = req.params.id
-        res.status(200).json(await this.WalletService.delete(id))
+            let id = req.params.id
+            res.status(200).json(await this.WalletService.delete(id))
     }
 }
 export default new WalletController();

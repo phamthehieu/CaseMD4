@@ -1,7 +1,7 @@
 declare class TransactionService {
     private transactionRepository;
     constructor();
-    getAll: () => Promise<any>;
+    getAll: (id: any) => Promise<any>;
     save: (transaction: any) => Promise<any>;
     findById: (id: any) => Promise<void>;
     remove: (id: any) => Promise<any>;

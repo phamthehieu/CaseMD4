@@ -8,7 +8,8 @@ class TransactionController {
     constructor() {
         this.getAll = async (req, res) => {
             try {
-                let transaction = await transactionService_1.default.getAll();
+                let id = req.params.id;
+                let transaction = await transactionService_1.default.getAll(id);
                 res.status(200).json(transaction);
             }
             catch (e) {

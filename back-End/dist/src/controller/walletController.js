@@ -7,16 +7,12 @@ const walletService_1 = __importDefault(require("../service/walletService"));
 class WalletController {
     constructor() {
         this.showWallet = async (req, res) => {
-            let wallet = await this.WalletService.getAllWallet();
+            let id = req.params.id;
+            let wallet = await this.WalletService.getAllWallet(id);
             res.status(200).json(wallet);
         };
         this.create = async (req, res) => {
-            let wallet = {
-                nameWallet: req.body.nameWallet,
-                user: req.decoded.idUser,
-            };
-            console.log(wallet);
-            let save = await this.WalletService.createWallet(wallet);
+            let save = await this.WalletService.createWallet(req.body);
             res.status(201).json(save);
         };
         this.edit = async (req, res) => {

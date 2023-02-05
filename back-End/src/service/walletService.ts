@@ -9,8 +9,10 @@ class WalletService {
         this.walletRepository = AppDataSource.getRepository(Wallet);
     }
 
-    getAllWallet = async () => {
-        return this.walletRepository.find()
+    getAllWallet = async (id) => {
+        let sql = `SELECT * from wallet where user = ${id}`
+        let wallet = this.walletRepository.query(sql)
+           return wallet;
     }
 
     createWallet = async (wallet) => {
@@ -18,10 +20,6 @@ class WalletService {
     }
 
     updateWallet = async (id, newWallet) => {
-        let wallet = await this.walletRepository.findOneBy({idWallet: id})
-        if (!wallet) {
-            return null
-        }
         return this.walletRepository.update({idWallet: id}, newWallet)
     }
 

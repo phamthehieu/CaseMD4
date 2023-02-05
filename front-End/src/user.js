@@ -1,4 +1,4 @@
-
+showLogin()
 function showLogin() {
     $("#body").html(`
     <!-- ////////////////////////////////////////////////////////////////////////////-->
@@ -20,10 +20,10 @@ function showLogin() {
                 <div class="card-content">                    
                     <div class="card-body p-3">
                         <p class="text-center h5 text-capitalize">Welcome to HKT!</p>                                                            
-                                <label for="user-name">Username</label>    
-                                <input type="text" class="form-control" id="userName" placeholder="Your Username">
-                                <label for="user-password">Password</label>
-                                <input type="password" class="form-control" id="password" placeholder="Enter Password">                         
+                                <label for="user-name" id="login1">Username</label>    
+                                <input type="text" class="form-control" id="userName" placeholder="Your Username" value="">
+                                <label for="user-password" id="login2">Password</label>
+                                <input type="password" class="form-control" id="password" placeholder="Enter Password" value="">                         
                             <button class="btn-gradient-primary btn-block my-1" onclick="login()">Log In</button>
                              <button class="btn-gradient-primary btn-block my-1" onclick="showRegister()">Register</button>
                     </div>                      
@@ -81,6 +81,12 @@ function showRegister() {
 function login() {
     let userName = $("#userName").val()
     let password = $("#password").val()
+    if (userName === "") {
+      return $("#login1").html(`Vui Lòng Nhập Tên Đăng Nhập`)
+    }
+    if (password === "") {
+       return $("#login2").html(`Vui Lòng Nhập Password`)
+    }
     let user = {
         userName: userName,
         password: password
@@ -93,10 +99,12 @@ function login() {
         },
         data: JSON.stringify(user),
         success : (token) => {
-            if (token === 'Password does not match') {
-                alert("Password does not match")
+            if (token === "User not found") {
+                return $("#login1").html(`Vui Lòng Nhập Đúng Tên Đăng Nhập`)
+            } else if (token === 'Password does not match') {
+                return $("#login2").html(`Vui Lòng Nhập Đúng Password`)
             } else {
-                localStorage.setItem('token',token.token)
+                localStorage.setItem('token',JSON.stringify(token))
                 showWallet()
             }
         }
@@ -128,8 +136,18 @@ function logOut() {
     showLogin()
 }
 function showFormProfile() {
-    $("#body").html(`
-    <nav class="header-navbar navbar-expand-md navbar navbar-with-menu navbar-without-dd-arrow fixed-top navbar-light navbar-bg-color">
+    let users = JSON.parse(localStorage.getItem('token'))
+    $.ajax({
+        type: 'GET',
+        url: `http://localhost:3000/user/profile/${users.idUser}`,
+        headers: {
+            'Content-Type': 'application/json',
+            Authorization: 'Bearer ' + users.token
+        },
+        success : (user) => {
+            let html = ''
+                html += `
+                 <nav class="header-navbar navbar-expand-md navbar navbar-with-menu navbar-without-dd-arrow fixed-top navbar-light navbar-bg-color">
         <div class="navbar-wrapper">
             <div class="navbar-header d-md-none">
                 <ul class="nav navbar-nav flex-row">
@@ -152,17 +170,17 @@ function showFormProfile() {
             </div>
         </div>
     </nav>
-    <div class="main-menu menu-fixed menu-dark menu-bg-default rounded menu-accordion menu-shadow">
+                 <div class="main-menu menu-fixed menu-dark menu-bg-default rounded menu-accordion menu-shadow">
         <div class="main-menu-content"><a class="navigation-brand d-none d-md-block d-lg-block d-xl-block" href="index.html"><img class="brand-logo" alt="CryptoDash admin logo" src="../../../app-assets/images/logo/logo.png"/></a>
             <ul class="navigation navigation-main" id="main-menu-navigation" data-menu="menu-navigation">
-                <li class="active"><a href="wallet.html"><i class="icon-wallet"></i>Wallet</a>
+                <li class="active"><a onclick="showWallet()"><i class="icon-wallet"></i>Wallet</a>
                 </li>
-                <li class=" nav-item"><a href="transactions.html"><i class="ft-user"></i> Profile</span></a>
+                <li class=" nav-item"><a onclick="showFormProfile()"><i class="ft-user"></i> Profile</span></a>
                 <li class=" nav-item"> <a onclick="logOut()"><i class="ft-power"></i> Log Out</a></li>
             </ul>
         </div>
     </div>
-    <div class="app-content content">
+                 <div class="app-content content">
     <div class="content-wrapper">
         <div class="content-header row">
           <div class="content-header-left col-md-8 col-12 mb-2 breadcrumb-new">
@@ -188,28 +206,24 @@ function showFormProfile() {
                     <div class="col-12">
                         <div class="row">                          
                             <div class="col-md-10 col-12">
-                                    <div class="col-6">
+                                    <div class="col-12">
                                         <fieldset class="form-label-group">
-                                            <input type="text" class="form-control" id="first-name" value="John">
-                                            <label for="first-name">userName</label>
+                                            <input type="text" class="form-control" id="first-name" value="${user.user.userName}" style="text-align: center">
+                                            <label for="first-name" style="text-align: center">userName </label>
                                         </fieldset>
                                     </div>
-                                    <div class="col-6">
+                                    <div class="col-12" >
                                         <fieldset class="form-label-group">
-                                            <input type="text" class="form-control" id="last-name" value="Doe">
-                                            <label for="last-name">FullName</label>
+                                            <input type="text" class="form-control" id="last-name" value="${user.user.fullName}" style="text-align: center">
+                                            <label for="last-name" style="text-align: center">FullName</label>
                                         </fieldset>
                                     </div>
-                                    <div class="col-6">
-                                        <fieldset class="form-label-group">
-                                            <input type="password" class="form-control" id="old-password" value="password">
-                                            <label for="old-password">Old password</label>
-                                        </fieldset>
-                                    </div>
-                                    <div class="col-12 text-right">
-                                         <div class="btn-group float-md-right"><a class="btn-gradient-secondary btn-sm white" onclick="showEditProfile()">Edit</a></div>
-                                    </div>
-                            </div>
+                                  
+                                    <div class="col-12 text-center">
+                                         <div class="btn-group text-left"><a class="btn-gradient-secondary btn-sm white" onclick="showFormEdit()">Edit FullName</a></div>
+                                         <div class="btn-group text-right"><a class="btn-gradient-secondary btn-sm white" onclick="showFormEdit()">Edit Password</a></div>
+                                    </div>                     
+                            </div> 
                         </div>
                     </div>
                 </div>
@@ -283,11 +297,43 @@ function showFormProfile() {
         </div>
       </div>
     </div>
-    `)
+                `
+            $("#body").html(html)
+        }
+    })
 }
-function showEditProfile() {
-    $("#body").html(`
-    <nav class="header-navbar navbar-expand-md navbar navbar-with-menu navbar-without-dd-arrow fixed-top navbar-light navbar-bg-color">
+function editProfile() {
+    let users = JSON.parse(localStorage.getItem('token'))
+    let fullName = $("#fullName").val()
+    let user = {
+        fullName: fullName
+    }
+    $.ajax({
+        type: 'PUT',
+        url: `http://localhost:3000/user/edit/${users.idUser}`,
+        headers: {
+            'Content-Type': 'application/json',
+            Authorization: 'Bearer ' + users.token
+        },
+        data: JSON.stringify(user),
+        success : () => {
+            showFormProfile()
+        }
+    })
+}
+function showFormEdit() {
+    let users = JSON.parse(localStorage.getItem('token'))
+    $.ajax({
+        type: 'GET',
+        url: `http://localhost:3000/user/profile/${users.idUser}`,
+        headers: {
+            'Content-Type': 'application/json',
+            Authorization: 'Bearer ' + users.token
+        },
+        success : (user) => {
+            let html = ''
+            html += `
+                 <nav class="header-navbar navbar-expand-md navbar navbar-with-menu navbar-without-dd-arrow fixed-top navbar-light navbar-bg-color">
         <div class="navbar-wrapper">
             <div class="navbar-header d-md-none">
                 <ul class="nav navbar-nav flex-row">
@@ -310,33 +356,18 @@ function showEditProfile() {
             </div>
         </div>
     </nav>
-    <div class="main-menu menu-fixed menu-dark menu-bg-default rounded menu-accordion menu-shadow">
+                 <div class="main-menu menu-fixed menu-dark menu-bg-default rounded menu-accordion menu-shadow">
         <div class="main-menu-content"><a class="navigation-brand d-none d-md-block d-lg-block d-xl-block" href="index.html"><img class="brand-logo" alt="CryptoDash admin logo" src="../../../app-assets/images/logo/logo.png"/></a>
             <ul class="navigation navigation-main" id="main-menu-navigation" data-menu="menu-navigation">
-                <li class="active"><a href="wallet.html"><i class="icon-wallet"></i>Wallet</a>
+                <li class="active"><a onclick="showWallet()"><i class="icon-wallet"></i>Wallet</a>
                 </li>
-                <li class=" nav-item"><a href="transactions.html"><i class="ft-user"></i> Profile</span></a>
+                <li class=" nav-item"><a onclick="showFormProfile()"><i class="ft-user"></i> Profile</span></a>
                 <li class=" nav-item"> <a onclick="logOut()"><i class="ft-power"></i> Log Out</a></li>
             </ul>
         </div>
     </div>
-    <div class="app-content content">
+                 <div class="app-content content">
     <div class="content-wrapper">
-        <div class="content-header row">
-          <div class="content-header-left col-md-8 col-12 mb-2 breadcrumb-new">
-            <h3 class="content-header-title mb-0 d-inline-block">Account Profile</h3>
-            <div class="row breadcrumbs-top d-inline-block">
-              <div class="breadcrumb-wrapper col-12">
-                <ol class="breadcrumb">
-                  <li class="breadcrumb-item"><a href="index.html">Dashboard</a>
-                  </li>
-                  <li class="breadcrumb-item active">Account Profile
-                  </li>
-                </ol>
-              </div>
-            </div>
-          </div>      
-        </div>
         <div class="content-body"><div class="row">
     <div class="col-12 col-md-8">
         <!-- User Profile -->
@@ -345,28 +376,17 @@ function showEditProfile() {
                 <div class="card-body">
                     <div class="col-12">
                         <div class="row">                          
-                            <div class="col-md-10 col-12">
-                                    <div class="col-6">
+                            <div class="col-md-10 col-12">          
+                                    <div class="col-12" >
                                         <fieldset class="form-label-group">
-                                            <input type="text" class="form-control" id="first-name" value="John">
-                                            <label for="first-name">userName</label>
+                                            <input type="text" class="form-control" id="fullName" value="${user.user.fullName}" style="text-align: center">
+                                            <label for="last-name" style="text-align: center">FullName</label>
                                         </fieldset>
-                                    </div>
-                                    <div class="col-6">
-                                        <fieldset class="form-label-group">
-                                            <input type="text" class="form-control" id="last-name" value="Doe">
-                                            <label for="last-name">FullName</label>
-                                        </fieldset>
-                                    </div>
-                                    <div class="col-6">
-                                        <fieldset class="form-label-group">
-                                            <input type="password" class="form-control" id="old-password" value="password">
-                                            <label for="old-password">Old password</label>
-                                        </fieldset>
-                                    </div>
-                                    <div class="col-12 text-right">
-                                         <div class="btn-group float-md-right"><a class="btn-gradient-secondary btn-sm white" href="wallet.html">SAVE</a></div>
-                                    </div>
+                                    </div>                 
+                                     <div class="col-12 text-center">
+                                          <div class="btn-group"><a class="btn-gradient-secondary btn-sm white" onclick="editProfile()">Edit</a></div>
+                                          <div class="btn-group"><a class="btn-gradient-secondary btn-sm white" onclick="showFormProfile()">ProFile</a></div>
+                                    </div>  
                             </div>
                         </div>
                     </div>
@@ -441,5 +461,8 @@ function showEditProfile() {
         </div>
       </div>
     </div>
-    `)
+                `
+            $("#body").html(html)
+        }
+    })
 }

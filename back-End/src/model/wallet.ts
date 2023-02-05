@@ -5,10 +5,8 @@ export class Wallet {
     idWallet: number;
     @Column({type: 'varchar', length: 255})
     nameWallet: string;
-    @Column()
-    user: string
-    @Column({default :0})
-    transaction: number
+    @Column({type: "int"})
+    user: number
     @Column({default :0})
     money: number
 }

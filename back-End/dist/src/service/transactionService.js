@@ -4,8 +4,8 @@ const transaction_1 = require("../model/transaction");
 const data_soure_1 = require("../data-soure");
 class TransactionService {
     constructor() {
-        this.getAll = async () => {
-            let sql = `select * from transaction join category on transaction.category = category.idCategory`;
+        this.getAll = async (id) => {
+            let sql = `select * from transaction join category on transaction.category = category.idCategory WHERE wallet = ${id}`;
             return await this.transactionRepository.query(sql);
         };
         this.save = async (transaction) => {
