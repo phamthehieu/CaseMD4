@@ -4,6 +4,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const userService_1 = __importDefault(require("../service/userService"));
+const bcrypt_1 = __importDefault(require("bcrypt"));
 class UserController {
     constructor() {
         this.editUser = async (req, res) => {
@@ -52,18 +53,16 @@ class UserController {
             }
         };
         this.changePassword = async (req, res) => {
-            try {
-                let username = req['decoded'].userName;
-                let user = {
-                    userName: username,
-                    password: req.body.password,
-                    newPassword: req.body.newPassword
-                };
-                let response = await this.UserService.changePassword(user);
-                res.status(200).json(response);
+            let id = req.params.id;
+            let user = await this.UserService.findUser(id);
+            let passwordCompare = await bcrypt_1.default.compare(req.body.password, user.password);
+            if (!passwordCompare) {
+                res.status(403).json({ message: 'wrong password' });
             }
-            catch (e) {
-                res.status(500).json(e.message);
+            else {
+                let newPassword = await bcrypt_1.default.hash(req.body.passwordNew, 10);
+                let response = await this.UserService.changePassword(user, newPassword);
+                res.status(200).json(response);
             }
         };
         this.UserService = userService_1.default;

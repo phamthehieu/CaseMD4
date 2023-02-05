@@ -21,7 +21,6 @@ class AuthService {
                     return "User not found";
                 }
                 else {
-                    let passwordCompare = await bcrypt_1.default.compare(user.password, userCheck.password);
                     if (userCheck.status === 'locked') {
                         return "User is already locked";
                     }

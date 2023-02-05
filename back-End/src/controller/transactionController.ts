@@ -50,5 +50,14 @@ class TransactionController {
             res.status(500).json(e.message)
         }
     }
+    findByType = async (req: Request, res :Response)=> {
+        try {
+            let type = req.query.type
+            let transaction = await transactionService.findByType(type)
+            res.status(200).json(transaction)
+        } catch (e) {
+            res.status(500).json(e.message)
+        }
+    }
 }
 export default new TransactionController()

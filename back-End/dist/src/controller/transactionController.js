@@ -54,6 +54,16 @@ class TransactionController {
                 res.status(500).json(e.message);
             }
         };
+        this.findByType = async (req, res) => {
+            try {
+                let type = req.query.type;
+                let transaction = await transactionService_1.default.findByType(type);
+                res.status(200).json(transaction);
+            }
+            catch (e) {
+                res.status(500).json(e.message);
+            }
+        };
     }
 }
 exports.default = new TransactionController();
