@@ -6,7 +6,7 @@ function showTransaction(id) {
           <ul class="nav navbar-nav flex-row">
             <li class="nav-item mobile-menu d-md-none mr-auto"><a class="nav-link nav-menu-main menu-toggle hidden-xs" href="#"><i class="ft-menu font-large-1"></i></a></li>
             <li class="nav-item d-md-none"><button onclick="showWallet()"><img class="brand-logo d-none d-md-block" alt="CryptoDash admin logo" src="../../../app-assets/images/logo/logo.png"><img class="brand-logo d-sm-block d-md-none" alt="CryptoDash admin logo sm" src="../../../app-assets/images/logo/logo-sm.png"></button></li>
-            <li class="nav-item d-md-none"><a class="nav-link open-navbar-container" data-toggle="collapse" data-target="#navbar-mobile"><i class="la la-ellipsis-v">   </i></a></li>
+            <li class="nav-item d-md-none"><a class="nav-link open-navbar-container" data-toggle="collapse" data-target="#navbar-mobile"><i class="la la-ellipsis-v"></i></a></li>
           </ul>
         </div>
         <div class="navbar-container">
@@ -16,7 +16,7 @@ function showTransaction(id) {
               <li>
                 <div class="input-group mb-3" style="margin-top: 10px">
                   <span class="input-group-text" id="basic-addon1"><i class="ficon ft-search"></i></span>
-                  <input type="text" class="form-control" placeholder="Username" aria-label="Username" aria-describedby="basic-addon1" onkeyup="searchTransaction(this.value)">
+                  <input type="text" class="form-control" placeholder="Username" aria-label="Username" aria-describedby="basic-addon1" onkeyup="searchTransaction(this.value, ${id})">
                 </div>
               </li>
             </ul>
@@ -145,11 +145,11 @@ function showTransaction(id) {
                                             <th class="border-top-0">Status</th>                               
                                             <th class="border-top-0">DANH MỤC</th>
                                             <th class="border-top-0">SỐ TIỀN</th>
+                                            <th class="border-top-0">NGÀY THÊM</th>
                                             <th class="border-top-0" colspan="2"></th>
                                         </tr>
                                         </thead>
                                         <tbody id="listTransactions">
-                                        
                                         </tbody>
                                     </table>
                                 </div>
@@ -203,7 +203,7 @@ function showListTransactions(id) {
     let users = JSON.parse(localStorage.getItem('token'))
     $.ajax({
         type: 'GET',
-        url: `http://localhost:3000/transactions/${id}`,
+        url: `http://localhost:3000/transactions/getAll/${id}`,
         headers: {
             'Content-Type': 'application/json',
             Authorization: 'Bearer ' + users.token
@@ -224,6 +224,9 @@ function showListTransactions(id) {
                             </td>
                               <td class="text-truncate">
                                  <p>${item.money} <i class="la la-dollar success font-medium-1 mr-1"></i></p>
+                              </td>
+                               <td class="text-truncate">
+                                 <p>Ngày: ${item.date} - Tháng: ${item.month}</p>
                               </td>
                               <td>
                                   <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#editModal${item.idTransaction}">Edit</button>
@@ -333,7 +336,7 @@ function showListCategory(id) {
     let users = JSON.parse(localStorage.getItem('token'))
     $.ajax({
         type: 'GET',
-        url: `http://localhost:3000/transactions/${id}`,
+        url: `http://localhost:3000/transactions/getAll/${id}`,
         headers: {
             'Content-Type': 'application/json',
             Authorization: 'Bearer ' + users.token
@@ -345,7 +348,6 @@ function showListCategory(id) {
                          <option value="${item.idCategory}">${item.nameCategory}</option>                  
                 `})
             $('#category').html(html1)
-            $(`#category`).html(html1)
         }
     })
 }
@@ -400,18 +402,18 @@ function deleteTransaction(idTransaction, idWallet) {
 }
 function searchTransaction(value, id) {
     console.log(id)
+    console.log(value)
     let type = value.toLowerCase()
     let users = JSON.parse(localStorage.getItem('token'))
     $.ajax({
         type: 'GET',
-        url: `http://localhost:3000/transactions/search?type=${type}`,
+        url: `http://localhost:3000/transactions/search?type=${type}&wallet=${id}`,
         headers: {
             'Content-Type': 'application/json',
             Authorization: 'Bearer ' + users.token
         },
         data: JSON.stringify(type, id),
         success : (transactions) => {
-            console.log(transactions)
             let html = ''
             transactions.map(item => {
                 html += `

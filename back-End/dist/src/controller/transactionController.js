@@ -5,7 +5,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 const transactionService_1 = __importDefault(require("../service/transactionService"));
 const categoryService_1 = __importDefault(require("../service/categoryService"));
-const walletController_1 = __importDefault(require("./walletController"));
+const walletService_1 = __importDefault(require("../service/walletService"));
 class TransactionController {
     constructor() {
         this.getAll = async (req, res) => {
@@ -26,12 +26,12 @@ class TransactionController {
                     wallet: req.body.wallet,
                     category: req.body.category,
                     type: req.body.type,
-                    moneyTransaction: req.body.moneyTransaction,
+                    money: req.body.money,
                     month: new Date().getMonth() + 1,
                     date: new Date().getDate()
                 };
                 await transactionService_1.default.save(newTransaction);
-                await walletController_1.default.editMoney(req.body.wallet);
+                await walletService_1.default.editIncomeMoney(req.body.wallet, req.body.type, req.body.money);
                 res.status(200).json("add ok");
             }
             catch (e) {
@@ -67,8 +67,7 @@ class TransactionController {
         this.findByType = async (req, res) => {
             try {
                 let type = req.query.type;
-                let id = req.query.id;
-                console.log(type);
+                let id = req.query.wallet;
                 let transaction = await transactionService_1.default.findByType(type, id);
                 res.status(200).json(transaction);
             }

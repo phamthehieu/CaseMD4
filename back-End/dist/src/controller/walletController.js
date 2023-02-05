@@ -12,11 +12,7 @@ class WalletController {
             res.status(200).json(wallet);
         };
         this.create = async (req, res) => {
-            let wallet = {
-                nameWallet: req.body.nameWallet,
-                user: req.decoded.idUser
-            };
-            let save = await this.WalletService.createWallet(wallet);
+            let save = await this.WalletService.createWallet(req.body);
             res.status(201).json(save);
         };
         this.edit = async (req, res) => {
@@ -27,19 +23,6 @@ class WalletController {
         this.delete = async (req, res) => {
             let id = req.params.id;
             res.status(200).json(await this.WalletService.delete(id));
-        };
-        this.editMoney = async (id) => {
-            let transaction = await this.WalletService.transaction(id);
-            let newMoney = 0;
-            for (let i = 0; i < transaction.length; i++) {
-                if (transaction[i].type === 'thu') {
-                    newMoney = newMoney + transaction[i].moneyTransaction;
-                }
-                else {
-                    newMoney = newMoney - transaction[i].moneyTransaction;
-                }
-            }
-            await this.WalletService.editMoney(id, newMoney);
         };
         this.WalletService = walletService_1.default;
     }

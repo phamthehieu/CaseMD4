@@ -2,6 +2,7 @@ import  {Request, Response} from 'express';
 import transactionService from "../service/transactionService";
 import categoryService from "../service/categoryService";
 import walletController from './walletController';
+import walletService from "../service/walletService";
 class TransactionController {
     constructor() {
     }
@@ -23,12 +24,12 @@ class TransactionController {
                 wallet: req.body.wallet,
                 category: req.body.category,
                 type: req.body.type,
-                moneyTransaction: req.body.moneyTransaction,
+                money: req.body.money,
                 month: new Date().getMonth() + 1,
                 date: new Date().getDate()
             }
             await transactionService.save(newTransaction)
-            await walletController.editMoney(req.body.wallet)
+            await walletService.editIncomeMoney(req.body.wallet,req.body.type,req.body.money)
             res.status(200).json("add ok")
         }
         catch (e){
@@ -63,8 +64,7 @@ class TransactionController {
     findByType = async (req: Request, res :Response)=> {
         try {
             let type = req.query.type
-            let id = req.query.id
-            console.log(type)
+            let id = req.query.wallet
             let transaction = await transactionService.findByType(type, id)
             res.status(200).json(transaction)
         } catch (e) {

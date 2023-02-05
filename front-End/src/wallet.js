@@ -82,7 +82,7 @@ function showWallet() {
           <div class="content-body"><div id="wallet">
     <div class="wallet-table-th d-none d-md-block">
         <div class="row">
-            <div class="col-md-4 col-12 py-1">
+            <div class="col-md-3 col-12 py-1">
                 <p class="mt-0 text-capitalize">Name Wallet</p>
             </div>
             <div class="col-md-2 col-12 py-1 text-center">
@@ -91,8 +91,11 @@ function showWallet() {
             <div class="col-md-2 col-12 py-1 text-center">
                 <p class="mt-0 text-capitalize">Số Tiền Chi</p>
             </div>
-            <div class="col-md-4 col-12 py-1 text-center">
-                <p class="mt-0 text-capitalize">Edit</p>
+            <div class="col-md-2 col-12 py-1 text-center">
+                <p class="mt-0 text-capitalize">Đã Chi Tiêu</p>
+            </div>
+            <div class="col-md-3 col-12 py-1 text-center" >
+                <p class="mt-0 text-capitalize"></p>
             </div>
         </div>
     </div>
@@ -128,7 +131,7 @@ function showListWallet() {
             <div class="card-body">
                 <div class="col-12">
                     <div class="row">
-                        <div class="col-md-4 col-12 py-1">
+                        <div class="col-md-3 col-12 py-1">
                             <div class="media">
                                 <div class="media-body" onclick="showTransaction(${item.idWallet})">
                                   <h5 class="mt-0 text-capitalize">${item.nameWallet}</h5>
@@ -136,15 +139,18 @@ function showListWallet() {
                             </div>
                         </div>
                         <div class="col-md-2 col-12 py-1 text-center">
-                            <h6>${item.money} VND</h6>         
+                            <h6 style="color: green">${item.incomeMoney} VND</h6>         
                         </div>
                         <div class="col-md-2 col-12 py-1 text-center">
-                           <h6>0.019842 BTC</h6>  
+                           <h6 style="color: red">${item.payMoney} VND</h6>  
+                        </div>
+                         <div class="col-md-2 col-12 py-1 text-center">
+                           <h6> VND</h6>  
                         </div>
                         <tr>
                         <td>
-                        <div class="col-md-4 col-12 text-center" style="margin-top: 5px">
-                         <button class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#deleteModal${item.idWallet}">Delete</button>
+                        <div class="col-md-3 col-12 text-center">
+                         <button class="btn btn-danger text-left" data-bs-toggle="modal" data-bs-target="#deleteModal${item.idWallet}">Delete</button>
                         <div class="modal fade" id="deleteModal${item.idWallet}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
                         <div class="modal-dialog">
                             <div class="modal-content">
@@ -164,7 +170,7 @@ function showListWallet() {
                         </div>
                         </td>
                         <td>
-                         <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#editModal${item.idWallet}">Edit</button>
+                         <button class="btn btn-primary text-right" data-bs-toggle="modal" data-bs-target="#editModal${item.idWallet}">Edit</button>
                             <div class="modal fade" id="editModal${item.idWallet}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
                                 <div class="modal-dialog modal-lg">
                                     <div class="modal-content">
@@ -211,7 +217,7 @@ function editWallet(id) {
     let user = users.idUser
     let wallet = {
         nameWallet: nameWallet,
-        money: money,
+        incomeMoney: money,
         user: user
     }
     $.ajax({
@@ -230,11 +236,11 @@ function editWallet(id) {
 function createWallet() {
     let users = JSON.parse(localStorage.getItem('token'))
     let nameWallet = $("#nameWallet").val()
-    let money = $("#money").val()
+    let incomeMoney = $("#money").val()
     let idUser = users.idUser;
     let wallet = {
         nameWallet: nameWallet,
-        money: money,
+        incomeMoney: incomeMoney,
         user: idUser
     }
     $.ajax({
