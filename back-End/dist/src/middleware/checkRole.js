@@ -2,8 +2,8 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.checkRole = void 0;
 const checkRole = async (req, res, next) => {
-    let role = req["decode"].position;
-    if (role === "admin") {
+    let check = req["decoded"].role;
+    if (check === "admin") {
         next();
     }
     else {

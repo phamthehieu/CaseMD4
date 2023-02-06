@@ -1,6 +1,6 @@
 export const checkRole = async (req, res, next) => {
-    let role = req["decode"].position
-    if (role === "admin") {
+    let check = req["decoded"].role
+    if (check === "admin") {
         next()
     } else {
         res.status(403).json({

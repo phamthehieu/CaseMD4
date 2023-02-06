@@ -2,7 +2,6 @@
 function showWallet() {
     let user = localStorage.getItem('token')
     let users = JSON.parse(localStorage.getItem('token'))
-    console.log(users.role)
     if (user) {
       if (users.role === 'user') {
           $("#body").html(`
@@ -30,7 +29,6 @@ function showWallet() {
         </div>
       </div>
     </nav>
-    <!-- ////////////////////////////////////////////////////////////////////////////-->
     <div class="main-menu menu-fixed menu-dark menu-bg-default rounded menu-accordion menu-shadow">
       <div class="main-menu-content"><a class="navigation-brand d-none d-md-block d-lg-block d-xl-block" href="index.html"><img class="brand-logo" alt="CryptoDash admin logo" src="../../../app-assets/images/logo/logo.png"/></a>
         <ul class="navigation navigation-main" id="main-menu-navigation" data-menu="menu-navigation">     
@@ -224,6 +222,7 @@ function showWallet() {
 }
 function showListWallet() {
     let users = JSON.parse(localStorage.getItem('token'))
+    console.log(users)
     $.ajax({
         type: 'GET',
         url: `http://localhost:3000/wallet/${users.idUser}`,

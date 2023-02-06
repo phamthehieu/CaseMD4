@@ -99,7 +99,9 @@ function login() {
         },
         data: JSON.stringify(user),
         success : (token) => {
-            if  (token.status === 'lock') {
+            if (token === 'User is already locked') {
+               return alert(`Tài khoản đã bị khóa vui lòng liên hệ lại`)
+            } else if  (token.status === 'lock') {
                 return alert(`Tài khoản đã bị khóa vui lòng liên hệ lại`)
             } else if (token === "User not found") {
                 return $("#login1").html(`Vui Lòng Nhập Đúng Tên Đăng Nhập`)
@@ -177,6 +179,7 @@ function showFormProfile() {
             <ul class="navigation navigation-main" id="main-menu-navigation" data-menu="menu-navigation">
                 <li class="active"><a onclick="showWallet()"><i class="icon-wallet"></i>Wallet</a>
                 </li>
+                <li class=" nav-item"><a onclick="showUsers()"><i class="icon-user-following"></i>Users</a>
                 <li class=" nav-item"><a onclick="showFormProfile()"><i class="ft-user"></i> Profile</span></a>
                 <li class=" nav-item"> <a onclick="logOut()"><i class="ft-power"></i> Log Out</a></li>
             </ul>
@@ -476,25 +479,17 @@ function showUsers() {
           <ul class="nav navbar-nav flex-row">
             <li class="nav-item mobile-menu d-md-none mr-auto"><a class="nav-link nav-menu-main menu-toggle hidden-xs" href="#"><i class="ft-menu font-large-1"></i></a></li>
             <li class="nav-item d-md-none"><button onclick="showWallet()"><img class="brand-logo d-none d-md-block" alt="CryptoDash admin logo" src="../../../app-assets/images/logo/logo.png"><img class="brand-logo d-sm-block d-md-none" alt="CryptoDash admin logo sm" src="../../../app-assets/images/logo/logo-sm.png"></button></li>
-            <li class="nav-item d-md-none"><a class="nav-link open-navbar-container" data-toggle="collapse" data-target="#navbar-mobile"><i class="la la-ellipsis-v">   </i></a></li>
+            <li class="nav-item d-md-none"><a class="nav-link open-navbar-container" data-toggle="collapse" data-target="#navbar-mobile"><i class="la la-ellipsis-v"></i></a></li>
           </ul>
         </div>
         <div class="navbar-container">
           <div class="collapse navbar-collapse" id="navbar-mobile">
             <ul class="nav navbar-nav mr-auto float-left">
               <li class="nav-item d-none d-md-block"><a class="nav-link nav-menu-main menu-toggle hidden-xs" href="#"><i class="ft-menu"></i></a></li>
-              <li>
-                <div class="input-group mb-3" style="margin-top: 10px">
-                  <span class="input-group-text" id="basic-addon1"><i class="ficon ft-search"></i></span>
-                  <input type="text" class="form-control" placeholder="Username" aria-label="Username" aria-describedby="basic-addon1">
-                </div>
-              </li>
             </ul>
-          </div>
         </div>
       </div>
     </nav>
-    <!-- ////////////////////////////////////////////////////////////////////////////-->
     <div class="main-menu menu-fixed menu-dark menu-bg-default rounded menu-accordion menu-shadow">
       <div class="main-menu-content"><a class="navigation-brand d-none d-md-block d-lg-block d-xl-block" href="index.html"><img class="brand-logo" alt="CryptoDash admin logo" src="../../../app-assets/images/logo/logo.png"/></a>
         <ul class="navigation navigation-main" id="main-menu-navigation" data-menu="menu-navigation">     
@@ -502,39 +497,6 @@ function showUsers() {
           </li>
           <li class=" nav-item"><a onclick="showFormProfile()"><i class="ft-user"></i> Profile</span></a>
           <li class=" nav-item"> <a onclick="logOut()"><i class="ft-power"></i> Log Out</a></li>  
-        </ul>
-      </div>
-    </div>
-    <div class="main-menu menu-fixed menu-dark menu-bg-default rounded menu-accordion menu-shadow">
-      <div class="main-menu-content"><a class="navigation-brand d-none d-md-block d-lg-block d-xl-block" href="index.html"><img class="brand-logo" alt="CryptoDash admin logo" src="../../../app-assets/images/logo/logo.png"/></a>
-        <ul class="navigation navigation-main" id="main-menu-navigation" data-menu="menu-navigation">
-          <li class=" nav-item"><a href="index.html"><i class="icon-grid"></i><span class="menu-title" data-i18n="">Dashboard</span></a>
-          </li>
-          <li class=" nav-item"><a href="buy-ico.html"><i class="icon-layers"></i><span class="menu-title" data-i18n="">Buy ICO</span></a>
-          </li>
-          <li class=" nav-item"><a href="wallet.html"><i class="icon-wallet"></i><span class="menu-title" data-i18n="">Wallet</span></a>
-          </li>
-          <li class=" nav-item"><a href="transactions.html"><i class="icon-shuffle"></i><span class="menu-title" data-i18n="">Transactions</span></a>
-          </li>
-          <li class=" nav-item"><a href="faq.html"><i class="icon-support"></i><span class="menu-title" data-i18n="">FAQ</span></a>
-          </li>
-          <li class=" nav-item"><a href="#"><i class="icon-user-following"></i><span class="menu-title" data-i18n="">Account</span></a>
-            <ul class="menu-content">
-              <li><a class="menu-item" href="account-profile.html">Profile</a>
-              </li>
-              <li><a class="menu-item" href="account-login-history.html">Login History</a>
-              </li>
-              <li class="navigation-divider"></li>
-              <li><a class="menu-item" href="#">Misc</a>
-                <ul class="menu-content">
-                  <li><a class="menu-item" href="account-login.html">Login</a>
-                  </li>
-                  <li><a class="menu-item" href="account-register.html">Register</a>
-                  </li>
-                </ul>
-              </li>
-            </ul>
-          </li>
         </ul>
       </div>
     </div>
@@ -554,68 +516,150 @@ function showUsers() {
               </div>
             </div>
           </div>
-          <div class="content-header-right col-md-4 col-12 d-none d-md-inline-block">
-            <div class="btn-group float-md-right"><a class="btn-gradient-secondary btn-sm white" href="wallet.html">Buy now</a></div>
-          </div>
         </div>
-        <div class="content-body"><div id="history">
-    <div class="history-table-th d-none d-md-block">
-        <div class="col-12">
-            <div class="row px-1">
-                <div class="col-md-2 col-12 py-1">
-                    <p class="mb-0">Date</p>
-                </div>
-                <div class="col-md-2 col-12 py-1">
-                    <p class="mb-0">Time</p>
-                </div>
-                <div class="col-md-2 col-12 py-1">
-                    <p class="mb-0">Browser</p>
-                </div>
-                <div class="col-md-2 col-12 py-1">
-                    <p class="mb-0">IP</p>
-                </div>
-                <div class="col-md-1 col-12 py-1">
-                    <p class="mb-0">Region</p>
-                </div>
-                <div class="col-md-3 col-12 py-1">
-                    <p class="mb-0">Status</p>
-                </div>
-            </div>
-        </div>
-    </div>
-    <div class="history-table-tbody">
-        <section class="card pull-up">
-            <div class="card-content">
-                <div class="card-body">
+        <div class="content-body">
+                <div class="history-table-th d-none d-md-block">
                     <div class="col-12">
-                        <div class="row">
+                        <div class="row px-1">
                             <div class="col-md-2 col-12 py-1">
-                                <p class="mb-0"><span class="d-inline-block d-md-none text-bold-700">Date: </span> 10-03-2018</p>
-                            </div>
-                            <div class="col-md-2 col-12 py-1">
-                                <p class="mb-0"><span class="d-inline-block d-md-none text-bold-700">Time: </span> 22:43:32(GMT+5)</p>
+                                <p class="mb-0">idUser</p>
                             </div>
                             <div class="col-md-2 col-12 py-1">
-                                <p class="mb-0"><span class="d-inline-block d-md-none text-bold-700">Browser: </span>  <span class="safari-icon browser-icon  d-none d-md-block"> Safari</span></p>
+                                <p class="mb-0">userName</p>
                             </div>
                             <div class="col-md-2 col-12 py-1">
-                                <p class="mb-0"><span class="d-inline-block d-md-none text-bold-700">IP: </span>  192.168.1.100</p>
+                                <p class="mb-0">fullName</p>
                             </div>
-                            <div class="col-md-1 col-12 py-1">
-                                <p class="mb-0"><span class="d-inline-block d-md-none text-bold-700">Region: </span> USA</p>
+                            <div class="col-md-2 col-12 py-1">
+                                <p class="mb-0">Role</p>
                             </div>
-                            <div class="col-md-3 col-12 py-1">
-                                <p class="mb-0 success"><span class="d-inline-block d-md-none text-bold-700">Status: </span> Successful login</p>
+                            <div class="col-md-4 col-12 py-1">
+                                <p class="mb-0">Status</p>
                             </div>
                         </div>
                     </div>
                 </div>
-            </div>
-        </section>
-    </div>
-</div>
+                <div id="list112"></div>
         </div>
       </div>
     </div>
     `)
+    showListUsers()
+}
+function showListUsers() {
+    let users = JSON.parse(localStorage.getItem('token'))
+    $.ajax({
+        type: "GET",
+        url: `http://localhost:3000/user/list-user`,
+        headers: {
+            'Content-Type': 'application/json',
+            Authorization: 'Bearer ' + users.token
+        },
+        success : (users) => {
+            let html = ''
+            users.map(item => {
+                if (item.role === 'admin') {
+                    html += `
+                        <div class="card-content">
+                            <div class="card-body">
+                                <div class="col-12">
+                                <div class="row">
+                                     <div class="col-md-2 col-12 py-1">
+                                            <p class="mb-0">${item.idUser}</p>
+                                        </div>
+                                        <div class="col-md-2 col-12 py-1">
+                                            <p class="mb-0">${item.userName}</p>
+                                        </div>
+                                        <div class="col-md-2 col-12 py-1">
+                                            <p class="mb-0">${item.fullName}</p>
+                                        </div>
+                                        <div class="col-md-2 col-12 py-1">
+                                            <p class="mb-0">${item.role}</p>
+                                        </div>
+                                         <div class="col-md-2 col-12 py-1">
+                                            <p class="mb-0">${item.status}</p>
+                                        </div>
+                                        <div class="col-md-2 col-12 py-1">
+                                           <div class="btn-group float-md-right"></div>
+                                        </div>
+                                    </div> 
+                                </div>
+                            </div>
+                        </div>
+                `} else if (item.status === 'open') {
+                  html += `
+                        <div class="card-content">
+                            <div class="card-body">
+                                <div class="col-12">
+                                <div class="row">
+                                     <div class="col-md-2 col-12 py-1">
+                                            <p class="mb-0">${item.idUser}</p>
+                                        </div>
+                                        <div class="col-md-2 col-12 py-1">
+                                            <p class="mb-0">${item.userName}</p>
+                                        </div>
+                                        <div class="col-md-2 col-12 py-1">
+                                            <p class="mb-0">${item.fullName}</p>
+                                        </div>
+                                        <div class="col-md-2 col-12 py-1">
+                                            <p class="mb-0">${item.role}</p>
+                                        </div>
+                                         <div class="col-md-2 col-12 py-1">
+                                            <p class="mb-0">${item.status}</p>
+                                        </div>
+                                        <div class="col-md-2 col-12 py-1">
+                                           <div class="btn-group float-md-right"><a class="btn-gradient-secondary btn-sm white" onclick="statusUsers(${item.idUser})">Lock</a></div>
+                                        </div>
+                                    </div> 
+                                </div>
+                            </div>
+                        </div>
+                `} else {
+                  html += `
+                        <div class="card-content">
+                            <div class="card-body">
+                                <div class="col-12">
+                                <div class="row">
+                                     <div class="col-md-2 col-12 py-1">
+                                            <p class="mb-0">${item.idUser}</p>
+                                        </div>
+                                        <div class="col-md-2 col-12 py-1">
+                                            <p class="mb-0">${item.userName}</p>
+                                        </div>
+                                        <div class="col-md-2 col-12 py-1">
+                                            <p class="mb-0">${item.fullName}</p>
+                                        </div>
+                                        <div class="col-md-2 col-12 py-1">
+                                            <p class="mb-0">${item.role}</p>
+                                        </div>
+                                         <div class="col-md-2 col-12 py-1">
+                                            <p class="mb-0">${item.status}</p>
+                                        </div>
+                                        <div class="col-md-2 col-12 py-1">
+                                           <div class="btn-group float-md-right"><a class="btn-gradient-secondary btn-sm white" onclick="statusUsers(${item.idUser})">Open</a></div>
+                                        </div>
+                                    </div> 
+                                </div>
+                            </div>
+                        </div>
+                `
+              }
+            })
+            $("#list112").html(html);
+    }
+    })
+}
+function statusUsers(id) {
+    let users = JSON.parse(localStorage.getItem('token'))
+    $.ajax({
+        type: 'PUT',
+        url: `http://localhost:3000/user/lock/${id}`,
+        headers: {
+            'Content-Type': 'application/json',
+            Authorization: 'Bearer ' + users.token
+        },
+        success : () => {
+           showUsers()
+        }
+    })
 }
