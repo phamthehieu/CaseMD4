@@ -12,7 +12,8 @@ class TransactionService {
             return this.transactionRepository.save(transaction);
         };
         this.findById = async (id) => {
-            return;
+            let transaction = this.transactionRepository.findOneBy({ idTransaction: id });
+            return transaction;
         };
         this.remove = async (id) => {
             let transaction = this.transactionRepository.findOneBy({ idTransaction: id });
@@ -32,8 +33,8 @@ class TransactionService {
                 return this.transactionRepository.update({ idTransaction: id }, newTransaction);
             }
         };
-        this.findByType = async (type) => {
-            let sql = `select * from transaction join category on transaction.category = category.idCategory where transaction.type like '%${type}%'`;
+        this.findByType = async (type, id) => {
+            let sql = `select * from transaction join category on transaction.category = category.idCategory where transaction.type like '%${type}%' and wallet = ${id}`;
             let transaction = await this.transactionRepository.query(sql);
             if (!transaction) {
                 return null;
@@ -42,8 +43,11 @@ class TransactionService {
                 return transaction;
             }
         };
-        this.searchByMonth = async (month) => {
-            return this.transactionRepository.find({ month: month });
+        this.searchByMonth = async (id, month) => {
+            let sql = `select * from transaction 
+                    join wallet on transaction.wallet = wallet.idWallet 
+                    where wallet.idWallet = ${id} and transaction.month = ${month}`;
+            return await this.transactionRepository.query(sql);
         };
         this.transactionRepository = data_soure_1.AppDataSource.getRepository(transaction_1.Transaction);
     }

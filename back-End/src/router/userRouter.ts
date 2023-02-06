@@ -7,7 +7,7 @@ import userController from "../controller/userController";
 export const userRouter = Router()
 
 userRouter.put('/edit/:id', UserController.editUser)
-userRouter.get('/lock/:id', UserController.lockUser)
+userRouter.put('/lock/:id', UserController.lockUser)
 userRouter.get('/list-user', userController.showListUser)
 userRouter.get('/profile/:id', userController.showProfile)
 userRouter.put('/changePassword/:id', userController.changePassword)

@@ -29,15 +29,22 @@ class WalletService {
                     where wallet.idWallet = ${wallet.idWallet}`;
             return await this.walletRepository.query(sql);
         };
-        this.transactionSpend = async (id) => {
-            let wallet = await this.walletRepository.findOneBy({ idWallet: id });
-            let sql = `select * from transaction 
-                    join wallet on transaction.wallet = wallet.idWallet 
-                    where wallet.idWallet = ${wallet.idWallet} and transaction.type ='chi'`;
-            return await this.walletRepository.query(sql);
-        };
-        this.editMoney = async (id, newMoney) => {
-            return await this.walletRepository.update({ idWallet: id }, { money: newMoney });
+        this.editIncomeMoney = async (id, type, money) => {
+            let a = Number(money);
+            if (type === 'income') {
+                let moneyWallet = await this.walletRepository.findOneBy({ idWallet: id });
+                let income = moneyWallet.incomeMoney;
+                let b = Number(income);
+                let c = a + b;
+                return await this.walletRepository.update({ idWallet: id }, { incomeMoney: c });
+            }
+            else {
+                let moneyWallet = await this.walletRepository.findOneBy({ idWallet: id });
+                let pay = moneyWallet.payMoney;
+                let n = Number(pay);
+                let d = a + n;
+                return await this.walletRepository.update({ idWallet: id }, { payMoney: d });
+            }
         };
         this.walletRepository = data_soure_1.AppDataSource.getRepository(wallet_1.Wallet);
     }

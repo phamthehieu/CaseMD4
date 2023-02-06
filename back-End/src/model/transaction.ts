@@ -10,6 +10,7 @@ export class Transaction {
     @Column()
     type: string;
     @Column()
+    money: string;
     moneyTransaction: number;
     @Column()
     month : number;

@@ -31,8 +31,8 @@ __decorate([
 ], Transaction.prototype, "type", void 0);
 __decorate([
     (0, typeorm_1.Column)(),
-    __metadata("design:type", Number)
-], Transaction.prototype, "moneyTransaction", void 0);
+    __metadata("design:type", String)
+], Transaction.prototype, "money", void 0);
 __decorate([
     (0, typeorm_1.Column)(),
     __metadata("design:type", Number)

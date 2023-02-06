@@ -24,10 +24,7 @@ class UserController {
             try {
                 let id = req.params.id;
                 let lock = await this.UserService.lock(id);
-                res.status(200).json({
-                    Message: 'Locked',
-                    lock
-                });
+                res.status(200).json({ lock });
             }
             catch (e) {
                 res.status(500).json(e.message);

@@ -1,4 +1,3 @@
-
 function showTransaction(id) {
    $("#body").html(`
                  <nav class="header-navbar navbar-expand-md navbar navbar-with-menu navbar-without-dd-arrow fixed-top navbar-light navbar-bg-color">
@@ -7,20 +6,20 @@ function showTransaction(id) {
           <ul class="nav navbar-nav flex-row">
             <li class="nav-item mobile-menu d-md-none mr-auto"><a class="nav-link nav-menu-main menu-toggle hidden-xs" href="#"><i class="ft-menu font-large-1"></i></a></li>
             <li class="nav-item d-md-none"><button onclick="showWallet()"><img class="brand-logo d-none d-md-block" alt="CryptoDash admin logo" src="../../../app-assets/images/logo/logo.png"><img class="brand-logo d-sm-block d-md-none" alt="CryptoDash admin logo sm" src="../../../app-assets/images/logo/logo-sm.png"></button></li>
-            <li class="nav-item d-md-none"><a class="nav-link open-navbar-container" data-toggle="collapse" data-target="#navbar-mobile"><i class="la la-ellipsis-v">   </i></a></li>
+            <li class="nav-item d-md-none"><a class="nav-link open-navbar-container" data-toggle="collapse" data-target="#navbar-mobile"><i class="la la-ellipsis-v"></i></a></li>
           </ul>
         </div>
         <div class="navbar-container">
           <div class="collapse navbar-collapse" id="navbar-mobile">
             <ul class="nav navbar-nav mr-auto float-left">
               <li class="nav-item d-none d-md-block"><a class="nav-link nav-menu-main menu-toggle hidden-xs" href="#"><i class="ft-menu"></i></a></li>
-              <li class="nav-item nav-search"><a class="nav-link nav-link-search" href="#"><i class="ficon ft-search"></i></a>
-                <div class="search-input">
-                  <input class="input" type="text" placeholder="Explore CryptoDash...">
+              <li>
+                <div class="input-group mb-3" style="margin-top: 10px">
+                  <span class="input-group-text" id="basic-addon1"><i class="ficon ft-search"></i></span>
+                  <input type="text" class="form-control" placeholder="Username" aria-label="Username" aria-describedby="basic-addon1" onkeyup="searchTransaction(this.value, ${id})">
                 </div>
               </li>
             </ul>
-          </div>
         </div>
       </div>
     </nav>
@@ -45,33 +44,8 @@ function showTransaction(id) {
                             <div class=" collapse show">
                                 <div class="card-body">
                                     <form class="form-horizontal form-purchase-token row">
-                                      <div class="col-md-12 col-12 text-center">  
-                                             <button class=" btn-gradient-secondary" data-bs-toggle="modal1" data-bs-target="#transactionModal">ADD Transaction</button>
-                            <div class="modal fade" id="transactionModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                                <div class="modal-dialog modal-lg">
-                                    <div class="modal-content">
-                                    <div class="modal-header">
-                                        <h1 class="modal-title fs-5" id="exampleModalLabel">Edit</h1>
-                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                                    </div>
-                                    <div class="modal-body">
-                                        <div class="input-group flex-nowrap">
-                                            <span class="input-group-text" >Name Wallet</span>
-                                            <input type="text" class="form-control" id="nameWallet" value="" >
-                                        </div>
-                                        <br>
-                                        <div class="input-group flex-nowrap">
-                                            <span class="input-group-text" >money</span>
-                                            <input type="text" class="form-control" id="money" value="" >
-                                        </div>
-                                    </div>
-                                    <div class="modal-footer">
-                                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                                        <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Save Wallet</button>
-                                    </div>
-                                    </div>
-                                </div>
-                            </div>
+                                      <div class="col-md-12 col-12">  
+                                       <h6 class="my-1">ADD TRANSACTION</h6>
                                         </div>  
                                     </form>
                                 </div>
@@ -84,53 +58,76 @@ function showTransaction(id) {
                         <div class="card">
                             <div class="card-content collapse show">
                                 <div class="card-body">
-                                    <form class="form-horizontal form-purchase-token row">          
+                                    <div class="form-horizontal form-purchase-token row">          
                                       <div class="col-md-2 col-12">
                                            <div class="row g-3 align-items-center">
                                                <div class="col-auto">
-                                                 <label for="inputPassword6" class="col-form-label">Loai</label>
+                                                 <label for="inputPassword6" class="col-form-label">Type</label>
                                                </div>
                                               <div class="col-8">
-                                               <select class="custom-select">
-                                                <option value="">THU</option>
-                                                <option value="1">CHI</option>                                         
-                                            </select>
+                                               <select class="custom-select" id="type">
+                                                <option value="income">income</option>
+                                                <option value="pay">pay</option>                                         
+                                               </select>
                                               </div>
                                             </div>  
                                         </div> 
                                         <div class="col-md-2 col-12">
                                          <div class="row g-3 align-items-center">
-                                               <div class="col-auto">
-                                                 <label for="inputPassword6" class="col-form-label">Danh Muc</label>
+                                               <div class="col-2">
+                                                 <label for="inputPassword6" class="col-form-label">List</label>
                                                </div>
-                                              <div class="col-8">
-                                               <select class="custom-select">
-                                                <option value="">THU</option>
-                                                <option value="1">CHI</option>                                         
-                                            </select>
+                                              <div class="col-6">
+                                               <select class="custom-select" id="category">
+                                                <option selected></option>                                               
+                                               </select>
                                               </div>
-                                            </div>                                     
+                                              <div class="col-3">
+                                                 <button class="btn btn-white" data-bs-toggle="modal" data-bs-target="#editModal"><i class="la la la-plus-circle black font-medium-6"></i></button>
+                                                      <div class="modal fade" id="editModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                                           <div class="modal-dialog modal-lg">
+                                                                 <div class="modal-content">
+                                                                      <div class="modal-header">
+                                                                           <h1 class="modal-title fs-5" id="exampleModalLabel">Create Category</h1>
+                                                                           <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                                                      </div>
+                                                                      <div class="modal-body">
+                                                                          <div class="input-group flex-nowrap">
+                                                                              <span class="input-group-text" id="addon-wrapping">Name</span>
+                                                                              <input type="text" class="form-control" id="nameCategory" aria-label="Username" aria-describedby="addon-wrapping">
+                                                                          </div>
+                                                                             
+                                                                            </div>
+                                                                            <div class="modal-footer">
+                                                                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                                                                <button type="button" class="btn btn-danger" data-bs-dismiss="modal" onclick="addCategory(${id})">Save</button>
+                                                                            </div>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                               </div>
+                                                            </div>                                 
                                         </div>                                                                                            
                                          <div class="col-md-4 col-12 mb-1">
                                            <div class="row g-3 align-items-center">
                                                <div class="col-auto">
-                                                 <label for="inputPassword6" class="col-form-label">Money</label>
+                                                 <label class="col-form-label">Money</label>
                                                </div>
                                               <div class="col-auto">
-                                                <input type="password" id="inputPassword6" class="form-control" aria-describedby="passwordHelpInline">
+                                                <input type="text" id="money" class="form-control" aria-describedby="passwordHelpInline">
                                               </div>
                                               <div class="col-auto">
                                                 <span id="passwordHelpInline" class="form-text">
-                                                  Thêm Tiền Cho Danh Mục Này
+                                                  Thêm Tiền Cho Danh Mục
                                                 </span>
                                               </div>
                                             </div>
                                         </div>
                                       
                                         <div class="col-md-2 col-12 text-center">
-                                            <button type="submit" class="btn-gradient-secondary">ADD</button>
+                                            <button type="submit" class="btn-gradient-secondary" onclick="createTransaction(${id})">ADD</button>
                                         </div>
-                                    </form>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -148,11 +145,11 @@ function showTransaction(id) {
                                             <th class="border-top-0">Status</th>                               
                                             <th class="border-top-0">DANH MỤC</th>
                                             <th class="border-top-0">SỐ TIỀN</th>
+                                            <th class="border-top-0">NGÀY THÊM</th>
                                             <th class="border-top-0" colspan="2"></th>
                                         </tr>
                                         </thead>
                                         <tbody id="listTransactions">
-                                        
                                         </tbody>
                                     </table>
                                 </div>
@@ -188,92 +185,7 @@ function showTransaction(id) {
                             <div class="card-content">
                                 <div class="card-body">
                                     <div class="card-text">
-                                        <section class="cd-horizontal-timeline">
-                                            <div class="timeline">
-                                                <div class="events-wrapper">
-                                                    <div class="events">
-                                                        <ol>
-                                                            <li><a href="#0" data-date="16/01/2018" class="selected">16 Jan</a></li>
-                                                            <li><a href="#0" data-date="28/02/2018">28 Feb</a></li>
-                                                            <li><a href="#0" data-date="20/04/2018">20 Mar</a></li>
-                                                            <li><a href="#0" data-date="20/05/2018">20 May</a></li>
-                                                            <li><a href="#0" data-date="09/07/2018">09 Jul</a></li>
-                                                            <li><a href="#0" data-date="30/08/2018">30 Aug</a></li>
-                                                            <li><a href="#0" data-date="15/09/2018">15 Sep</a></li>
-                                                        </ol>
-                                                        <span class="filling-line" aria-hidden="true"></span>
-                                                    </div>
-                                                    <!-- .events -->
-                                                </div>
-                                                <!-- .events-wrapper -->
-                                                <ul class="cd-timeline-navigation">
-                                                    <li><a href="#0" class="prev inactive">Prev</a></li>
-                                                    <li><a href="#0" class="next">Next</a></li>
-                                                </ul>
-                                                <!-- .cd-timeline-navigation -->
-                                            </div>
-                                            <!-- .timeline -->
-                                            <div class="events-content">
-                                                <ol>
-                                                    <li class="selected" data-date="16/01/2018">
-                                                        <blockquote class="blockquote border-0">
-                                                            <p class="text-bold-600">CryptoDash platform idea</p>
-                                                        </blockquote>
-                                                        <p class="lead mt-2">
-                                                            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Illum praesentium officia, fugit recusandae ipsa, quia velit nulla adipisci? Consequuntur aspernatur at.
-                                                        </p>
-                                                    </li>
-                                                    <li data-date="28/02/2018">
-                                                        <blockquote class="blockquote border-0">
-                                                            <p class="text-bold-600">Technical & strategy development</p>
-                                                        </blockquote>
-                                                        <p class="lead mt-2">
-                                                            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Illum praesentium officia, fugit recusandae ipsa, quia velit nulla adipisci? Consequuntur aspernatur at.
-                                                        </p>
-                                                    </li>
-                                                    <li data-date="20/04/2018">
-                                                        <blockquote class="blockquote border-0">
-                                                            <p class="text-bold-600">ICO Launched</p>
-                                                        </blockquote>
-                                                        <p class="lead mt-2">
-                                                            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Illum praesentium officia, fugit recusandae ipsa, quia velit nulla adipisci? Consequuntur aspernatur at.
-                                                        </p>
-                                                    </li>
-                                                    <li data-date="20/05/2018">
-                                                        <blockquote class="blockquote border-0">
-                                                            <p class="text-bold-600">CryptoDash beta version launched</p>
-                                                        </blockquote>
-                                                        <p class="lead mt-2">
-                                                            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Illum praesentium officia, fugit recusandae ipsa, quia velit nulla adipisci? Consequuntur aspernatur at.
-                                                        </p>
-                                                    </li>
-                                                    <li data-date="09/07/2018">
-                                                        <blockquote class="blockquote border-0">
-                                                            <p class="text-bold-600">Mobile apps for iOS & Android</p>
-                                                        </blockquote>
-                                                        <p class="lead mt-2">
-                                                            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Illum praesentium officia, fugit recusandae ipsa, quia velit nulla adipisci? Consequuntur aspernatur at.
-                                                        </p>
-                                                    </li>
-                                                    <li data-date="30/08/2018">
-                                                        <blockquote class="blockquote border-0">
-                                                            <p class="text-bold-600">Partnership with business merchant</p>
-                                                        </blockquote>
-                                                        <p class="lead mt-2">
-                                                            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Illum praesentium officia, fugit recusandae ipsa, quia velit nulla adipisci? Consequuntur aspernatur at.
-                                                        </p>
-                                                    </li>
-                                                    <li data-date="15/09/2018">
-                                                        <blockquote class="blockquote border-0">
-                                                            <p class="text-bold-600">Launch live paltform</p>
-                                                        </blockquote>
-                                                        <p class="lead mt-2">
-                                                            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Illum praesentium officia, fugit recusandae ipsa, quia velit nulla adipisci? Consequuntur aspernatur at.
-                                                        </p>
-                                                    </li>
-                                                </ol>
-                                            </div>
-                                        </section>
+                                  
                                     </div>
                                 </div>
                             </div>
@@ -291,11 +203,216 @@ function showListTransactions(id) {
     let users = JSON.parse(localStorage.getItem('token'))
     $.ajax({
         type: 'GET',
-        url: `http://localhost:3000/transactions/${id}`,
+        url: `http://localhost:3000/transactions/getAll/${id}`,
         headers: {
             'Content-Type': 'application/json',
             Authorization: 'Bearer ' + users.token
         },
+        success : (all) => {
+            let html = ''
+            let categories = ''
+            all.category.map(item => {
+                categories += `
+                         <option value="${item.idCategory}">${item.nameCategory}</option>                  
+                `})
+            all.transaction.map(item => {
+                html += `
+                <tr>
+                   <td class="text-truncate"><i class="la la-cart-plus success font-medium-1 mr-1"></i> ${item.type}</td>
+                    <td class="text-truncate">
+                        <p>${item.nameCategory}</p>
+                            </td>
+                              <td class="text-truncate">
+                                 <p>${item.money} <i class="la la-dollar success font-medium-1 mr-1"></i></p>
+                              </td>
+                               <td class="text-truncate">
+                                 <p>Ngày: ${item.date} - Tháng: ${item.month}</p>
+                              </td>
+                              <td>
+                                  <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#editModal${item.idTransaction}">Edit</button>
+                                      <div class="modal fade" id="editModal${item.idTransaction}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                           <div class="modal-dialog modal-lg">
+                                                         <div class="modal-content">
+                                                              <div class="modal-header">
+                                                            <h1 class="modal-title fs-5" id="exampleModalLabel">Edit ${item.nameCategory}</h1>
+                                                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                                        </div>
+                                                        <div class="modal-body">
+                                                            <div class="input-group flex-nowrap">
+                                                                <span class="input-group-text" id="addon-wrapping">Money</span>
+                                                                <input type="text" class="form-control" id="money${item.idTransaction}" value="${item.money}"  aria-describedby="addon-wrapping">
+                                                            </div>
+                                                            <br>
+                                                            <div class="input-group flex-nowrap">
+                                                                <select id="category${item.idTransaction}" class="form-select" aria-label="Default select example" aria-describedby="addon-wrapping">
+                                                                    <option value="${item.idCategory}">${item.nameCategory}</option>
+                                                                    ${categories}
+                                                                </select>
+                                                            </div>
+                                                        </div>
+                                                        <div class="modal-footer">
+                                                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                                            <button type="button" class="btn btn-danger" data-bs-dismiss="modal" onclick="editTransaction(${item.idTransaction})">Save</button>
+                                                        </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                            </td>
+                                            <td>
+                                             <button class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#deleteModal${item.idTransaction}">Delete</button>
+                                                <div class="modal fade" id="deleteModal${item.idTransaction}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                                <div class="modal-dialog">
+                                                    <div class="modal-content">
+                                                    <div class="modal-header">
+                                                        <h1 class="modal-title fs-5" id="exampleModalLabel">Delete ${item.type} - ${item.nameCategory}</h1>
+                                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                                    </div>
+                                                    <div class="modal-body">
+                                                        Are you sure you want to delete???
+                                                    </div>
+                                                    <div class="modal-footer">
+                                                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">No</button>
+                                                        <button type="button" class="btn btn-danger" data-bs-dismiss="modal" onclick="deleteTransaction(${item.idTransaction}, ${item.wallet})">Yes</button>
+                                                    </div>
+                                                    </div>
+                                                </div>
+                                                </div>
+                                            </td>             
+                                        </tr>
+                            
+                `})
+            showListCategory(id)
+            $("#listTransactions").html(html)
+
+        }
+    })
+
+}
+function addCategory(id) {
+    let users = JSON.parse(localStorage.getItem('token'))
+    let nameCategory = $("#nameCategory").val()
+    let category = {
+        nameCategory: nameCategory,
+    }
+    $.ajax({
+        type: "POST",
+        url: "http://localhost:3000/categories/create",
+        headers: {
+            'Content-Type': 'application/json',
+            Authorization: 'Bearer ' + users.token
+        },
+        data: JSON.stringify(category),
+        success : () => {
+            showTransaction(id)
+        }
+    })
+}
+function createTransaction(id) {
+    let users = JSON.parse(localStorage.getItem('token'))
+    let category = $("#category").val();
+    let type = $("#type").val();
+    let wallet = id;
+    let money = $("#money").val();
+    let transaction = {
+        category: category,
+        type: type,
+        wallet: wallet,
+        money: money
+    }
+    $.ajax({
+        type: "POST",
+        url: "http://localhost:3000/transactions",
+        headers: {
+            'Content-Type': 'application/json',
+            Authorization: 'Bearer ' + users.token
+        },
+        data: JSON.stringify(transaction),
+        success : () => {
+            showTransaction(id)
+        }
+    })
+}
+function showListCategory(id) {
+    let users = JSON.parse(localStorage.getItem('token'))
+    $.ajax({
+        type: 'GET',
+        url: `http://localhost:3000/transactions/getAll/${id}`,
+        headers: {
+            'Content-Type': 'application/json',
+            Authorization: 'Bearer ' + users.token
+        },
+        success : (all) => {
+            let html1 = ''
+            all.category.map(item => {
+                html1 += `
+                         <option value="${item.idCategory}">${item.nameCategory}</option>                  
+                `})
+            $('#category').html(html1)
+        }
+    })
+}
+function editTransaction(idTransaction) {
+    let users = JSON.parse(localStorage.getItem('token'))
+    $.ajax({
+        type: "GET",
+        url: `http://localhost:3000/transactions/findById/${idTransaction}`,
+        headers: {
+            'Content-Type': 'application/json',
+            Authorization: 'Bearer ' + users.token
+        },
+        success : (transaction) => {
+            let wallet = transaction.wallet;
+            let category = $(`#category${idTransaction}`).val()
+            let type = transaction.type;
+            let money = $(`#money${idTransaction}`).val();
+            let editTransaction = {
+                wallet: wallet,
+                category: category,
+                type: type,
+                money: money
+            }
+            $.ajax({
+                type: "PUT",
+                url: `http://localhost:3000/transactions/${idTransaction}`,
+                headers: {
+                    'Content-Type': 'application/json',
+                    Authorization: 'Bearer ' + users.token
+                },
+                data: JSON.stringify(editTransaction),
+                success : () => {
+                    showTransaction(wallet)
+                }
+            })
+        }
+    })
+}
+function deleteTransaction(idTransaction, idWallet) {
+    let users = JSON.parse(localStorage.getItem('token'))
+    $.ajax({
+        type: 'DELETE',
+        url: `http://localhost:3000/transactions/${idTransaction}`,
+        headers: {
+            'Content-Type': 'application/json',
+            Authorization: 'Bearer ' + users.token
+        },
+        success : () => {
+            showTransaction(idWallet)
+        }
+    })
+}
+function searchTransaction(value, id) {
+    console.log(id)
+    console.log(value)
+    let type = value.toLowerCase()
+    let users = JSON.parse(localStorage.getItem('token'))
+    $.ajax({
+        type: 'GET',
+        url: `http://localhost:3000/transactions/search?type=${type}&wallet=${id}`,
+        headers: {
+            'Content-Type': 'application/json',
+            Authorization: 'Bearer ' + users.token
+        },
+        data: JSON.stringify(type, id),
         success : (transactions) => {
             let html = ''
             transactions.map(item => {
@@ -309,40 +426,36 @@ function showListTransactions(id) {
                                  <p>${item.money} <i class="la la-dollar success font-medium-1 mr-1"></i></p>
                               </td>
                               <td>
-                                  <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#editModal${item.idWallet}">Edit</button>
-                                      <div class="modal fade" id="editModal${item.idWallet}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                  <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#editModal${item.idTransaction}">Edit</button>
+                                      <div class="modal fade" id="editModal${item.idTransaction}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
                                            <div class="modal-dialog modal-lg">
                                                  <div class="modal-content">
                                                       <div class="modal-header">
-                                                           <h1 class="modal-title fs-5" id="exampleModalLabel">Edit ${item.nameWallet}</h1>
+                                                           <h1 class="modal-title fs-5" >Edit ${item.nameCategory}</h1>
                                                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                                       </div>
                                                       <div class="modal-body">
                                                           <div class="input-group flex-nowrap">
-                                                              <span class="input-group-text" id="addon-wrapping">Name</span>
-                                                              <input type="text" class="form-control" id="nameWallet${item.idWallet}" value="${item.nameWallet}" aria-label="Username" aria-describedby="addon-wrapping">
+                                                              <span class="input-group-text" >Money</span>
+                                                              <input type="text" class="form-control" id="money${item.idTransaction}" value="${item.money}" aria-describedby="addon-wrapping"> 
+                                                              
                                                           </div>
-                                                                <br>
-                                                                <div class="input-group flex-nowrap">
-                                                                    <span class="input-group-text" id="addon-wrapping">Price VND</span>
-                                                                    <input type="text" class="form-control" id="money${item.idWallet}" value="${item.money}" aria-label="Username" aria-describedby="addon-wrapping">
-                                                                </div>
                                                             </div>
                                                             <div class="modal-footer">
                                                                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                                                                <button type="button" class="btn btn-danger" data-bs-dismiss="modal" onclick="editWallet(${item.idWallet})">Save</button>
+                                                                <button type="button" class="btn btn-danger" data-bs-dismiss="modal" onclick="editTransaction(${item.wallet}, ${item.idTransaction}})">Save</button>
                                                             </div>
                                                             </div>
                                                         </div>
                                                     </div>
                                             </td>
                                             <td>
-                                             <button class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#deleteModal${item.idWallet}">Delete</button>
-                                                <div class="modal fade" id="deleteModal${item.idWallet}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                             <button class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#deleteModal${item.idTransaction}">Delete</button>
+                                                <div class="modal fade" id="deleteModal${item.idTransaction}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
                                                 <div class="modal-dialog">
                                                     <div class="modal-content">
                                                     <div class="modal-header">
-                                                        <h1 class="modal-title fs-5" id="exampleModalLabel">Delete ${item.nameWallet}</h1>
+                                                        <h1 class="modal-title fs-5" id="exampleModalLabel">Delete ${item.type} - ${item.nameCategory}</h1>
                                                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                                     </div>
                                                     <div class="modal-body">
@@ -350,15 +463,18 @@ function showListTransactions(id) {
                                                     </div>
                                                     <div class="modal-footer">
                                                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">No</button>
-                                                        <button type="button" class="btn btn-danger" data-bs-dismiss="modal" onclick="deleteWallet(${item.idWallet})">Yes</button>
+                                                        <button type="button" class="btn btn-danger" data-bs-dismiss="modal" onclick="deleteTransaction(${item.idTransaction}, ${item.wallet})">Yes</button>
                                                     </div>
                                                     </div>
                                                 </div>
                                                 </div>
                                             </td>             
                                         </tr>
+                            
                 `})
+            showListCategory(id)
             $("#listTransactions").html(html)
+
         }
     })
 }

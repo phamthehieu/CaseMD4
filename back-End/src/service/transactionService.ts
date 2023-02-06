@@ -8,13 +8,14 @@ class TransactionService {
     }
     getAll = async (id) =>{
         let sql = `select * from transaction join category on transaction.category = category.idCategory WHERE wallet = ${id}`
-        return await  this.transactionRepository.query(sql)
+        return await this.transactionRepository.query(sql)
     }
     save = async (transaction) =>{
         return this.transactionRepository.save(transaction)
     }
     findById = async (id) =>{
-        return
+        let transaction = this.transactionRepository.findOneBy({idTransaction :id})
+        return transaction;
     }
     remove = async (id)=>{
         let transaction = this.transactionRepository.findOneBy({idTransaction :id})
@@ -35,8 +36,8 @@ class TransactionService {
             return  this.transactionRepository.update({idTransaction :id},newTransaction)
         }
     }
-    findByType = async (type) =>{
-        let sql = `select * from transaction join category on transaction.category = category.idCategory where transaction.type like '%${type}%'`
+    findByType = async (type, id) =>{
+        let sql = `select * from transaction join category on transaction.category = category.idCategory where transaction.type like '%${type}%' and wallet = ${id}`
         let transaction = await  this.transactionRepository.query(sql)
         if(!transaction){
             return null
@@ -46,8 +47,11 @@ class TransactionService {
         }
     }
 
-    searchByMonth = async (month) =>{
-        return this.transactionRepository.find({month: month})
+    searchByMonth = async (id, month) =>{
+        let sql = `select * from transaction 
+                    join wallet on transaction.wallet = wallet.idWallet 
+                    where wallet.idWallet = ${id} and transaction.month = ${month}`
+        return await this.transactionRepository.query(sql)
     }
 
 
