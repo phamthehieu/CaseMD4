@@ -2,7 +2,6 @@ showLogin()
 
 function showLogin() {
     $("#body").html(`
-    <!-- ////////////////////////////////////////////////////////////////////////////-->
     <div class="app-content content">
       <div class="content-wrapper">
         <div class="content-header row">
@@ -186,7 +185,6 @@ function showFormProfile() {
             <ul class="navigation navigation-main" id="main-menu-navigation" data-menu="menu-navigation">
                 <li class="active"><a onclick="showWallet()"><i class="icon-wallet"></i>Wallet</a>
                 </li>
-                <li class=" nav-item"><a onclick="showUsers()"><i class="icon-user-following"></i>Users</a>
                 <li class=" nav-item"><a onclick="showFormProfile()"><i class="ft-user"></i> Profile</span></a>
                 <li class=" nav-item"> <a onclick="logOut()"><i class="ft-power"></i> Log Out</a></li>
             </ul>

@@ -18,11 +18,7 @@ function showWallet() {
           <div class="collapse navbar-collapse" id="navbar-mobile">
             <ul class="nav navbar-nav mr-auto float-left">
               <li class="nav-item d-none d-md-block"><a class="nav-link nav-menu-main menu-toggle hidden-xs" href="#"><i class="ft-menu"></i></a></li>
-              <li>
-                <div class="input-group mb-3" style="margin-top: 10px">
-                  <span class="input-group-text" id="basic-addon1"><i class="ficon ft-search"></i></span>
-                  <input type="text" class="form-control" placeholder="Username" aria-label="Username" aria-describedby="basic-addon1">
-                </div>
+              <li>         
               </li>
             </ul>
           </div>
@@ -125,10 +121,6 @@ function showWallet() {
             <ul class="nav navbar-nav mr-auto float-left">
               <li class="nav-item d-none d-md-block"><a class="nav-link nav-menu-main menu-toggle hidden-xs" href="#"><i class="ft-menu"></i></a></li>
               <li>
-                <div class="input-group mb-3" style="margin-top: 10px">
-                  <span class="input-group-text" id="basic-addon1"><i class="ficon ft-search"></i></span>
-                  <input type="text" class="form-control" placeholder="Username" aria-label="Username" aria-describedby="basic-addon1">
-                </div>
               </li>
             </ul>
           </div>
