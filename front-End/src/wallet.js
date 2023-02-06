@@ -284,7 +284,7 @@ function showListWallet() {
                                         <br>
                                         <div class="input-group flex-nowrap">
                                             <span class="input-group-text" id="addon-wrapping">Price VND</span>
-                                            <input type="text" class="form-control" id="money${item.idWallet}" value="${item.money}" aria-label="Username" aria-describedby="addon-wrapping">
+                                            <input type="text" class="form-control" id="money${item.idWallet}" value="${item.incomeMoney}" aria-label="Username" aria-describedby="addon-wrapping">
                                         </div>
                                     </div>
                                     <div class="modal-footer">
