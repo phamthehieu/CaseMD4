@@ -167,7 +167,7 @@ function showTransaction(id) {
                                 <div class="card-body">
                                     <div class="card-text">
                                         <div class="input-group mb-3">
-                                          <input type="text" class="form-control" aria-label="Text input with segmented dropdown button" id="date" placeholder="  vvNhập ngày muốn tìm kiếm ?">
+                                          <input type="text" class="form-control" aria-label="Text input with segmented dropdown button" id="date" placeholder=" Nhập ngày muốn tìm kiếm ?">
                                           <select class="form-select" aria-label="Default select example" aria-describedby="addon-wrapping" onchange="searchDay(this.value, ${id})">
                                           <option value="1">Tháng 1</option>
                                           <option value="2">Tháng 2</option>
@@ -182,6 +182,8 @@ function showTransaction(id) {
                                           <option value="11">Tháng 11</option>
                                           <option value="12">Tháng 12</option>
                                        </select>
+                                       <tbody id="day1">
+                                      </tbody>
                                         </div>
                                     </div>
                                 </div>
@@ -533,7 +535,6 @@ function searchMonth(month, id) {
         },
         data: JSON.stringify(id,month),
         success : (transactions) => {
-            console.log(transactions)
             let html =''
            transactions.map(item => {
                html += `
@@ -555,9 +556,36 @@ function searchMonth(month, id) {
     })
 }
 function searchDay(month, id) {
+    let users = JSON.parse(localStorage.getItem('token'))
     let date = $("#date").val()
-    console.log(month)
-    console.log(id)
-    console.log(date)
+    $.ajax({
+        type: 'GET',
+        url: `http://localhost:3000/transactions/date/search?id=${id}&month=${month}&date=${date}`,
+        headers: {
+            'Content-Type': 'application/json',
+            Authorization: 'Bearer ' + users.token
+        },
+        data: JSON.stringify(id,month),
+        success : (transactions) => {
+            console.log(transactions)
+            let html =''
+            transactions.map(item => {
+                html += `
+              <tr>
+                   <td class="text-truncate"><i class="la la-cart-plus success font-medium-1 mr-1"></i> ${item.type}</td>
+                    <td class="text-truncate">
+                        <p>${item.nameCategory}</p>
+                    </td>
+                    <td class="text-truncate">
+                        <p>${item.money} <i class="la la-dollar success font-medium-1 mr-1"></i></p>
+                    </td>
+                    <td class="text-truncate">
+                        <p>Ngày: ${item.date} - Tháng: ${item.month}</p>
+                    </td>   
+              </tr>
+               `})
+            $("#day1").html(html)
+        }
+    })
 
 }

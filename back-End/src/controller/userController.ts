@@ -55,16 +55,20 @@ class UserController {
 
     changePassword = async (req: Request, res: Response) => {
         // let username = req['decoded'].userName;
-        let id = req.params.id;
-        let user = await this.UserService.findUser(id)
-        let passwordCompare = await bcrypt.compare(req.body.password, user.password)
-        if (!passwordCompare) {
-            res.status(403).json({message: 'wrong password'})
-        }else {
-            let newPassword = await bcrypt.hash(req.body.passwordNew, 10)
-            let response = await this.UserService.changePassword(user, newPassword)
-            res.status(200).json(response)
+        try {
+            let id = req.params.id;
+            let user = await this.UserService.findUser(id)
+            let passwordCompare = await bcrypt.compare(req.body.password, user.password)
+            if (!passwordCompare) {
+                res.status(403).json({message: 'wrong password'})
+            }else {
+                let newPassword = await bcrypt.hash(req.body.passwordNew, 10)
+                let response = await this.UserService.changePassword(user, newPassword)
+                res.status(200).json(response)
 
+            }
+        }catch (e) {
+            res.status(500).json(e.message);
         }
     }
 }

@@ -83,6 +83,19 @@ class TransactionController {
             res.status(500).json(e.message)
         }
     }
+    searchByDate = async (req, res ) =>{
+        try {
+            let date = req.query.date
+            let id = req.query.id
+            let month = req.query.month
+            let transaction = await transactionService.searchByDate(id,month, date)
+            res.status(200).json(transaction)
+        }catch (e) {
+            res.status(500).json(e.message);
+
+        }
+    }
+
 
 }
 export default new TransactionController()

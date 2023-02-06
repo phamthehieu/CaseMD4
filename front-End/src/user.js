@@ -556,15 +556,6 @@ function showUsers() {
 }
 
 function showFormChangePassword() {
-    // let users = JSON.parse(localStorage.getItem('token'))
-    // $.ajax({
-    //     type: 'GET',
-    //     url: `http://localhost:3000/user/changePassword/${users.idUser}`,
-    //     headers: {
-    //         'Content-Type': 'application/json',
-    //         Authorization: 'Bearer ' + users.token
-    //     },
-    //     success : (user) => {
     let html = ''
     html += `
                  <nav class="header-navbar navbar-expand-md navbar navbar-with-menu navbar-without-dd-arrow fixed-top navbar-light navbar-bg-color">

@@ -14,4 +14,5 @@ exports.transactionRouter.put('/:id', transactionController_1.default.update);
 exports.transactionRouter.get('/search', transactionController_1.default.findByType);
 exports.transactionRouter.get("/findById/:id", transactionController_1.default.findById);
 exports.transactionRouter.get('/month/search', transactionController_1.default.searchByMonth);
+exports.transactionRouter.get('/date/search', transactionController_1.default.searchByDate);
 //# sourceMappingURL=transactionRouter.js.map
