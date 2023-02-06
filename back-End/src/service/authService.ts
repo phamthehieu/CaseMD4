@@ -31,7 +31,8 @@ class AuthService {
                         let payload = {
                             idUser: userCheck.idUser,
                             userName: userCheck.userName,
-                            role: userCheck.role
+                            role: userCheck.role,
+                            status: userCheck.status
                         }
                         const token = jwt.sign(payload, SECRET, {
                             expiresIn: 36000
@@ -40,7 +41,8 @@ class AuthService {
                             token: token,
                             idUser: userCheck.idUser,
                             userName: userCheck.username,
-                            role: userCheck.role
+                            role: userCheck.role,
+                            status: userCheck.status
                         }
                         return check;
                     }
