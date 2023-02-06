@@ -3,11 +3,9 @@ import AuthService from "../service/authService";
 import categoryService from "../service/categoryService";
 class AuthController {
     private AuthService
-
     constructor() {
         this.AuthService = AuthService;
     }
-
     register = async (req, res) => {
         try {
             let user = await this.AuthService.register(req.body)
@@ -16,7 +14,6 @@ class AuthController {
             res.status(500).json(e.message);
         }
     }
-
     login = async (req: Request, res: Response) => {
         try {
             let response = await this.AuthService.checkUser(req.body)
@@ -25,6 +22,5 @@ class AuthController {
             res.status(500).json(e.message);
         }
     }
-
 }
 export default new AuthController()

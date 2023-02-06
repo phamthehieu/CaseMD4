@@ -5,12 +5,10 @@ import transactionService from "./transactionService";
 class WalletService {
     private walletRepository;
     private transactionService
-
     constructor() {
         this.walletRepository = AppDataSource.getRepository(Wallet);
         this.transactionService = transactionService
     }
-
     getAllWallet = async (id) => {
         let sql = `SELECT * from wallet where user = ${id}`
         let wallet = await this.walletRepository.query(sql)
@@ -19,12 +17,9 @@ class WalletService {
     createWallet = async (wallet) => {
         return await this.walletRepository.save(wallet)
     }
-
     updateWallet = async (id, newWallet) => {
-
         return await this.walletRepository.update({idWallet: id}, newWallet)
     }
-
     delete = async (id) => {
         let wallet = await this.walletRepository.findOneBy({idWallet: id})
         if (!wallet) {
@@ -32,7 +27,6 @@ class WalletService {
         }
         return await this.walletRepository.delete({idWallet: id})
     }
-
     transaction = async (id) => {
         let wallet = await this.walletRepository.findOneBy({idWallet: id})
         let sql = `select * from transaction 
@@ -89,7 +83,6 @@ class WalletService {
             return await this.walletRepository.update({idWallet: idWallet} ,{payMoney: g})
         }
     }
-
 }
 
 export default new WalletService

@@ -161,7 +161,7 @@ function showTransaction(id) {
                 <!-- Basic Horizontal Timeline -->
                 <div class="row match-height">
                     <div class="col-xl-6 col-lg-12">
-                        <h6 class="my-2">Latest updates</h6>
+                        <h6 class="my-2">SEARCH DAY</h6>
                         <div class="card">
                             <div class="card-content">
                                 <div class="card-body">
