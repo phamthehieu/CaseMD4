@@ -87,9 +87,6 @@ function showWallet() {
             <div class="col-md-2 col-12 py-1 text-center">
                 <p class="mt-0 text-capitalize">Số Tiền Chi</p>
             </div>
-            <div class="col-md-2 col-12 py-1 text-center">
-                <p class="mt-0 text-capitalize">Đã Chi Tiêu</p>
-            </div>
             <div class="col-md-3 col-12 py-1 text-center" >
                 <p class="mt-0 text-capitalize"></p>
             </div>
@@ -187,9 +184,7 @@ function showWallet() {
             <div class="col-md-2 col-12 py-1 text-center">
                 <p class="mt-0 text-capitalize">Số Tiền Chi</p>
             </div>
-            <div class="col-md-2 col-12 py-1 text-center">
-                <p class="mt-0 text-capitalize">Đã Chi Tiêu</p>
-            </div>
+          
             <div class="col-md-3 col-12 py-1 text-center" >
                 <p class="mt-0 text-capitalize"></p>
             </div>
@@ -241,9 +236,6 @@ function showListWallet() {
                         </div>
                         <div class="col-md-2 col-12 py-1 text-center">
                            <h6 style="color: red">${item.payMoney} VND</h6>  
-                        </div>
-                         <div class="col-md-2 col-12 py-1 text-center">
-                           <h6> VND</h6>  
                         </div>
                         <tr>
                         <td>
