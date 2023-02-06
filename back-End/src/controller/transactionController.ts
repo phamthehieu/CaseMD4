@@ -75,6 +75,7 @@ class TransactionController {
     }
 
     searchByMonth = async (req: Request, res :Response) => {
+        console.log(1)
             let month = req.query.month
             let transaction = await transactionService.searchByMonth(month)
             res.status(200).json(transaction)

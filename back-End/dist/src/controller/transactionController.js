@@ -77,11 +77,6 @@ class TransactionController {
                 res.status(500).json(e.message);
             }
         };
-        this.searchByMonth = async (req, res) => {
-            let month = req.query.month;
-            let transaction = await transactionService_1.default.searchByMonth(month);
-            res.status(200).json(transaction);
-        };
     }
 }
 exports.default = new TransactionController();
