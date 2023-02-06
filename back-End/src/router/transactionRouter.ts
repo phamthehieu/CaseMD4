@@ -10,5 +10,5 @@ transactionRouter.put('/:id',transactionController.update)
 
 transactionRouter.get('/search',transactionController.findByType)
 transactionRouter.get("/findById/:id", transactionController.findById)
-transactionRouter.get('/month/:id',transactionController.searchByMonth)
+transactionRouter.get('/month/search',transactionController.searchByMonth)
 

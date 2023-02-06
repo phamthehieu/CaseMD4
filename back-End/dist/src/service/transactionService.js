@@ -44,9 +44,9 @@ class TransactionService {
             }
         };
         this.searchByMonth = async (id, month) => {
-            let sql = `select * from transaction 
-                    join wallet on transaction.wallet = wallet.idWallet 
-                    where wallet.idWallet = ${id} and transaction.month = ${month}`;
+            let sql = `select * from transaction
+                                     join wallet on transaction.wallet = wallet.idWallet join category on category.idCategory = transaction.category
+                   where wallet.idWallet = ${id} and transaction.month = ${month}`;
             return await this.transactionRepository.query(sql);
         };
         this.transactionRepository = data_soure_1.AppDataSource.getRepository(transaction_1.Transaction);

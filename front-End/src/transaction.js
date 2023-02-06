@@ -185,6 +185,44 @@ function showTransaction(id) {
                             <div class="card-content">
                                 <div class="card-body">
                                     <div class="card-text">
+                                      <select class="form-select" aria-label="Default select example" aria-describedby="addon-wrapping" onchange="searchMonth(this.value, ${id})">
+                                         <option value="1">Tháng 1</option>
+                                         <option value="2">Tháng 2</option>
+                                         <option value="3">Tháng 3</option>
+                                         <option value="4">Tháng 4</option>
+                                         <option value="5">Tháng 5</option>
+                                         <option value="6">Tháng 6</option>
+                                         <option value="7">Tháng 7</option>
+                                         <option value="8">Tháng 8</option>
+                                         <option value="9">Tháng 9</option>
+                                         <option value="10">Tháng 10</option>
+                                         <option value="11">Tháng 11</option>
+                                         <option value="12">Tháng 12</option>
+                                      </select>
+                                      <tbody id="month">
+                                      </tbody>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                         <div class="card">
+                            <div class="card-content">
+                                <div class="card-body">
+                                    <div class="card-text">
+                                        <div class="table-responsive">
+                                            <table id="recent-orders" class="table table-hover table-xl mb-0">
+                                            <thead>
+                                            <tr>
+                                                <th class="border-top-0">Status</th>                               
+                                                <th class="border-top-0">DANH MỤC</th>
+                                                <th class="border-top-0">SỐ TIỀN</th>
+                                                <th class="border-top-0">NGÀY THÊM</th>
+                                            </tr>
+                                            </thead>
+                                            <tbody id="month">
+                                            </tbody>
+                                            </table>
+                                        </div> 
                                     </div>
                                 </div>
                             </div>
@@ -198,7 +236,7 @@ function showTransaction(id) {
    `)
     showListTransactions(id)
 }
-function showListTransactions(id, value) {
+function showListTransactions(id) {
     let users = JSON.parse(localStorage.getItem('token'))
     $.ajax({
         type: 'GET',
@@ -475,4 +513,35 @@ function searchTransaction(value, id) {
         }
     })
 }
-
+function searchMonth(month, id) {
+    let users = JSON.parse(localStorage.getItem('token'))
+    $.ajax({
+        type: 'GET',
+        url: `http://localhost:3000/transactions/month/search?id=${id}&month=${month}`,
+        headers: {
+            'Content-Type': 'application/json',
+            Authorization: 'Bearer ' + users.token
+        },
+        data: JSON.stringify(id,month),
+        success : (transactions) => {
+            console.log(transactions)
+            let html =''
+           transactions.map(item => {
+               html += `
+              <tr>
+                   <td class="text-truncate"><i class="la la-cart-plus success font-medium-1 mr-1"></i> ${item.type}</td>
+                    <td class="text-truncate">
+                        <p>${item.nameCategory}</p>
+                    </td>
+                    <td class="text-truncate">
+                        <p>${item.money} <i class="la la-dollar success font-medium-1 mr-1"></i></p>
+                    </td>
+                    <td class="text-truncate">
+                        <p>Ngày: ${item.date} - Tháng: ${item.month}</p>
+                    </td>   
+              </tr>
+               `})
+            $("#month").html(html)
+        }
+    })
+}

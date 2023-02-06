@@ -76,10 +76,16 @@ class TransactionController {
             }
         };
         this.searchByMonth = async (req, res) => {
-            let id = req.params.id;
-            let month = req.query.month;
-            let transaction = await transactionService_1.default.searchByMonth(id, month);
-            res.status(200).json(transaction);
+            try {
+                let id = req.query.id;
+                let month = req.query.month;
+                let transaction = await transactionService_1.default.searchByMonth(id, month);
+                res.status(200).json(transaction);
+            }
+            catch (e) {
+                console.log(e);
+                res.status(500).json(e.message);
+            }
         };
     }
 }
