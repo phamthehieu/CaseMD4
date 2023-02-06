@@ -1,7 +1,11 @@
 "use strict";
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
 Object.defineProperty(exports, "__esModule", { value: true });
 const data_soure_1 = require("../data-soure");
 const wallet_1 = require("../model/wallet");
+const transactionService_1 = __importDefault(require("./transactionService"));
 class WalletService {
     constructor() {
         this.getAllWallet = async (id) => {
@@ -29,7 +33,7 @@ class WalletService {
                     where wallet.idWallet = ${wallet.idWallet}`;
             return await this.walletRepository.query(sql);
         };
-        this.editIncomeMoney = async (id, type, money) => {
+        this.addMoney = async (id, type, money) => {
             let a = Number(money);
             if (type === 'income') {
                 let moneyWallet = await this.walletRepository.findOneBy({ idWallet: id });
@@ -46,7 +50,43 @@ class WalletService {
                 return await this.walletRepository.update({ idWallet: id }, { payMoney: d });
             }
         };
+        this.editMoney = async (id, idWallet, type, money) => {
+            let d = Number(money);
+            let moneyTransaction = await this.transactionService.findById(id);
+            let a = Number(moneyTransaction.money);
+            let moneyWallet = await this.walletRepository.findOneBy({ idWallet: idWallet });
+            let b = Number(moneyWallet.incomeMoney);
+            let g = Number(moneyWallet.payMoney);
+            if (type === 'income') {
+                let c = b - a;
+                c = c + d;
+                return await this.walletRepository.update({ idWallet: idWallet }, { incomeMoney: c });
+            }
+            else {
+                let e = g - a;
+                e = e + d;
+                return await this.walletRepository.update({ idWallet: idWallet }, { payMoney: e });
+            }
+        };
+        this.deleteMoney = async (id) => {
+            let transaction = await this.transactionService.findById(id);
+            let idWallet = transaction.wallet;
+            let a = transaction.money;
+            let type = transaction.type;
+            let moneyWallet = await this.walletRepository.findOneBy({ idWallet: idWallet });
+            let b = moneyWallet.payMoney;
+            let c = moneyWallet.incomeMoney;
+            if (type === 'income') {
+                let d = c - a;
+                return await this.walletRepository.update({ idWallet: idWallet }, { incomeMoney: d });
+            }
+            else {
+                let g = b - a;
+                return await this.walletRepository.update({ idWallet: idWallet }, { payMoney: g });
+            }
+        };
         this.walletRepository = data_soure_1.AppDataSource.getRepository(wallet_1.Wallet);
+        this.transactionService = transactionService_1.default;
     }
 }
 exports.default = new WalletService;

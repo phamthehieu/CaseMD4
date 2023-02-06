@@ -29,7 +29,7 @@ class TransactionController {
                 date: new Date().getDate()
             }
             await transactionService.save(newTransaction)
-            await walletService.editIncomeMoney(req.body.wallet,req.body.type,req.body.money)
+            await walletService.addMoney(req.body.wallet,req.body.type,req.body.money)
             res.status(200).json("add ok")
         }
         catch (e){
@@ -39,6 +39,7 @@ class TransactionController {
     delete = async (req: Request, res :Response)=>{
         try{
             let id =  req.params.id
+            await walletService.deleteMoney(id)
             await transactionService.remove(id)
             res.status(200).json('Delete Success !!!')
         }
@@ -49,7 +50,15 @@ class TransactionController {
     update = async (req: Request, res :Response)=> {
           try {
               let id = req.params.id
-              let newTransaction = req.body
+              let newTransaction = {
+                  wallet: req.body.wallet,
+                  category: req.body.category,
+                  type: req.body.type,
+                  money: req.body.money,
+                  month: new Date().getMonth() + 1,
+                  date: new Date().getDate()
+              }
+              await walletService.editMoney(id,req.body.wallet,req.body.type,req.body.money)
               await transactionService.update(id,newTransaction)
               res.status(200).json('Update Success !!!')
           }  catch (e){

@@ -1,12 +1,14 @@
 import {AppDataSource} from "../data-soure";
 import {User} from "../model/user";
 import {Wallet} from "../model/wallet";
-
+import transactionService from "./transactionService";
 class WalletService {
     private walletRepository;
+    private transactionService
 
     constructor() {
         this.walletRepository = AppDataSource.getRepository(Wallet);
+        this.transactionService = transactionService
     }
 
     getAllWallet = async (id) => {
@@ -14,11 +16,6 @@ class WalletService {
         let wallet = await this.walletRepository.query(sql)
            return wallet;
     }
-
-    // wallet = async (id) => {
-    //     return await this.walletRepository.findOneBy({idWallet: id})
-    // }
-
     createWallet = async (wallet) => {
         return await this.walletRepository.save(wallet)
     }
@@ -43,7 +40,7 @@ class WalletService {
                     where wallet.idWallet = ${wallet.idWallet}`
         return  await this.walletRepository.query(sql)
     }
-    editIncomeMoney = async (id,type,money) => {
+    addMoney = async (id,type,money) => {
         let a = Number(money)
         if (type === 'income') {
             let moneyWallet = await this.walletRepository.findOneBy({idWallet: id})
@@ -59,6 +56,40 @@ class WalletService {
             return await this.walletRepository.update({idWallet: id},{payMoney: d})
         }
     }
+    editMoney = async (id, idWallet, type, money) => {
+        let d = Number(money)
+        let moneyTransaction = await this.transactionService.findById(id)
+        let a = Number(moneyTransaction.money)
+        let moneyWallet = await this.walletRepository.findOneBy({idWallet: idWallet})
+        let b = Number(moneyWallet.incomeMoney)
+        let g = Number(moneyWallet.payMoney)
+        if (type === 'income') {
+            let c = b - a
+            c = c + d
+            return await this.walletRepository.update({idWallet: idWallet} ,{incomeMoney: c})
+        } else {
+            let e = g - a
+            e = e + d
+            return await this.walletRepository.update({idWallet: idWallet} ,{payMoney: e})
+        }
+    }
+    deleteMoney = async (id) => {
+        let transaction = await this.transactionService.findById(id)
+        let idWallet = transaction.wallet
+        let a = transaction.money
+        let type = transaction.type
+        let moneyWallet = await this.walletRepository.findOneBy({idWallet: idWallet})
+        let b = moneyWallet.payMoney
+        let c = moneyWallet.incomeMoney
+        if (type === 'income') {
+            let d = c - a
+            return await this.walletRepository.update({idWallet: idWallet} ,{incomeMoney: d})
+        } else {
+            let g = b - a
+            return await this.walletRepository.update({idWallet: idWallet} ,{payMoney: g})
+        }
+    }
+
 }
 
 export default new WalletService

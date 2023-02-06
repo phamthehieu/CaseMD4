@@ -31,7 +31,7 @@ class TransactionController {
                     date: new Date().getDate()
                 };
                 await transactionService_1.default.save(newTransaction);
-                await walletService_1.default.editIncomeMoney(req.body.wallet, req.body.type, req.body.money);
+                await walletService_1.default.addMoney(req.body.wallet, req.body.type, req.body.money);
                 res.status(200).json("add ok");
             }
             catch (e) {
@@ -41,6 +41,7 @@ class TransactionController {
         this.delete = async (req, res) => {
             try {
                 let id = req.params.id;
+                await walletService_1.default.deleteMoney(id);
                 await transactionService_1.default.remove(id);
                 res.status(200).json('Delete Success !!!');
             }
@@ -49,10 +50,23 @@ class TransactionController {
             }
         };
         this.update = async (req, res) => {
-            let id = req.params.id;
-            let newTransaction = req.body;
-            await transactionService_1.default.update(id, newTransaction);
-            res.status(200).json('Update Success !!!');
+            try {
+                let id = req.params.id;
+                let newTransaction = {
+                    wallet: req.body.wallet,
+                    category: req.body.category,
+                    type: req.body.type,
+                    money: req.body.money,
+                    month: new Date().getMonth() + 1,
+                    date: new Date().getDate()
+                };
+                await walletService_1.default.editMoney(id, req.body.wallet, req.body.type, req.body.money);
+                await transactionService_1.default.update(id, newTransaction);
+                res.status(200).json('Update Success !!!');
+            }
+            catch (e) {
+                res.status(500).json(e.message);
+            }
         };
         this.findById = async (req, res) => {
             try {
