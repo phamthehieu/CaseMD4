@@ -1,6 +1,6 @@
 function showTransaction(id) {
    $("#body").html(`
-                 <nav class="header-navbar navbar-expand-md navbar navbar-with-menu navbar-without-dd-arrow fixed-top navbar-light navbar-bg-color">
+    <nav class="header-navbar navbar-expand-md navbar navbar-with-menu navbar-without-dd-arrow fixed-top navbar-light navbar-bg-color">
       <div class="navbar-wrapper">
         <div class="navbar-header d-md-none">
           <ul class="nav navbar-nav flex-row">
@@ -28,6 +28,7 @@ function showTransaction(id) {
         <ul class="navigation navigation-main" id="main-menu-navigation" data-menu="menu-navigation">     
           <li class="active"><a onclick="showWallet()"><i class="icon-wallet"></i>Wallet</a>
           </li>
+          <li class=" nav-item"><a onclick="showUsers()"><i class="icon-user-following"></i>Users</a>
           <li class=" nav-item"><a onclick="showFormProfile()"><i class="ft-user"></i> Profile</span></a>
           <li class=" nav-item"> <a onclick="logOut()"><i class="ft-power"></i> Log Out</a></li>  
         </ul>
@@ -185,7 +186,6 @@ function showTransaction(id) {
                             <div class="card-content">
                                 <div class="card-body">
                                     <div class="card-text">
-                                        <table id="table"></table>
                                     </div>
                                 </div>
                             </div>
@@ -196,10 +196,10 @@ function showTransaction(id) {
             </div>
         </div>
     </div>
-                `)
+   `)
     showListTransactions(id)
 }
-function showListTransactions(id) {
+function showListTransactions(id, value) {
     let users = JSON.parse(localStorage.getItem('token'))
     $.ajax({
         type: 'GET',
@@ -279,7 +279,7 @@ function showListTransactions(id) {
                                                 </div>
                                             </td>             
                                         </tr>
-                            
+                           
                 `})
             showListCategory(id)
             $("#listTransactions").html(html)
@@ -401,8 +401,6 @@ function deleteTransaction(idTransaction, idWallet) {
     })
 }
 function searchTransaction(value, id) {
-    console.log(id)
-    console.log(value)
     let type = value.toLowerCase()
     let users = JSON.parse(localStorage.getItem('token'))
     $.ajax({

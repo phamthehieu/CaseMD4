@@ -36,7 +36,8 @@ class UserController {
     showListUser = async (req: Request, res: Response) => {
         try {
             let users = await this.UserService.getUser();
-            res.status(200).json({users})
+            console.log(users)
+            res.status(200).json(users)
         } catch (e) {
             res.status(500).json(e.message);
         }
