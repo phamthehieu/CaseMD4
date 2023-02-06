@@ -164,23 +164,32 @@ function showTransaction(id) {
                         <h6 class="my-2">Latest updates</h6>
                         <div class="card">
                             <div class="card-content">
-                                <img class="img-fluid" src="../../../app-assets/images/pages/blog-post.png" alt="Card image cap">
                                 <div class="card-body">
-                                    <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-                                    <a href="#" class="card-link">Card link</a>
-                                    <a href="#" class="card-link">Another link</a>
+                                    <div class="card-text">
+                                        <div class="input-group mb-3">
+                                          <select>
+                                          <option value="1">Tháng 1</option>
+                                          <option value="2">Tháng 2</option>
+                                          <option value="3">Tháng 3</option>
+                                          <option value="4">Tháng 4</option>
+                                          <option value="5">Tháng 5</option>
+                                          <option value="6">Tháng 6</option>
+                                          <option value="7">Tháng 7</option>
+                                          <option value="8">Tháng 8</option>
+                                          <option value="9">Tháng 9</option>
+                                          <option value="10">Tháng 10</option>
+                                          <option value="11">Tháng 11</option>
+                                          <option value="12">Tháng 12</option>
+                                       </select>
+                                          <input type="text" class="form-control" aria-label="Text input with segmented dropdown button">
+                                        </div>
+                                    </div>
                                 </div>
-                            </div>
-                            <div class="card-footer border-top-blue-grey border-top-lighten-5 text-muted">
-                                <span class="float-left">3 hours ago</span>
-                                <span class="float-right">
-                    <a href="#" class="card-link">Read More <i class="fa fa-angle-right"></i></a>
-                  </span>
-                            </div>
+                            </div>           
                         </div>
                     </div>
                     <div class="col-xl-8 col-lg-12">
-                        <h6 class="my-2">Roadmap</h6>
+                        <h6 class="my-2">SEARCH TO MONTH</h6>
                         <div class="card">
                             <div class="card-content">
                                 <div class="card-body">
