@@ -167,7 +167,8 @@ function showTransaction(id) {
                                 <div class="card-body">
                                     <div class="card-text">
                                         <div class="input-group mb-3">
-                                          <select>
+                                          <input type="text" class="form-control" aria-label="Text input with segmented dropdown button" id="date" placeholder="  vvNhập ngày muốn tìm kiếm ?">
+                                          <select class="form-select" aria-label="Default select example" aria-describedby="addon-wrapping" onchange="searchDay(this.value, ${id})">
                                           <option value="1">Tháng 1</option>
                                           <option value="2">Tháng 2</option>
                                           <option value="3">Tháng 3</option>
@@ -181,7 +182,6 @@ function showTransaction(id) {
                                           <option value="11">Tháng 11</option>
                                           <option value="12">Tháng 12</option>
                                        </select>
-                                          <input type="text" class="form-control" aria-label="Text input with segmented dropdown button">
                                         </div>
                                     </div>
                                 </div>
@@ -553,4 +553,11 @@ function searchMonth(month, id) {
             $("#month").html(html)
         }
     })
+}
+function searchDay(month, id) {
+    let date = $("#date").val()
+    console.log(month)
+    console.log(id)
+    console.log(date)
+
 }
