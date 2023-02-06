@@ -160,7 +160,7 @@ function showTransaction(id) {
                 <!--/ Recent Transactions -->
                 <!-- Basic Horizontal Timeline -->
                 <div class="row match-height">
-                    <div class="col-xl-4 col-lg-12">
+                    <div class="col-xl-6 col-lg-12">
                         <h6 class="my-2">Latest updates</h6>
                         <div class="card">
                             <div class="card-content">
@@ -182,15 +182,35 @@ function showTransaction(id) {
                                           <option value="11">Tháng 11</option>
                                           <option value="12">Tháng 12</option>
                                        </select>
-                                       <tbody id="day1">
-                                      </tbody>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>           
+                        </div>
+                        <div class="card">
+                            <div class="card-content">
+                                <div class="card-body">
+                                    <div class="card-text">
+                                        <div class="table-responsive">
+                                            <table id="recent-orders" class="table table-hover table-xl mb-0">
+                                            <thead>
+                                            <tr>
+                                                <th class="border-top-0">Status</th>                               
+                                                <th class="border-top-0">DANH MỤC</th>
+                                                <th class="border-top-0">SỐ TIỀN</th>
+                                                <th class="border-top-0">NGÀY THÊM</th>
+                                            </tr>
+                                            </thead>
+                                            <tbody id="day1">
+                                            </tbody>
+                                            </table>
                                         </div>
                                     </div>
                                 </div>
                             </div>           
                         </div>
                     </div>
-                    <div class="col-xl-8 col-lg-12">
+                    <div class="col-xl-6 col-lg-12">
                         <h6 class="my-2">SEARCH TO MONTH</h6>
                         <div class="card">
                             <div class="card-content">
@@ -210,8 +230,6 @@ function showTransaction(id) {
                                          <option value="11">Tháng 11</option>
                                          <option value="12">Tháng 12</option>
                                       </select>
-                                      <tbody id="month">
-                                      </tbody>
                                     </div>
                                 </div>
                             </div>
@@ -584,6 +602,7 @@ function searchDay(month, id) {
                     </td>   
               </tr>
                `})
+            console.log(html)
             $("#day1").html(html)
         }
     })

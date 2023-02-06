@@ -51,7 +51,8 @@ class TransactionService {
         };
         this.searchByDate = async (id, month, date) => {
             let sql = `select * from transaction 
-                    join wallet on transaction.wallet = wallet.idWallet 
+                    join wallet on transaction.wallet = wallet.idWallet
+                    join category on category.idCategory = transaction.category
                     where wallet.idWallet = ${id} and transaction.month = ${month} and transaction.date = ${date}`;
             return await this.transactionRepository.query(sql);
         };
