@@ -47,10 +47,14 @@ class TransactionController {
         }
     }
     update = async (req: Request, res :Response)=> {
-            let id = req.params.id
-            let newTransaction = req.body
-            await transactionService.update(id,newTransaction)
-            res.status(200).json('Update Success !!!')
+          try {
+              let id = req.params.id
+              let newTransaction = req.body
+              await transactionService.update(id,newTransaction)
+              res.status(200).json('Update Success !!!')
+          }  catch (e){
+              res.status(500).json(e.message)
+          }
     }
     findById = async (req: Request, res :Response)=> {
         try {
