@@ -185,7 +185,7 @@ function showTransaction(id) {
                             <div class="card-content">
                                 <div class="card-body">
                                     <div class="card-text">
-                                  
+                                        <table id="table"></table>
                                     </div>
                                 </div>
                             </div>
@@ -478,3 +478,4 @@ function searchTransaction(value, id) {
         }
     })
 }
+

@@ -7,6 +7,7 @@ declare class AuthService {
         idUser: any;
         userName: any;
         role: any;
+        status: any;
     }>;
 }
 declare const _default: AuthService;
